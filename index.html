@@ -512,6 +512,7 @@ section:nth-child(even) { background: var(--bg-alt); }
   .portfolio-grid { grid-template-columns: 1fr; }
   .skills-grid { grid-template-columns: 1fr; }
   .contact-grid { grid-template-columns: 1fr; }
+  #research .container > div { grid-template-columns: 1fr !important; }
   .process-steps { grid-template-columns: repeat(3, 1fr); }
   .case-study { padding: 24px; }
   .philosophy-card { padding: 32px 24px; }
@@ -528,6 +529,7 @@ section:nth-child(even) { background: var(--bg-alt); }
     <button class="nav-hamburger" onclick="this.nextElementSibling.classList.toggle('open')" aria-label="Toggle navigation">&#9776;</button>
     <ul class="nav-links">
       <li><a href="#about">About</a></li>
+      <li><a href="#research">Research</a></li>
       <li><a href="#portfolio">Portfolio</a></li>
       <li><a href="#skills">Skills</a></li>
       <li><a href="#contact">Contact</a></li>
@@ -596,6 +598,70 @@ section:nth-child(even) { background: var(--bg-alt); }
           </li>
         </ul>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== RESEARCH ==================== -->
+<section id="research">
+  <div class="container">
+    <div class="section-header">
+      <h2>Research & Scholarship</h2>
+      <p>Original research connecting learning science to practical instructional outcomes.</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+
+      <!-- WGU Capstone -->
+      <div style="background:var(--bg);border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:var(--shadow)">
+        <div style="background:linear-gradient(135deg,#065f46,#10b981);padding:24px 28px;color:#fff">
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;opacity:0.7;margin-bottom:4px">WGU M.Ed. Capstone</div>
+          <h3 style="font-size:19px;font-weight:800;line-height:1.3">SEL Integration in Physical Education</h3>
+        </div>
+        <div style="padding:24px 28px">
+          <div style="display:flex;gap:16px;margin-bottom:16px">
+            <div style="text-align:center;background:var(--primary-bg);border-radius:8px;padding:12px 16px;flex:1">
+              <div style="font-size:24px;font-weight:800;color:var(--primary)">150%</div>
+              <div style="font-size:11px;color:var(--text-light);font-weight:600">Teamwork Confidence Improvement</div>
+            </div>
+            <div style="text-align:center;background:var(--primary-bg);border-radius:8px;padding:12px 16px;flex:1">
+              <div style="font-size:24px;font-weight:800;color:var(--primary)">50%&rarr;90%</div>
+              <div style="font-size:11px;color:var(--text-light);font-weight:600">Effective Communication</div>
+            </div>
+          </div>
+          <p style="font-size:14px;color:var(--text-light);line-height:1.6;margin-bottom:12px">Action research study measuring the impact of Social-Emotional Learning strategies on 6th-grade students' collaboration and communication skills in PE. Used mixed-methods design: pre/post surveys, observation checklists, and student journal reflections.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:6px">
+            <span class="tag">Action Research</span>
+            <span class="tag">Mixed Methods</span>
+            <span class="tag">SEL / CASEL</span>
+            <span class="tag">Pre/Post Design</span>
+            <span class="tag">Grade 6</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Capella Capstone -->
+      <div style="background:var(--bg);border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:var(--shadow)">
+        <div style="background:linear-gradient(135deg,#1e3a5f,#1e40af);padding:24px 28px;color:#fff">
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;opacity:0.7;margin-bottom:4px">Capella University M.S. Capstone</div>
+          <h3 style="font-size:19px;font-weight:800;line-height:1.3">Sport Psychology & Confidence-Building in K&ndash;8 PE</h3>
+        </div>
+        <div style="padding:24px 28px">
+          <div style="background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:12px 16px;margin-bottom:16px;display:flex;align-items:center;gap:10px">
+            <span style="font-size:20px">&#128279;</span>
+            <span style="font-size:13px;font-weight:600;color:#92400e">This research is the academic foundation for the interactive Confidence Module in this portfolio — connecting original scholarship to a shipped instructional tool.</span>
+          </div>
+          <p style="font-size:14px;color:var(--text-light);line-height:1.6;margin-bottom:12px">Designed a year-long confidence-building framework for K&ndash;8 physical education grounded in Bandura's Self-Efficacy Theory and Locke & Latham's Goal-Setting Theory. Bridges sport psychology research with practical curriculum design for youth learners.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:6px">
+            <span class="tag">Bandura Self-Efficacy</span>
+            <span class="tag">Locke & Latham</span>
+            <span class="tag">Goal Setting</span>
+            <span class="tag">K-8 Framework</span>
+            <span class="tag">Sport Psychology</span>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
