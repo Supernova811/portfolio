@@ -1,0 +1,1552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FitnessGram Administration Training Guide | Interactive Learning Module</title>
+<style>
+/* ============================================
+   RESET & BASE
+   ============================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --primary: #1e40af;
+  --primary-light: #3b82f6;
+  --primary-bg: #eff6ff;
+  --accent: #f59e0b;
+  --accent-hover: #d97706;
+  --success: #10b981;
+  --success-bg: #ecfdf5;
+  --error: #ef4444;
+  --error-bg: #fef2f2;
+  --warning: #f59e0b;
+  --warning-bg: #fffbeb;
+  --text: #1e293b;
+  --text-light: #64748b;
+  --bg: #ffffff;
+  --bg-alt: #f8fafc;
+  --border: #e2e8f0;
+  --shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+  --radius: 8px;
+  --sidebar-w: 280px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  color: var(--text);
+  background: var(--bg-alt);
+  line-height: 1.6;
+  font-size: 16px;
+}
+
+/* ============================================
+   LAYOUT
+   ============================================ */
+.app { display: flex; min-height: 100vh; }
+
+.sidebar {
+  width: var(--sidebar-w);
+  background: var(--primary);
+  color: #fff;
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  transition: transform 0.3s ease;
+}
+
+.sidebar-header {
+  padding: 24px 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.15);
+}
+
+.sidebar-header h1 {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1.4;
+}
+
+.sidebar-header .subtitle {
+  font-size: 12px;
+  opacity: 0.7;
+  margin-top: 4px;
+}
+
+.sidebar-nav {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px 0;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 20px;
+  cursor: pointer;
+  transition: background 0.2s;
+  font-size: 14px;
+  border: none;
+  background: none;
+  color: #fff;
+  width: 100%;
+  text-align: left;
+}
+
+.nav-item:hover { background: rgba(255,255,255,0.1); }
+.nav-item.active { background: rgba(255,255,255,0.2); font-weight: 600; }
+.nav-item.completed .nav-circle { background: var(--success); border-color: var(--success); }
+.nav-item.completed .nav-circle::after { content: '\2713'; font-size: 11px; }
+
+.nav-circle {
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.5);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700;
+  flex-shrink: 0;
+}
+
+.nav-item.active .nav-circle { border-color: var(--accent); background: var(--accent); color: var(--primary); }
+
+.sidebar-footer {
+  padding: 16px 20px;
+  border-top: 1px solid rgba(255,255,255,0.15);
+  font-size: 12px;
+  opacity: 0.6;
+  text-align: center;
+}
+
+/* MOBILE HAMBURGER */
+.hamburger {
+  display: none;
+  position: fixed;
+  top: 12px; left: 12px;
+  z-index: 200;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  width: 44px; height: 44px;
+  font-size: 22px;
+  cursor: pointer;
+  box-shadow: var(--shadow-lg);
+}
+
+.overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 90;
+}
+
+/* MAIN */
+.main {
+  flex: 1;
+  margin-left: var(--sidebar-w);
+  display: flex;
+  flex-direction: column;
+}
+
+/* PROGRESS BAR */
+.progress-bar-container {
+  position: sticky;
+  top: 0;
+  background: var(--bg);
+  padding: 0;
+  z-index: 50;
+  border-bottom: 1px solid var(--border);
+}
+
+.progress-bar { height: 4px; background: var(--border); }
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-light), var(--accent));
+  transition: width 0.5s ease;
+  width: 0%;
+}
+
+.progress-text {
+  padding: 8px 32px;
+  font-size: 13px;
+  color: var(--text-light);
+  display: flex;
+  justify-content: space-between;
+}
+
+/* CONTENT */
+.content {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 40px 32px 80px;
+  width: 100%;
+}
+
+/* ============================================
+   CONTENT BLOCKS
+   ============================================ */
+.lesson-header { margin-bottom: 40px; }
+
+.lesson-tag {
+  display: inline-block;
+  background: var(--primary-bg);
+  color: var(--primary);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-bottom: 12px;
+}
+
+.lesson-header h2 {
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 12px;
+}
+
+.lesson-header p {
+  font-size: 17px;
+  color: var(--text-light);
+  line-height: 1.6;
+}
+
+.section { display: none; }
+.section.active { display: block; }
+
+/* CARDS */
+.card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: var(--shadow);
+}
+
+.card h3 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.card p, .card li { margin-bottom: 8px; }
+.card ul, .card ol { padding-left: 20px; }
+.card ul li { list-style: disc; }
+
+/* CALLOUT */
+.callout {
+  border-left: 4px solid var(--primary);
+  background: var(--primary-bg);
+  padding: 16px 20px;
+  border-radius: 0 var(--radius) var(--radius) 0;
+  margin: 20px 0;
+  font-size: 15px;
+}
+
+.callout.warning {
+  border-left-color: var(--warning);
+  background: var(--warning-bg);
+}
+
+.callout.success {
+  border-left-color: var(--success);
+  background: var(--success-bg);
+}
+
+.callout-label {
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 4px;
+  color: var(--primary);
+}
+
+.callout.warning .callout-label { color: var(--accent-hover); }
+.callout.success .callout-label { color: var(--success); }
+
+/* DESIGNER NOTE */
+.designer-note {
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+  border: 1px solid #bae6fd;
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  margin-bottom: 32px;
+  font-size: 14px;
+  color: #0c4a6e;
+  line-height: 1.6;
+}
+
+.designer-note strong {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--primary);
+}
+
+/* ACCORDION */
+.accordion { margin-bottom: 16px; }
+
+.accordion-toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+  transition: all 0.2s;
+  text-align: left;
+  gap: 12px;
+}
+
+.accordion-toggle:hover { border-color: var(--primary-light); background: var(--primary-bg); }
+.accordion-toggle.open { border-radius: var(--radius) var(--radius) 0 0; border-color: var(--primary-light); background: var(--primary-bg); }
+
+.accordion-toggle .acc-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: var(--primary-bg);
+  color: var(--primary);
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.accordion-toggle.open .acc-icon { background: var(--primary); color: #fff; }
+
+.accordion-toggle .acc-chevron {
+  transition: transform 0.3s;
+  font-size: 14px;
+  color: var(--text-light);
+  flex-shrink: 0;
+}
+
+.accordion-toggle.open .acc-chevron { transform: rotate(180deg); }
+
+.accordion-body {
+  display: none;
+  padding: 20px 24px;
+  background: var(--bg);
+  border: 1px solid var(--primary-light);
+  border-top: none;
+  border-radius: 0 0 var(--radius) var(--radius);
+}
+
+.accordion-body.open { display: block; }
+
+.accordion-body h4 {
+  font-size: 15px;
+  font-weight: 700;
+  margin: 16px 0 8px;
+  color: var(--primary);
+}
+
+.accordion-body h4:first-child { margin-top: 0; }
+
+.accordion-body ul { padding-left: 20px; margin-bottom: 12px; }
+.accordion-body li { margin-bottom: 6px; list-style: disc; }
+
+.common-mistake {
+  background: var(--error-bg);
+  border-left: 3px solid var(--error);
+  padding: 10px 14px;
+  border-radius: 0 var(--radius) var(--radius) 0;
+  margin-top: 12px;
+  font-size: 14px;
+}
+
+.common-mistake strong { color: var(--error); }
+
+/* SCENARIO CARDS */
+.scenario-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: var(--shadow);
+}
+
+.scenario-number {
+  display: inline-block;
+  background: var(--primary);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+  margin-bottom: 12px;
+}
+
+.scenario-card .scenario-prompt {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+
+.scenario-options { display: flex; flex-direction: column; gap: 10px; }
+
+.scenario-btn {
+  display: block;
+  width: 100%;
+  padding: 14px 18px;
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg);
+  cursor: pointer;
+  font-size: 15px;
+  text-align: left;
+  transition: all 0.2s;
+  color: var(--text);
+  line-height: 1.4;
+}
+
+.scenario-btn:hover:not(.chosen) { border-color: var(--primary-light); background: var(--primary-bg); }
+
+.scenario-btn.correct {
+  border-color: var(--success);
+  background: var(--success-bg);
+  cursor: default;
+}
+
+.scenario-btn.incorrect {
+  border-color: var(--error);
+  background: var(--error-bg);
+  cursor: default;
+  opacity: 0.7;
+}
+
+.scenario-btn.correct::before { content: '\2713  '; color: var(--success); font-weight: 700; }
+.scenario-btn.incorrect::before { content: '\2717  '; color: var(--error); font-weight: 700; }
+
+.scenario-feedback {
+  display: none;
+  margin-top: 14px;
+  padding: 14px 18px;
+  border-radius: var(--radius);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.scenario-feedback.show { display: block; }
+.scenario-feedback.correct { background: var(--success-bg); border-left: 3px solid var(--success); }
+.scenario-feedback.incorrect { background: var(--error-bg); border-left: 3px solid var(--error); }
+
+/* REFERENCE TABLE */
+.ref-table-wrap { overflow-x: auto; margin: 20px 0; }
+
+.ref-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  min-width: 580px;
+}
+
+.ref-table th {
+  background: var(--primary);
+  color: #fff;
+  padding: 10px 14px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.ref-table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+
+.ref-table tr:nth-child(even) td { background: var(--bg-alt); }
+.ref-table tr:hover td { background: var(--primary-bg); }
+
+/* QUIZ */
+.quiz-question {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+}
+
+.quiz-question .q-number {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 8px;
+}
+
+.quiz-question .q-text {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+.quiz-option {
+  display: block;
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+  cursor: pointer;
+  font-size: 14px;
+  text-align: left;
+  transition: all 0.2s;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+
+.quiz-option:hover:not(.chosen) { border-color: var(--primary-light); background: var(--primary-bg); }
+.quiz-option.correct { border-color: var(--success); background: var(--success-bg); }
+.quiz-option.incorrect { border-color: var(--error); background: var(--error-bg); opacity: 0.7; }
+
+.quiz-feedback {
+  display: none;
+  margin-top: 10px;
+  padding: 10px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+}
+
+.quiz-feedback.show { display: block; }
+.quiz-feedback.correct { background: var(--success-bg); color: #065f46; }
+.quiz-feedback.incorrect { background: var(--error-bg); color: #991b1b; }
+
+/* QUIZ RESULTS */
+.quiz-results {
+  display: none;
+  text-align: center;
+  padding: 32px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-top: 24px;
+  box-shadow: var(--shadow);
+}
+
+.quiz-results.show { display: block; }
+
+.quiz-score {
+  font-size: 48px;
+  font-weight: 800;
+  color: var(--primary);
+  margin-bottom: 8px;
+}
+
+.quiz-score-label {
+  font-size: 14px;
+  color: var(--text-light);
+  margin-bottom: 20px;
+}
+
+/* CERTIFICATE */
+.certificate {
+  display: none;
+  background: #fff;
+  border: 3px solid var(--primary);
+  border-radius: 12px;
+  padding: 48px 40px;
+  text-align: center;
+  margin-top: 32px;
+  position: relative;
+  overflow: hidden;
+}
+
+.certificate.show { display: block; }
+
+.certificate::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 6px;
+  background: linear-gradient(90deg, var(--primary), var(--accent), var(--primary));
+}
+
+.certificate .cert-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+
+.certificate h3 {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--primary);
+  margin-bottom: 8px;
+}
+
+.certificate .cert-subtitle {
+  font-size: 14px;
+  color: var(--text-light);
+  margin-bottom: 24px;
+}
+
+.certificate .cert-name {
+  font-size: 28px;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--text);
+  border-bottom: 2px solid var(--border);
+  display: inline-block;
+  padding: 4px 40px 8px;
+  margin-bottom: 16px;
+  min-width: 240px;
+}
+
+.certificate .cert-detail {
+  font-size: 14px;
+  color: var(--text-light);
+  margin-bottom: 4px;
+}
+
+.certificate .cert-date {
+  font-size: 13px;
+  color: var(--text-light);
+  margin-top: 16px;
+}
+
+.cert-input-area {
+  margin-top: 24px;
+}
+
+.cert-input-area input {
+  padding: 10px 16px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 16px;
+  width: 260px;
+  max-width: 100%;
+  text-align: center;
+}
+
+.cert-input-area button {
+  margin-top: 12px;
+  display: inline-block;
+}
+
+/* BUTTONS */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-radius: var(--radius);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+}
+
+.btn-primary { background: var(--primary); color: #fff; }
+.btn-primary:hover { background: #1e3a8a; }
+
+.btn-accent { background: var(--accent); color: #fff; }
+.btn-accent:hover { background: var(--accent-hover); }
+
+.btn-outline { background: transparent; color: var(--primary); border: 2px solid var(--primary); }
+.btn-outline:hover { background: var(--primary-bg); }
+
+.btn-success { background: var(--success); color: #fff; }
+.btn-success:hover { background: #059669; }
+
+.nav-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+
+/* PRINT BUTTON */
+.btn-print { margin-top: 20px; }
+
+/* COMPONENT BADGE */
+.component-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--primary-bg);
+  color: var(--primary);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin: 4px 4px 4px 0;
+}
+
+/* HFZ CHIPS */
+.hfz-chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+
+.hfz-chip {
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.hfz-chip.healthy { background: var(--success-bg); color: #065f46; border: 1px solid #a7f3d0; }
+.hfz-chip.needs { background: var(--warning-bg); color: #92400e; border: 1px solid #fde68a; }
+.hfz-chip.risk { background: var(--error-bg); color: #991b1b; border: 1px solid #fecaca; }
+
+/* FOOTER */
+.site-footer {
+  text-align: center;
+  padding: 24px 32px;
+  font-size: 13px;
+  color: var(--text-light);
+  border-top: 1px solid var(--border);
+}
+
+.site-footer strong { color: var(--text); }
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 768px) {
+  .hamburger { display: flex; align-items: center; justify-content: center; }
+  .sidebar { transform: translateX(-100%); }
+  .sidebar.open { transform: translateX(0); }
+  .overlay.open { display: block; }
+  .main { margin-left: 0; }
+  .content { padding: 24px 16px 60px; }
+  .progress-text { padding: 8px 16px; }
+  .lesson-header h2 { font-size: 24px; }
+  .nav-buttons { flex-direction: column; gap: 12px; }
+  .nav-buttons .btn { width: 100%; justify-content: center; }
+  .certificate { padding: 32px 20px; }
+}
+
+@media print {
+  .sidebar, .hamburger, .progress-bar-container, .nav-buttons, .btn-print, .overlay { display: none !important; }
+  .main { margin-left: 0; }
+  .section { display: block !important; }
+  .accordion-body { display: block !important; }
+  .certificate { display: block !important; border: 2px solid #000; }
+}
+</style>
+</head>
+<body>
+
+<!-- HAMBURGER -->
+<button class="hamburger" onclick="toggleSidebar()" aria-label="Menu">&#9776;</button>
+<div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+<div class="app">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <h1>FitnessGram Administration Training Guide</h1>
+      <div class="subtitle">Professional Development Module</div>
+    </div>
+    <nav class="sidebar-nav">
+      <button class="nav-item active" onclick="goTo(0)">
+        <span class="nav-circle">1</span>
+        Understanding FitnessGram
+      </button>
+      <button class="nav-item" onclick="goTo(1)">
+        <span class="nav-circle">2</span>
+        Test Administration Protocols
+      </button>
+      <button class="nav-item" onclick="goTo(2)">
+        <span class="nav-circle">3</span>
+        Scenarios &amp; Decision Points
+      </button>
+      <button class="nav-item" onclick="goTo(3)">
+        <span class="nav-circle">4</span>
+        Quick Reference &amp; Self-Check
+      </button>
+    </nav>
+    <div class="sidebar-footer">Est. Completion: 20&ndash;30 minutes</div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main">
+    <div class="progress-bar-container">
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+      <div class="progress-text">
+        <span id="progressLabel">Section 1 of 4</span>
+        <span id="progressPct">0%</span>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         SECTION 1: Understanding FitnessGram
+         ========================================== -->
+    <div class="section active" data-section="0">
+      <div class="content">
+        <div class="designer-note">
+          <strong>Instructional Design Note</strong>
+          While this guide targets PE professionals, the instructional design principles demonstrated &mdash; scenario-based learning, decision-tree assessment, and spaced practice protocols &mdash; apply to any professional training context.
+        </div>
+
+        <div class="lesson-header">
+          <span class="lesson-tag">Section 1</span>
+          <h2>Understanding FitnessGram</h2>
+          <p>Before administering a single test, every educator needs to understand what FitnessGram measures, why standardized protocols exist, and how the data is used to support student health.</p>
+        </div>
+
+        <div class="card">
+          <h3>What Is FitnessGram?</h3>
+          <p>FitnessGram is the most widely used youth fitness assessment in the United States. Developed by The Cooper Institute, it provides a standardized battery of tests that measure health-related fitness components &mdash; not athletic ability.</p>
+          <p>The purpose is not to rank students against each other. It is to compare each student's results against research-based health standards called <strong>Healthy Fitness Zones</strong>.</p>
+        </div>
+
+        <div class="card">
+          <h3>The 5 Test Components</h3>
+          <p>FitnessGram assesses five areas of health-related fitness:</p>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;margin:16px 0;">
+            <span class="component-badge">&#9654; PACER &mdash; Aerobic Capacity</span>
+            <span class="component-badge">&#9654; Curl-Up &mdash; Abdominal Strength</span>
+            <span class="component-badge">&#9654; Trunk Lift &mdash; Trunk Extensor Strength/Flexibility</span>
+            <span class="component-badge">&#9654; Push-Up &mdash; Upper Body Strength</span>
+            <span class="component-badge">&#9654; Sit &amp; Reach &mdash; Flexibility</span>
+          </div>
+          <p>Each test has a specific protocol that must be followed exactly. When everyone administers the test the same way, the data is valid and comparable year to year.</p>
+        </div>
+
+        <div class="card">
+          <h3>Healthy Fitness Zone (HFZ)</h3>
+          <p>FitnessGram scores are not graded on a curve. Instead, each score falls into one of three categories based on the student's <strong>age and gender</strong>:</p>
+          <div class="hfz-chips">
+            <span class="hfz-chip healthy">HFZ &mdash; Healthy Fitness Zone</span>
+            <span class="hfz-chip needs">NI-HFZ &mdash; Needs Improvement</span>
+            <span class="hfz-chip risk">NI-HFZ Health Risk &mdash; Needs Improvement (Health Risk)</span>
+          </div>
+          <p>These zones are based on research linking fitness levels to health outcomes. A student who scores in the HFZ is meeting the minimum threshold associated with good health for their age group.</p>
+          <div class="callout">
+            <div class="callout-label">Key Concept</div>
+            HFZ thresholds differ by age and gender. A 10-year-old boy and a 14-year-old girl have different cut-off scores for the same test. Always reference the correct standards table.
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Why Consistency Matters</h3>
+          <p>FitnessGram data is only useful when every administrator follows the same protocol, every time. Consider what happens when protocols are inconsistent:</p>
+          <ul>
+            <li><strong>Unreliable data</strong> &mdash; Scores cannot be compared across classes, schools, or years</li>
+            <li><strong>Bad decisions</strong> &mdash; A student may appear to improve or decline based on how the test was run, not their actual fitness</li>
+            <li><strong>Lost credibility</strong> &mdash; Parents, administrators, and other stakeholders can't trust the results</li>
+            <li><strong>Wasted time</strong> &mdash; If data can't be used, the testing period served no purpose</li>
+          </ul>
+          <div class="callout warning">
+            <div class="callout-label">Bottom Line</div>
+            Inconsistent protocols = unreliable data = bad decisions. Standardization is not optional.
+          </div>
+        </div>
+
+        <!-- Knowledge Check -->
+        <div class="card">
+          <h3>&#9989; Knowledge Check</h3>
+          <p style="margin-bottom:16px;">Which statement best describes the purpose of FitnessGram?</p>
+          <div class="scenario-options" id="kc1">
+            <button class="scenario-btn" onclick="checkKC('kc1', this, false)">To rank students against each other in athletic performance</button>
+            <button class="scenario-btn" onclick="checkKC('kc1', this, true)">To compare each student's fitness to research-based health standards</button>
+            <button class="scenario-btn" onclick="checkKC('kc1', this, false)">To determine which students should be on sports teams</button>
+          </div>
+          <div class="scenario-feedback" id="kc1-fb-correct" style="background:var(--success-bg);border-left:3px solid var(--success);">Correct. FitnessGram compares individual scores to Healthy Fitness Zones, not to other students.</div>
+          <div class="scenario-feedback" id="kc1-fb-incorrect" style="background:var(--error-bg);border-left:3px solid var(--error);">Not quite. FitnessGram is a health-related assessment, not a performance ranking. It compares each student to research-based health standards.</div>
+        </div>
+
+        <div class="nav-buttons">
+          <span></span>
+          <button class="btn btn-primary" onclick="goTo(1)">Next: Test Protocols &#8594;</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         SECTION 2: Test Administration Protocols
+         ========================================== -->
+    <div class="section" data-section="1">
+      <div class="content">
+        <div class="lesson-header">
+          <span class="lesson-tag">Section 2</span>
+          <h2>Test Administration Protocols</h2>
+          <p>Expand each test below to review the full administration protocol, step by step. Pay close attention to the common mistakes &mdash; these are where data reliability breaks down.</p>
+        </div>
+
+        <!-- PACER -->
+        <div class="accordion">
+          <button class="accordion-toggle" onclick="toggleAccordion(this)">
+            <span style="display:flex;align-items:center;gap:12px;"><span class="acc-icon">&#9654;</span> PACER (Aerobic Capacity)</span>
+            <span class="acc-chevron">&#9660;</span>
+          </button>
+          <div class="accordion-body">
+            <h4>Setup</h4>
+            <ul>
+              <li>Mark a 20-meter course with two lines (cones recommended at each end)</li>
+              <li>Use the official PACER audio CD or app for cadence</li>
+              <li>Students line up at one end of the course</li>
+            </ul>
+            <h4>Protocol</h4>
+            <ul>
+              <li>Students run back and forth across the 20-meter distance, keeping pace with an audio beep</li>
+              <li>The first lap is slow (approximately 9 seconds) and gets progressively faster</li>
+              <li>Students <strong>must reach the line BEFORE the beep sounds</strong></li>
+              <li>A student is allowed <strong>one missed beep</strong> &mdash; they are out after <strong>missing two beeps total</strong> (they do not need to be consecutive)</li>
+              <li>Record the <strong>total number of laps completed</strong></li>
+            </ul>
+            <h4>Key Rules</h4>
+            <ul>
+              <li>Students must touch or cross the line on each lap &mdash; no cutting corners</li>
+              <li>Students should not start before the audio signals the beginning</li>
+              <li>Encourage effort but do not coach pace during the test</li>
+            </ul>
+            <div class="common-mistake">
+              <strong>Common Mistakes:</strong> Letting students start late or before the signal. Allowing students to cut corners and not reach the line. Counting a lap when the student clearly missed the beep.
+            </div>
+          </div>
+        </div>
+
+        <!-- CURL-UP -->
+        <div class="accordion">
+          <button class="accordion-toggle" onclick="toggleAccordion(this)">
+            <span style="display:flex;align-items:center;gap:12px;"><span class="acc-icon">&#9654;</span> Curl-Up (Abdominal Strength)</span>
+            <span class="acc-chevron">&#9660;</span>
+          </button>
+          <div class="accordion-body">
+            <h4>Setup</h4>
+            <ul>
+              <li>Student lies on their back on a mat, knees bent at approximately 140 degrees, feet flat on the floor</li>
+              <li>Arms straight at sides, fingers touching the near edge of a measuring strip</li>
+              <li>Strip width: <strong>3 inches</strong> (ages 5&ndash;9) or <strong>4.5 inches</strong> (ages 10+)</li>
+            </ul>
+            <h4>Protocol</h4>
+            <ul>
+              <li>Student curls up slowly, sliding fingers across the strip until they touch the far edge</li>
+              <li>Performed to a <strong>cadence of 1 curl-up every 3 seconds</strong> (use official audio)</li>
+              <li>Heels must remain in contact with the floor</li>
+              <li>Test ends when the student can no longer maintain the cadence, or reaches the <strong>maximum of 75 curl-ups</strong></li>
+            </ul>
+            <h4>Key Rules</h4>
+            <ul>
+              <li>Head does not need to touch the floor between reps, but shoulder blades must</li>
+              <li>Movement should be smooth and controlled, not jerky</li>
+              <li>Student should breathe normally throughout</li>
+            </ul>
+            <div class="common-mistake">
+              <strong>Common Mistakes:</strong> Students pulling their head forward with their hands (arms must stay at sides). Feet lifting off the floor. Not using the cadence audio and allowing students to rush.
+            </div>
+          </div>
+        </div>
+
+        <!-- TRUNK LIFT -->
+        <div class="accordion">
+          <button class="accordion-toggle" onclick="toggleAccordion(this)">
+            <span style="display:flex;align-items:center;gap:12px;"><span class="acc-icon">&#9654;</span> Trunk Lift (Trunk Extensor Strength/Flexibility)</span>
+            <span class="acc-chevron">&#9660;</span>
+          </button>
+          <div class="accordion-body">
+            <h4>Setup</h4>
+            <ul>
+              <li>Student lies face down on a mat</li>
+              <li>Hands are placed under the thighs</li>
+              <li>Place a coin or marker on the floor in front of the student's eyes as a focus point</li>
+            </ul>
+            <h4>Protocol</h4>
+            <ul>
+              <li>Student lifts their upper body off the floor in a slow, controlled manner</li>
+              <li>They hold the position while you measure the distance from the floor to the chin</li>
+              <li><strong>Maximum score is 12 inches &mdash; do NOT record anything higher</strong></li>
+              <li>Allow two trials and record the higher score</li>
+            </ul>
+            <h4>Key Rules</h4>
+            <ul>
+              <li>Student must look at the focus point to keep head in a neutral position</li>
+              <li>The lift should be slow and controlled, not a quick jerk</li>
+              <li>Hands must remain under the thighs at all times</li>
+            </ul>
+            <div class="common-mistake">
+              <strong>Common Mistakes:</strong> Recording measurements above 12 inches (scores higher than 12 indicate hyperextension, which is unsafe and should not be encouraged). Letting students use their arms to push up. Not capping at 12 inches.
+            </div>
+          </div>
+        </div>
+
+        <!-- PUSH-UP -->
+        <div class="accordion">
+          <button class="accordion-toggle" onclick="toggleAccordion(this)">
+            <span style="display:flex;align-items:center;gap:12px;"><span class="acc-icon">&#9654;</span> Push-Up (Upper Body Strength)</span>
+            <span class="acc-chevron">&#9660;</span>
+          </button>
+          <div class="accordion-body">
+            <h4>Setup</h4>
+            <ul>
+              <li>Student assumes a standard push-up position: hands under or slightly wider than shoulders, body straight from head to toes</li>
+              <li>A partner or the tester observes form</li>
+            </ul>
+            <h4>Protocol</h4>
+            <ul>
+              <li>Performed to a <strong>cadence of 1 push-up every 3 seconds</strong> (use official audio)</li>
+              <li>Student lowers body until <strong>elbows reach a 90-degree angle</strong>, then pushes back up</li>
+              <li>Test ends when student can no longer maintain cadence or form breaks down</li>
+              <li>Record the <strong>total number of push-ups completed with correct form</strong></li>
+            </ul>
+            <h4>Key Rules</h4>
+            <ul>
+              <li>Body must remain straight throughout &mdash; no sagging or piking</li>
+              <li>Elbows must reach 90 degrees on every rep to count</li>
+              <li>Only count reps completed with proper form</li>
+            </ul>
+            <div class="common-mistake">
+              <strong>Common Mistakes:</strong> Sagging hips (most common form breakdown). Not going low enough &mdash; many students only bend slightly. Counting reps after form has broken.
+            </div>
+          </div>
+        </div>
+
+        <!-- SIT & REACH -->
+        <div class="accordion">
+          <button class="accordion-toggle" onclick="toggleAccordion(this)">
+            <span style="display:flex;align-items:center;gap:12px;"><span class="acc-icon">&#9654;</span> Sit &amp; Reach (Flexibility)</span>
+            <span class="acc-chevron">&#9660;</span>
+          </button>
+          <div class="accordion-body">
+            <h4>Setup</h4>
+            <ul>
+              <li>Use a standard sit-and-reach box</li>
+              <li>Student removes shoes</li>
+              <li>Student sits on the floor with <strong>one leg extended</strong> against the box and the <strong>other knee bent</strong>, foot flat on the floor, to the side of the straight leg</li>
+            </ul>
+            <h4>Protocol</h4>
+            <ul>
+              <li>Student places one hand on top of the other, palms down</li>
+              <li>Student reaches forward slowly along the top of the box with both hands</li>
+              <li>Record the distance reached in inches or centimeters</li>
+              <li><strong>Measure BOTH the left and right sides separately</strong></li>
+              <li>Allow practice reaches first, then record the best of multiple attempts per side</li>
+            </ul>
+            <h4>Key Rules</h4>
+            <ul>
+              <li>The extended knee must remain straight (locked) during the measurement</li>
+              <li>The reach must be a slow, sustained movement &mdash; no bouncing</li>
+              <li>Keep the back as flat as possible during the reach</li>
+            </ul>
+            <div class="common-mistake">
+              <strong>Common Mistakes:</strong> Allowing students to bounce forward to reach farther. Not keeping the extended knee straight (bending invalidates the measurement). Forgetting to test both left and right sides.
+            </div>
+          </div>
+        </div>
+
+        <div class="callout success" style="margin-top:32px;">
+          <div class="callout-label">Tip</div>
+          Bookmark this section. On testing day, pull up the protocol for whichever test you're running and keep it visible as a reference.
+        </div>
+
+        <div class="nav-buttons">
+          <button class="btn btn-outline" onclick="goTo(0)">&#8592; Previous</button>
+          <button class="btn btn-primary" onclick="goTo(2)">Next: Scenarios &#8594;</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         SECTION 3: Scenarios & Decision Points
+         ========================================== -->
+    <div class="section" data-section="2">
+      <div class="content">
+        <div class="lesson-header">
+          <span class="lesson-tag">Section 3</span>
+          <h2>Common Scenarios &amp; Decision Points</h2>
+          <p>Testing rarely goes perfectly. Read each scenario, decide what you would do, and check your answer. These are the judgment calls that separate reliable data from guesswork.</p>
+        </div>
+
+        <!-- Scenario 1 -->
+        <div class="scenario-card" id="sc1">
+          <span class="scenario-number">Scenario 1 &mdash; PACER</span>
+          <div class="scenario-prompt">A student reaches the line just as the beep sounds on the PACER. Do they continue running?</div>
+          <div class="scenario-options">
+            <button class="scenario-btn" onclick="checkScenario('sc1', this, true)">Yes &mdash; arriving on the beep counts. The student continues.</button>
+            <button class="scenario-btn" onclick="checkScenario('sc1', this, false)">No &mdash; they needed to be across before the beep.</button>
+            <button class="scenario-btn" onclick="checkScenario('sc1', this, false)">It depends on how close they were. Use your judgment.</button>
+          </div>
+          <div class="scenario-feedback correct" id="sc1-correct">Correct. The rule is students must reach the line <strong>by</strong> the beep. Arriving exactly on the beep satisfies this requirement. The student continues.</div>
+          <div class="scenario-feedback incorrect" id="sc1-incorrect">Not quite. The standard is that students must reach the line <strong>by</strong> the beep. Arriving on the beep counts &mdash; they only miss if they are short of the line when the beep sounds.</div>
+        </div>
+
+        <!-- Scenario 2 -->
+        <div class="scenario-card" id="sc2">
+          <span class="scenario-number">Scenario 2 &mdash; Curl-Up</span>
+          <div class="scenario-prompt">During curl-ups, you notice a student is pulling their head forward with their hands instead of keeping arms at their sides. What do you do?</div>
+          <div class="scenario-options">
+            <button class="scenario-btn" onclick="checkScenario('sc2', this, false)">Let them finish and just record a lower score.</button>
+            <button class="scenario-btn" onclick="checkScenario('sc2', this, true)">Stop the student, re-demonstrate correct form, and have them restart.</button>
+            <button class="scenario-btn" onclick="checkScenario('sc2', this, false)">Make a note on the sheet and count it anyway.</button>
+          </div>
+          <div class="scenario-feedback correct" id="sc2-correct">Correct. Improper form means the test is not measuring what it's supposed to measure. Stop the student, demonstrate the correct technique (arms at sides, curl from the core), and let them restart. Data integrity matters more than finishing fast.</div>
+          <div class="scenario-feedback incorrect" id="sc2-incorrect">Incorrect form invalidates the data. The right move is to stop the student, demonstrate proper technique (arms at sides, curl from the core), and have them restart. Never record scores from improper form.</div>
+        </div>
+
+        <!-- Scenario 3 -->
+        <div class="scenario-card" id="sc3">
+          <span class="scenario-number">Scenario 3 &mdash; Trunk Lift</span>
+          <div class="scenario-prompt">A student's trunk lift measurement reads 14 inches. What do you record?</div>
+          <div class="scenario-options">
+            <button class="scenario-btn" onclick="checkScenario('sc3', this, false)">14 inches &mdash; record what you measured.</button>
+            <button class="scenario-btn" onclick="checkScenario('sc3', this, true)">12 inches &mdash; that's the maximum allowed score.</button>
+            <button class="scenario-btn" onclick="checkScenario('sc3', this, false)">Have the student try again and aim for exactly 12.</button>
+          </div>
+          <div class="scenario-feedback correct" id="sc3-correct">Correct. The maximum trunk lift score is <strong>12 inches</strong>. Scores above 12 indicate hyperextension, which is unsafe and should not be encouraged or rewarded. Always cap at 12.</div>
+          <div class="scenario-feedback incorrect" id="sc3-incorrect">The correct answer is 12 inches. Trunk lift is capped at 12 inches because anything above that indicates hyperextension, which poses an injury risk. Never record above the maximum.</div>
+        </div>
+
+        <!-- Scenario 4 -->
+        <div class="scenario-card" id="sc4">
+          <span class="scenario-number">Scenario 4 &mdash; PACER</span>
+          <div class="scenario-prompt">A student asks to redo the PACER because they "weren't ready." Do you allow a retest?</div>
+          <div class="scenario-options">
+            <button class="scenario-btn" onclick="checkScenario('sc4', this, false)">Yes &mdash; let them run it again right now.</button>
+            <button class="scenario-btn" onclick="checkScenario('sc4', this, false)">Yes &mdash; but only if there's time left in the period.</button>
+            <button class="scenario-btn" onclick="checkScenario('sc4', this, true)">No &mdash; one attempt per testing period. A retest can happen on a different testing day.</button>
+          </div>
+          <div class="scenario-feedback correct" id="sc4-correct">Correct. Allowing immediate retests undermines standardization and creates fairness issues. Students get <strong>one attempt per testing period</strong>. If a legitimate reason for a retest exists, it should be scheduled for a different day.</div>
+          <div class="scenario-feedback incorrect" id="sc4-incorrect">The standard is one attempt per testing period. Immediate retests compromise data consistency and fairness. If a retest is warranted, schedule it for a different testing day.</div>
+        </div>
+
+        <!-- Scenario 5 -->
+        <div class="scenario-card" id="sc5">
+          <span class="scenario-number">Scenario 5 &mdash; Push-Up</span>
+          <div class="scenario-prompt">During push-ups, a student's hips start sagging on rep 8. They've pushed through and completed what they say are 8 reps. What do you record?</div>
+          <div class="scenario-options">
+            <button class="scenario-btn" onclick="checkScenario('sc5', this, false)">Record 8 &mdash; they completed the reps.</button>
+            <button class="scenario-btn" onclick="checkScenario('sc5', this, true)">Record 7 &mdash; the last rep with correct form.</button>
+            <button class="scenario-btn" onclick="checkScenario('sc5', this, false)">Record 8 but make a note about the form breakdown.</button>
+          </div>
+          <div class="scenario-feedback correct" id="sc5-correct">Correct. You record the <strong>last rep completed with correct form</strong>. If form broke on rep 8, the score is 7. A rep only counts when performed with proper technique &mdash; straight body, elbows to 90 degrees, no sagging.</div>
+          <div class="scenario-feedback incorrect" id="sc5-incorrect">The correct answer is 7. Only reps completed with proper form count. If form broke at rep 8, the last valid rep was 7. Notes don't change the score &mdash; form is the standard.</div>
+        </div>
+
+        <div class="callout" style="margin-top:8px;">
+          <div class="callout-label">Reflection</div>
+          Every one of these scenarios comes up during real testing. Knowing the answers in advance means you won't second-guess yourself in the moment &mdash; and your data will be reliable.
+        </div>
+
+        <div class="nav-buttons">
+          <button class="btn btn-outline" onclick="goTo(1)">&#8592; Previous</button>
+          <button class="btn btn-primary" onclick="goTo(3)">Next: Quick Reference &#8594;</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         SECTION 4: Quick Reference & Self-Check
+         ========================================== -->
+    <div class="section" data-section="3">
+      <div class="content">
+        <div class="lesson-header">
+          <span class="lesson-tag">Section 4</span>
+          <h2>Quick Reference &amp; Self-Check</h2>
+          <p>Use the summary table as a testing-day reference. Then complete the 5-question knowledge check to confirm your understanding and earn your certificate.</p>
+        </div>
+
+        <!-- Reference Table -->
+        <div class="card">
+          <h3>Protocol Quick Reference</h3>
+          <div class="ref-table-wrap">
+            <table class="ref-table">
+              <thead>
+                <tr>
+                  <th>Test</th>
+                  <th>Component</th>
+                  <th>Cadence</th>
+                  <th>Scoring</th>
+                  <th>Key Watch-Out</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>PACER</strong></td>
+                  <td>Aerobic Capacity</td>
+                  <td>Audio beep (progressive)</td>
+                  <td>Total laps completed</td>
+                  <td>Out after 2 missed beeps</td>
+                </tr>
+                <tr>
+                  <td><strong>Curl-Up</strong></td>
+                  <td>Abdominal Strength</td>
+                  <td>1 every 3 seconds</td>
+                  <td>Total reps (max 75)</td>
+                  <td>Arms at sides, not behind head</td>
+                </tr>
+                <tr>
+                  <td><strong>Trunk Lift</strong></td>
+                  <td>Trunk Ext. Strength/Flex.</td>
+                  <td>Hold position</td>
+                  <td>Inches (max 12)</td>
+                  <td>Never record above 12"</td>
+                </tr>
+                <tr>
+                  <td><strong>Push-Up</strong></td>
+                  <td>Upper Body Strength</td>
+                  <td>1 every 3 seconds</td>
+                  <td>Total reps w/ correct form</td>
+                  <td>Elbows to 90&deg;, body straight</td>
+                </tr>
+                <tr>
+                  <td><strong>Sit &amp; Reach</strong></td>
+                  <td>Flexibility</td>
+                  <td>Slow, sustained reach</td>
+                  <td>Distance (L &amp; R separately)</td>
+                  <td>No bouncing; knee straight</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Quiz -->
+        <div class="card" style="border:2px solid var(--primary);">
+          <h3>&#128221; Final Knowledge Check</h3>
+          <p style="margin-bottom:20px;color:var(--text-light);">Answer all 5 questions to unlock your certificate of completion.</p>
+
+          <!-- Q1 -->
+          <div class="quiz-question" id="q1">
+            <div class="q-number">Question 1 of 5</div>
+            <div class="q-text">How many missed beeps eliminate a student from the PACER?</div>
+            <button class="quiz-option" onclick="checkQuiz('q1',this,false)">1 missed beep</button>
+            <button class="quiz-option" onclick="checkQuiz('q1',this,true)">2 missed beeps</button>
+            <button class="quiz-option" onclick="checkQuiz('q1',this,false)">3 missed beeps</button>
+            <button class="quiz-option" onclick="checkQuiz('q1',this,false)">2 consecutive missed beeps</button>
+            <div class="quiz-feedback correct" id="q1-correct">Right. Students are out after 2 total missed beeps &mdash; they do not need to be consecutive.</div>
+            <div class="quiz-feedback incorrect" id="q1-incorrect">The answer is 2 missed beeps (total, not necessarily consecutive).</div>
+          </div>
+
+          <!-- Q2 -->
+          <div class="quiz-question" id="q2">
+            <div class="q-number">Question 2 of 5</div>
+            <div class="q-text">What is the maximum score you should ever record for the Trunk Lift?</div>
+            <button class="quiz-option" onclick="checkQuiz('q2',this,false)">10 inches</button>
+            <button class="quiz-option" onclick="checkQuiz('q2',this,true)">12 inches</button>
+            <button class="quiz-option" onclick="checkQuiz('q2',this,false)">15 inches</button>
+            <button class="quiz-option" onclick="checkQuiz('q2',this,false)">No maximum &mdash; record whatever you measure</button>
+            <div class="quiz-feedback correct" id="q2-correct">Correct. 12 inches is the cap. Higher scores indicate hyperextension.</div>
+            <div class="quiz-feedback incorrect" id="q2-incorrect">The maximum is 12 inches. Anything higher indicates unsafe hyperextension.</div>
+          </div>
+
+          <!-- Q3 -->
+          <div class="quiz-question" id="q3">
+            <div class="q-number">Question 3 of 5</div>
+            <div class="q-text">During push-ups, what angle should the elbows reach on each rep?</div>
+            <button class="quiz-option" onclick="checkQuiz('q3',this,false)">45 degrees</button>
+            <button class="quiz-option" onclick="checkQuiz('q3',this,true)">90 degrees</button>
+            <button class="quiz-option" onclick="checkQuiz('q3',this,false)">Chest must touch the floor</button>
+            <button class="quiz-option" onclick="checkQuiz('q3',this,false)">Any amount of bend counts</button>
+            <div class="quiz-feedback correct" id="q3-correct">Correct. Elbows must reach 90 degrees for the rep to count.</div>
+            <div class="quiz-feedback incorrect" id="q3-incorrect">The standard is 90 degrees at the elbow. Not to the floor, and not a partial bend.</div>
+          </div>
+
+          <!-- Q4 -->
+          <div class="quiz-question" id="q4">
+            <div class="q-number">Question 4 of 5</div>
+            <div class="q-text">What makes FitnessGram's Healthy Fitness Zone (HFZ) different from a traditional grading curve?</div>
+            <button class="quiz-option" onclick="checkQuiz('q4',this,false)">It uses percentiles to rank students</button>
+            <button class="quiz-option" onclick="checkQuiz('q4',this,false)">It is based on teacher observation, not numbers</button>
+            <button class="quiz-option" onclick="checkQuiz('q4',this,true)">It compares students to research-based health standards, not to each other</button>
+            <button class="quiz-option" onclick="checkQuiz('q4',this,false)">It uses pass/fail with no middle category</button>
+            <div class="quiz-feedback correct" id="q4-correct">Exactly. HFZ is criterion-referenced, meaning each student is measured against a health standard, not against their peers.</div>
+            <div class="quiz-feedback incorrect" id="q4-incorrect">HFZ is criterion-referenced &mdash; it compares students to health-based thresholds, not to other students.</div>
+          </div>
+
+          <!-- Q5 -->
+          <div class="quiz-question" id="q5">
+            <div class="q-number">Question 5 of 5</div>
+            <div class="q-text">For the Sit &amp; Reach test, which side(s) must be measured?</div>
+            <button class="quiz-option" onclick="checkQuiz('q5',this,false)">Only the dominant side</button>
+            <button class="quiz-option" onclick="checkQuiz('q5',this,false)">Only the right side</button>
+            <button class="quiz-option" onclick="checkQuiz('q5',this,true)">Both left and right sides, separately</button>
+            <button class="quiz-option" onclick="checkQuiz('q5',this,false)">Both legs extended at the same time</button>
+            <div class="quiz-feedback correct" id="q5-correct">Correct. Both sides are measured separately to assess flexibility on each side independently.</div>
+            <div class="quiz-feedback incorrect" id="q5-incorrect">Both left and right sides must be measured separately. One side may be more flexible than the other.</div>
+          </div>
+
+          <!-- Quiz Results -->
+          <div class="quiz-results" id="quizResults">
+            <div class="quiz-score" id="quizScore">0/5</div>
+            <div class="quiz-score-label" id="quizScoreLabel">Calculating...</div>
+            <button class="btn btn-success" id="certBtn" onclick="showCertificate()" style="display:none;">Generate Certificate</button>
+          </div>
+        </div>
+
+        <!-- Certificate -->
+        <div class="certificate" id="certificate">
+          <div class="cert-icon">&#127942;</div>
+          <h3>Certificate of Completion</h3>
+          <div class="cert-subtitle">FitnessGram Administration Training Guide</div>
+          <div class="cert-name" id="certName">Your Name</div>
+          <div class="cert-detail">has successfully completed the FitnessGram Administration</div>
+          <div class="cert-detail">Training Guide, demonstrating knowledge of standardized test</div>
+          <div class="cert-detail">protocols, scoring procedures, and decision-making scenarios.</div>
+          <div class="cert-date" id="certDate"></div>
+
+          <div class="cert-input-area" id="certInput">
+            <div><input type="text" id="certNameInput" placeholder="Enter your name"></div>
+            <div><button class="btn btn-primary" onclick="generateCert()">Generate Certificate</button></div>
+          </div>
+
+          <button class="btn btn-outline btn-print" onclick="window.print()" style="margin-top:20px;">&#128424; Print Certificate</button>
+        </div>
+
+        <div class="nav-buttons">
+          <button class="btn btn-outline" onclick="goTo(2)">&#8592; Previous</button>
+          <span></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="site-footer">
+      Designed by <strong>Kevin Terranova, M.S.</strong> | Curriculum &amp; Instruction | Sport Psychology
+    </div>
+
+  </div><!-- /main -->
+</div><!-- /app -->
+
+<script>
+/* ============================================
+   STATE
+   ============================================ */
+let currentSection = 0;
+const totalSections = 4;
+const completed = new Set();
+let quizAnswered = 0;
+let quizCorrect = 0;
+
+/* ============================================
+   NAVIGATION
+   ============================================ */
+function goTo(index) {
+  // Mark current as completed
+  completed.add(currentSection);
+
+  currentSection = index;
+  // Show/hide sections
+  document.querySelectorAll('.section').forEach((s, i) => {
+    s.classList.toggle('active', i === index);
+  });
+
+  // Update nav
+  document.querySelectorAll('.nav-item').forEach((n, i) => {
+    n.classList.toggle('active', i === index);
+    if (completed.has(i) && i !== index) n.classList.add('completed');
+  });
+
+  // Update progress
+  updateProgress();
+
+  // Scroll to top
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  // Close sidebar on mobile
+  if (window.innerWidth <= 768) {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('overlay').classList.remove('open');
+  }
+}
+
+function updateProgress() {
+  const pct = Math.round(((completed.size) / totalSections) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressLabel').textContent = 'Section ' + (currentSection + 1) + ' of ' + totalSections;
+  document.getElementById('progressPct').textContent = pct + '% complete';
+}
+
+/* ============================================
+   SIDEBAR TOGGLE (Mobile)
+   ============================================ */
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('open');
+}
+
+/* ============================================
+   ACCORDIONS
+   ============================================ */
+function toggleAccordion(btn) {
+  const body = btn.nextElementSibling;
+  const isOpen = btn.classList.contains('open');
+
+  // Close all in parent
+  btn.closest('.content').querySelectorAll('.accordion-toggle').forEach(t => {
+    t.classList.remove('open');
+    t.nextElementSibling.classList.remove('open');
+  });
+
+  if (!isOpen) {
+    btn.classList.add('open');
+    body.classList.add('open');
+  }
+}
+
+/* ============================================
+   KNOWLEDGE CHECKS (Section 1)
+   ============================================ */
+function checkKC(id, btn, isCorrect) {
+  const container = document.getElementById(id);
+  if (container.classList.contains('answered')) return;
+  container.classList.add('answered');
+
+  container.querySelectorAll('.scenario-btn').forEach(b => {
+    b.classList.add('chosen');
+    if (b === btn) {
+      b.classList.add(isCorrect ? 'correct' : 'incorrect');
+    }
+    // Show correct answer
+    if (isCorrect === false) {
+      // Find correct button - it's the one that would pass true
+    }
+  });
+
+  // Highlight correct answer if wrong
+  if (!isCorrect) {
+    container.querySelectorAll('.scenario-btn').forEach((b, i) => {
+      // Mark the correct one (second button for kc1)
+      if (id === 'kc1' && i === 1) b.classList.add('correct');
+    });
+  }
+
+  const fbId = id + '-fb-' + (isCorrect ? 'correct' : 'incorrect');
+  document.getElementById(fbId).classList.add('show');
+}
+
+/* ============================================
+   SCENARIOS (Section 3)
+   ============================================ */
+function checkScenario(id, btn, isCorrect) {
+  const card = document.getElementById(id);
+  if (card.classList.contains('answered')) return;
+  card.classList.add('answered');
+
+  card.querySelectorAll('.scenario-btn').forEach(b => {
+    b.classList.add('chosen');
+    if (b === btn) {
+      b.classList.add(isCorrect ? 'correct' : 'incorrect');
+    }
+  });
+
+  // Show correct answer if wrong
+  if (!isCorrect) {
+    card.querySelectorAll('.scenario-btn').forEach(b => {
+      // The correct button has true in its onclick
+      if (b.getAttribute('onclick').includes('true')) {
+        b.classList.add('correct');
+      }
+    });
+  }
+
+  document.getElementById(id + '-' + (isCorrect ? 'correct' : 'incorrect')).classList.add('show');
+}
+
+/* ============================================
+   QUIZ (Section 4)
+   ============================================ */
+function checkQuiz(id, btn, isCorrect) {
+  const q = document.getElementById(id);
+  if (q.classList.contains('answered')) return;
+  q.classList.add('answered');
+  quizAnswered++;
+  if (isCorrect) quizCorrect++;
+
+  q.querySelectorAll('.quiz-option').forEach(b => {
+    b.classList.add('chosen');
+    if (b === btn) {
+      b.classList.add(isCorrect ? 'correct' : 'incorrect');
+    }
+    // Highlight correct answer
+    if (b.getAttribute('onclick').includes('true')) {
+      b.classList.add('correct');
+    }
+  });
+
+  document.getElementById(id + '-' + (isCorrect ? 'correct' : 'incorrect')).classList.add('show');
+
+  // Check if all answered
+  if (quizAnswered === 5) {
+    showQuizResults();
+  }
+}
+
+function showQuizResults() {
+  const results = document.getElementById('quizResults');
+  results.classList.add('show');
+  document.getElementById('quizScore').textContent = quizCorrect + '/5';
+
+  let label, showCert;
+  if (quizCorrect === 5) {
+    label = 'Perfect score! You are ready to administer FitnessGram with confidence.';
+    showCert = true;
+  } else if (quizCorrect >= 4) {
+    label = 'Strong performance. Review any missed items, then generate your certificate.';
+    showCert = true;
+  } else if (quizCorrect >= 3) {
+    label = 'Good effort. Consider reviewing Sections 1\u20133 before testing day.';
+    showCert = true;
+  } else {
+    label = 'Review the training guide and try again. Understanding these protocols is critical before administering tests.';
+    showCert = false;
+  }
+
+  document.getElementById('quizScoreLabel').textContent = label;
+  if (showCert) {
+    document.getElementById('certBtn').style.display = 'inline-flex';
+  }
+
+  // Mark section 4 completed
+  completed.add(3);
+  updateProgress();
+}
+
+/* ============================================
+   CERTIFICATE
+   ============================================ */
+function showCertificate() {
+  document.getElementById('certificate').classList.add('show');
+  document.getElementById('certificate').scrollIntoView({ behavior: 'smooth' });
+}
+
+function generateCert() {
+  const name = document.getElementById('certNameInput').value.trim();
+  if (!name) { alert('Please enter your name.'); return; }
+  document.getElementById('certName').textContent = name;
+  document.getElementById('certInput').style.display = 'none';
+
+  const now = new Date();
+  document.getElementById('certDate').textContent = 'Completed on ' + now.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
+  // Mark all complete
+  for (let i = 0; i < totalSections; i++) completed.add(i);
+  updateProgress();
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.add('completed'));
+}
+
+/* Init */
+updateProgress();
+</script>
+
+</body>
+</html>
