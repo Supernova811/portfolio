@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kevin Terranova | Instructional Designer & Curriculum Developer</title>
+<style>
+/* ============================================
+   RESET & VARIABLES
+   ============================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --primary: #1e40af;
+  --primary-light: #3b82f6;
+  --primary-bg: #eff6ff;
+  --accent: #f59e0b;
+  --accent-hover: #d97706;
+  --success: #10b981;
+  --text: #1e293b;
+  --text-light: #64748b;
+  --bg: #ffffff;
+  --bg-alt: #f8fafc;
+  --border: #e2e8f0;
+  --shadow: 0 1px 3px rgba(0,0,0,0.1);
+  --shadow-lg: 0 10px 25px rgba(0,0,0,0.1);
+  --radius: 8px;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  color: var(--text);
+  background: var(--bg);
+  line-height: 1.6;
+}
+
+a { color: var(--primary); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ============================================
+   NAV
+   ============================================ */
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+  z-index: 100;
+  padding: 0 24px;
+}
+
+.nav-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+}
+
+.nav-brand {
+  font-weight: 800;
+  font-size: 18px;
+  color: var(--primary);
+}
+
+.nav-links { display: flex; gap: 28px; list-style: none; }
+
+.nav-links a {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-light);
+  transition: color 0.2s;
+}
+
+.nav-links a:hover { color: var(--primary); text-decoration: none; }
+
+.nav-hamburger {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: var(--text);
+}
+
+/* ============================================
+   HERO
+   ============================================ */
+.hero {
+  padding: 140px 24px 80px;
+  text-align: center;
+  background: linear-gradient(135deg, var(--primary-bg), #dbeafe);
+}
+
+.hero h1 {
+  font-size: 44px;
+  font-weight: 800;
+  line-height: 1.15;
+  margin-bottom: 8px;
+}
+
+.hero .title {
+  font-size: 20px;
+  color: var(--primary);
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.hero .lead {
+  font-size: 18px;
+  color: var(--text-light);
+  max-width: 640px;
+  margin: 0 auto 32px;
+  line-height: 1.7;
+}
+
+.hero-badges {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.badge {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 8px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  box-shadow: var(--shadow);
+}
+
+.hero-cta {
+  display: inline-block;
+  background: var(--primary);
+  color: #fff;
+  padding: 14px 32px;
+  border-radius: var(--radius);
+  font-size: 16px;
+  font-weight: 700;
+  transition: background 0.2s;
+  text-decoration: none;
+}
+
+.hero-cta:hover { background: var(--primary-light); text-decoration: none; }
+
+/* ============================================
+   SECTIONS
+   ============================================ */
+section {
+  padding: 80px 24px;
+}
+
+section:nth-child(even) { background: var(--bg-alt); }
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.section-header h2 {
+  font-size: 32px;
+  font-weight: 800;
+  margin-bottom: 12px;
+}
+
+.section-header p {
+  font-size: 17px;
+  color: var(--text-light);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* ============================================
+   ABOUT
+   ============================================ */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: start;
+}
+
+.about-text h3 {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: var(--primary);
+}
+
+.about-text p { margin-bottom: 14px; }
+
+.credential-list {
+  list-style: none;
+  margin-top: 20px;
+}
+
+.credential-list li {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.credential-list .icon {
+  width: 36px; height: 36px;
+  background: var(--primary-bg);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.credential-list .degree { font-weight: 700; font-size: 15px; }
+.credential-list .school { font-size: 13px; color: var(--text-light); }
+
+/* ============================================
+   PORTFOLIO CARDS
+   ============================================ */
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.project-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: var(--shadow);
+}
+
+.project-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+
+.card-banner {
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+}
+
+.card-banner.blue { background: linear-gradient(135deg, #1e3a5f, #1e40af); }
+.card-banner.green { background: linear-gradient(135deg, #065f46, #10b981); }
+.card-banner.amber { background: linear-gradient(135deg, #78350f, #f59e0b); }
+.card-banner.purple { background: linear-gradient(135deg, #4c1d95, #8b5cf6); }
+
+.card-body { padding: 24px; }
+
+.card-type {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--primary);
+  margin-bottom: 6px;
+}
+
+.card-body h3 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.card-body p {
+  font-size: 14px;
+  color: var(--text-light);
+  margin-bottom: 16px;
+  line-height: 1.6;
+}
+
+.card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.tag {
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 3px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-light);
+}
+
+.card-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.card-link:hover { text-decoration: underline; }
+
+/* ============================================
+   CASE STUDY DETAIL (expandable)
+   ============================================ */
+.case-study {
+  display: none;
+  background: var(--bg);
+  border: 2px solid var(--primary);
+  border-radius: 12px;
+  padding: 40px;
+  margin-top: 24px;
+  grid-column: 1 / -1;
+}
+
+.case-study.open { display: block; }
+
+.case-study h3 {
+  font-size: 24px;
+  font-weight: 800;
+  margin-bottom: 20px;
+  color: var(--primary);
+}
+
+.case-study h4 {
+  font-size: 17px;
+  font-weight: 700;
+  margin: 24px 0 8px;
+}
+
+.case-study p { margin-bottom: 12px; }
+
+.process-steps {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  margin: 24px 0;
+}
+
+.process-step {
+  text-align: center;
+  padding: 16px 8px;
+  background: var(--primary-bg);
+  border-radius: var(--radius);
+  position: relative;
+}
+
+.process-step .step-num {
+  width: 28px; height: 28px;
+  background: var(--primary);
+  color: #fff;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 8px;
+  font-size: 13px; font-weight: 700;
+}
+
+.process-step .step-label { font-size: 13px; font-weight: 600; }
+
+.close-case {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 20px;
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.close-case:hover { background: var(--border); }
+
+/* ============================================
+   SKILLS
+   ============================================ */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.skill-category h3 {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--primary);
+  color: var(--primary);
+}
+
+.skill-list { list-style: none; }
+
+.skill-list li {
+  padding: 6px 0;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.skill-list li::before {
+  content: '';
+  width: 6px; height: 6px;
+  background: var(--primary-light);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ============================================
+   PHILOSOPHY
+   ============================================ */
+.philosophy-card {
+  background: linear-gradient(135deg, #1e3a5f, #1e40af);
+  color: #fff;
+  border-radius: 12px;
+  padding: 48px;
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.philosophy-card blockquote {
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.5;
+  margin-bottom: 16px;
+  font-style: italic;
+}
+
+.philosophy-card cite {
+  font-size: 14px;
+  opacity: 0.7;
+  font-style: normal;
+}
+
+/* ============================================
+   CONTACT
+   ============================================ */
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  text-align: center;
+}
+
+.contact-item {
+  padding: 32px 20px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.contact-item .icon {
+  font-size: 28px;
+  margin-bottom: 12px;
+}
+
+.contact-item h3 {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.contact-item p {
+  font-size: 14px;
+  color: var(--text-light);
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+.footer {
+  padding: 32px 24px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-light);
+  border-top: 1px solid var(--border);
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .nav-hamburger { display: block; }
+  .nav-links.open {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 64px; left: 0; right: 0;
+    background: var(--bg);
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--border);
+    box-shadow: var(--shadow-lg);
+  }
+  .hero h1 { font-size: 30px; }
+  .hero .title { font-size: 16px; }
+  .about-grid { grid-template-columns: 1fr; gap: 32px; }
+  .portfolio-grid { grid-template-columns: 1fr; }
+  .skills-grid { grid-template-columns: 1fr; }
+  .contact-grid { grid-template-columns: 1fr; }
+  .process-steps { grid-template-columns: repeat(3, 1fr); }
+  .case-study { padding: 24px; }
+  .philosophy-card { padding: 32px 24px; }
+  .philosophy-card blockquote { font-size: 18px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ==================== NAV ==================== -->
+<nav class="nav" role="navigation">
+  <div class="nav-inner">
+    <div class="nav-brand">Kevin Terranova</div>
+    <button class="nav-hamburger" onclick="this.nextElementSibling.classList.toggle('open')" aria-label="Toggle navigation">&#9776;</button>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#portfolio">Portfolio</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ==================== HERO ==================== -->
+<header class="hero">
+  <!-- Headshot placeholder — replace src with your actual photo -->
+  <div style="width:120px;height:120px;border-radius:50%;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;font-size:40px;font-weight:800;margin:0 auto 20px;border:4px solid #fff;box-shadow:var(--shadow-lg)">KT</div>
+  <h1>Kevin Terranova</h1>
+  <div class="title">Instructional Designer | Curriculum Developer | Learning & Performance Specialist</div>
+  <p class="lead" style="font-style:italic;font-weight:500;color:var(--primary);max-width:680px">"My focus is helping learners experience small wins early so they build confidence and stay engaged in learning. Start simple. Build success. Increase challenge. Confidence grows."</p>
+  <p class="lead">Two master's degrees. Nearly a decade in education. I don't just plan curriculum — I build it, test it, and ship it.</p>
+  <div class="hero-badges">
+    <span class="badge">M.S. Curriculum & Instruction</span>
+    <span class="badge">M.S. Sport Psychology</span>
+    <span class="badge">B.S. Kinesiology</span>
+    <span class="badge">K-8 Educator</span>
+    <span class="badge">Digital Product Builder</span>
+  </div>
+  <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
+    <a href="#portfolio" class="hero-cta">View My Work &#8595;</a>
+    <a href="Kevin_Terranova_Resume.pdf" class="hero-cta" style="background:#fff;color:var(--primary);border:2px solid var(--primary)" download>Download Resume &#128196;</a>
+  </div>
+</header>
+
+<!-- ==================== ABOUT ==================== -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-text">
+        <h3>About Me</h3>
+        <p>I work in learning and performance, with experience designing programs, assessing progress, and developing skills through structured, feedback-driven systems.</p>
+        <p>My background spans education, kinesiology, and applied psychology. I've spent years building learning environments, measuring outcomes, and adjusting programs based on what actually works. I focus on clarity, consistency, and improvement — not theory for theory's sake.</p>
+        <p>In my current role, I design and implement learning programs for K-8 students, evaluate performance using observation and data, and adapt systems to support individuals with different skill levels and needs. I work within real constraints, align goals to outcomes, and translate complex expectations into practical action.</p>
+        <p>I also build digital learning tools — including a FitnessGram assessment tracker used by PE teachers, and interactive curriculum modules grounded in sports psychology research.</p>
+      </div>
+      <div>
+        <h3 style="font-size:22px;font-weight:700;color:var(--primary);margin-bottom:16px">Education</h3>
+        <ul class="credential-list">
+          <li>
+            <span class="icon">&#127891;</span>
+            <div>
+              <div class="degree">M.S. Sport Psychology</div>
+              <div class="school">Capella University | 2025</div>
+              <div style="font-size:13px;color:var(--text-light);margin-top:2px">Performance Motivation | Cognitive Psychology | Behavioral Change | SEL</div>
+            </div>
+          </li>
+          <li>
+            <span class="icon">&#127891;</span>
+            <div>
+              <div class="degree">M.S. Curriculum & Instruction</div>
+              <div class="school">Western Governors University | 2024</div>
+              <div style="font-size:13px;color:var(--text-light);margin-top:2px">Instructional Design | Curriculum Development | Backward Design | Differentiation</div>
+            </div>
+          </li>
+          <li>
+            <span class="icon">&#127891;</span>
+            <div>
+              <div class="degree">B.S. Kinesiology, Health & Physical Education</div>
+              <div class="school">Rockford University | 2022</div>
+              <div style="font-size:13px;color:var(--text-light);margin-top:2px">Exercise Physiology | Functional Movement | Human Anatomy</div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== PORTFOLIO ==================== -->
+<section id="portfolio">
+  <div class="container">
+    <div class="section-header">
+      <h2>Portfolio</h2>
+      <p>Selected projects demonstrating my instructional design process — from needs analysis to measurable outcomes.</p>
+    </div>
+
+    <!-- Featured module CTA -->
+    <div style="background:linear-gradient(135deg,#1e3a5f,#1e40af);border-radius:12px;padding:40px;text-align:center;margin-bottom:32px;color:#fff;box-shadow:var(--shadow-lg)">
+      <div style="font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;opacity:0.7;margin-bottom:8px">Featured Project</div>
+      <h3 style="font-size:24px;font-weight:800;margin-bottom:12px">Confidence Through Structured Goal Setting</h3>
+      <p style="opacity:0.85;max-width:560px;margin:0 auto 24px;font-size:16px">An interactive 5-lesson sports psychology module for grades 6-8. Built with HTML/CSS/JS — no Articulate subscription required.</p>
+      <a href="confidence-goal-setting-module.html" target="_blank" style="display:inline-block;background:var(--accent);color:#1e293b;padding:14px 32px;border-radius:8px;font-size:16px;font-weight:700;text-decoration:none;transition:background 0.2s">Launch the Interactive Module &#8594;</a>
+    </div>
+
+    <div class="portfolio-grid" id="portfolioGrid">
+
+      <!-- PROJECT 1: Interactive Module -->
+      <div class="project-card" onclick="openCase('case1')">
+        <div class="card-banner blue" role="img" aria-label="Interactive module icon">&#129504;</div>
+        <div class="card-body">
+          <div class="card-type">Interactive Learning Module</div>
+          <h3>Confidence Through Structured Goal Setting</h3>
+          <p>A 5-lesson interactive module for grades 6-8 teaching self-efficacy through structured goal setting. Built with HTML/CSS/JS. Standards-aligned and WCAG-accessible.</p>
+          <div class="card-tags">
+            <span class="tag">Sports Psychology</span>
+            <span class="tag">Bandura</span>
+            <span class="tag">Locke & Latham</span>
+            <span class="tag">SEL</span>
+            <span class="tag">SHAPE America</span>
+            <span class="tag">Interactive</span>
+          </div>
+          <span class="card-link">View Case Study &#8594;</span>
+        </div>
+      </div>
+
+      <!-- PROJECT 2: TitanPE -->
+      <div class="project-card" onclick="openCase('case2')">
+        <div class="card-banner green" role="img" aria-label="Digital product icon">&#127939;</div>
+        <div class="card-body">
+          <div class="card-type">Shipped Digital Product</div>
+          <h3>TitanPE — FitnessGram Assessment Tracker</h3>
+          <p>A web-based fitness assessment tracker for K-8 PE teachers. Designed, built, iterated, and shipped to a marketplace of 50,000+ educators.</p>
+          <div class="card-tags">
+            <span class="tag">Product Design</span>
+            <span class="tag">FitnessGram</span>
+            <span class="tag">K-8</span>
+            <span class="tag">Data Tracking</span>
+            <span class="tag">Iteration</span>
+          </div>
+          <span class="card-link">View Case Study &#8594;</span>
+        </div>
+      </div>
+
+      <!-- PROJECT 3: PE Volleyball Unit -->
+      <div class="project-card" onclick="openCase('case3')">
+        <div class="card-banner amber" role="img" aria-label="Curriculum icon">&#127952;</div>
+        <div class="card-body">
+          <div class="card-type">Curriculum Design — ADDIE Process</div>
+          <h3>K-5 Volleyball Unit</h3>
+          <p>A multi-week volleyball unit for K-5 students demonstrating the full ADDIE instructional design process — from needs analysis through evaluation.</p>
+          <div class="card-tags">
+            <span class="tag">ADDIE</span>
+            <span class="tag">Scaffolding</span>
+            <span class="tag">Differentiation</span>
+            <span class="tag">IL Standards</span>
+            <span class="tag">Assessment</span>
+          </div>
+          <span class="card-link">View Case Study &#8594;</span>
+        </div>
+      </div>
+
+      <!-- PROJECT 4: Teacher Training -->
+      <div class="project-card" onclick="openCase('case4')">
+        <div class="card-banner purple" role="img" aria-label="Training icon">&#128218;</div>
+        <div class="card-body">
+          <div class="card-type">Adult Learning / Training Design</div>
+          <h3>FitnessGram Administration Training Guide</h3>
+          <p>A teacher-facing training module on properly administering FitnessGram fitness assessments. Demonstrates design for adult professional learners.</p>
+          <div class="card-tags">
+            <span class="tag">Adult Learning</span>
+            <span class="tag">Training Design</span>
+            <span class="tag">FitnessGram</span>
+            <span class="tag">Decision Tree</span>
+            <span class="tag">Scenario-Based</span>
+          </div>
+          <span class="card-link">View Case Study &#8594;</span>
+        </div>
+      </div>
+
+      <!-- ==================== CASE STUDIES ==================== -->
+
+      <!-- CASE 1 -->
+      <div class="case-study" id="case1">
+        <h3>Case Study: Confidence Through Structured Goal Setting</h3>
+
+        <h4>The Challenge</h4>
+        <p>Middle school PE students often disengage when they perceive themselves as "not athletic." Research in sport psychology — specifically Bandura's Self-Efficacy Theory and Locke & Latham's Goal Setting Theory — suggests that confidence is built through structured success experiences, not innate talent. How do you design a learning experience that teaches students to build their own confidence?</p>
+
+        <h4>Design Process</h4>
+        <div class="process-steps">
+          <div class="process-step"><div class="step-num">A</div><div class="step-label">Analyze</div></div>
+          <div class="process-step"><div class="step-num">D</div><div class="step-label">Design</div></div>
+          <div class="process-step"><div class="step-num">D</div><div class="step-label">Develop</div></div>
+          <div class="process-step"><div class="step-num">I</div><div class="step-label">Implement</div></div>
+          <div class="process-step"><div class="step-num">E</div><div class="step-label">Evaluate</div></div>
+        </div>
+
+        <h4>Analysis</h4>
+        <p><strong>Learner Profile:</strong> Grades 6-8, mixed ability levels, many with low physical self-concept. Students often set vague goals ("get better") or avoid challenge entirely.</p>
+        <p><strong>Needs Assessment:</strong> Students lacked a framework for translating effort into progress. Without measurable targets, they couldn't recognize improvement — leading to disengagement.</p>
+        <p><strong>Standards Alignment:</strong> SHAPE America Standards 4 & 5, CASEL SEL Competencies (Self-Awareness, Self-Management), Illinois State Goals 19, 20, 21.</p>
+
+        <h4>Design Decisions</h4>
+        <ul style="margin:12px 0 12px 24px">
+          <li><strong>Scaffolded 5-lesson structure</strong> — each lesson builds on the previous, moving from understanding confidence to applying it</li>
+          <li><strong>Interactive format</strong> — knowledge checks, reflection prompts, slider activities, scenario-based learning, and a goal-building tool</li>
+          <li><strong>Grounded in research</strong> — Bandura's four sources of self-efficacy, Locke & Latham's goal-setting principles</li>
+          <li><strong>Accessible and responsive</strong> — WCAG 2.1 AA compliance, works on any device</li>
+          <li><strong>Certificate of completion</strong> with a personal Confidence Plan students can print and use</li>
+        </ul>
+
+        <h4>Development</h4>
+        <p>Built as a single-file interactive web application using HTML, CSS, and JavaScript. No external dependencies or subscriptions required. Progress tracking via localStorage. Rise-quality interactions without the $1,399/year price tag.</p>
+
+        <h4>Results</h4>
+        <p>A fully functional, standards-aligned interactive learning module ready for classroom deployment. Demonstrates proficiency in instructional design, learning science, interactive content development, and accessibility compliance.</p>
+
+        <p style="margin-top:20px"><a href="confidence-goal-setting-module.html" class="card-link" style="font-size:16px" target="_blank">Launch the Interactive Module &#8594;</a></p>
+
+        <button class="close-case" onclick="closeCase('case1')">Close Case Study</button>
+      </div>
+
+      <!-- CASE 2 -->
+      <div class="case-study" id="case2">
+        <h3>Case Study: TitanPE — FitnessGram Assessment Tracker</h3>
+
+        <h4>The Challenge</h4>
+        <p>PE teachers administering FitnessGram fitness tests need to score students against age- and gender-specific Healthy Fitness Zone (HFZ) standards, track results across classes, and generate reports. Existing tools were either expensive, complex, or required internet access in a gym with no reliable WiFi.</p>
+
+        <h4>Design Process</h4>
+        <div class="process-steps">
+          <div class="process-step"><div class="step-num">A</div><div class="step-label">Analyze</div></div>
+          <div class="process-step"><div class="step-num">D</div><div class="step-label">Design</div></div>
+          <div class="process-step"><div class="step-num">D</div><div class="step-label">Develop</div></div>
+          <div class="process-step"><div class="step-num">I</div><div class="step-label">Implement</div></div>
+          <div class="process-step"><div class="step-num">E</div><div class="step-label">Evaluate</div></div>
+        </div>
+
+        <h4>Analysis</h4>
+        <p><strong>User Profile:</strong> K-8 PE teachers with limited technology time, often entering scores on a phone or tablet between classes.</p>
+        <p><strong>Needs Assessment:</strong> Teachers need a tool that works offline, auto-calculates HFZ zones, handles multiple classes, and generates printable reports — all without training or setup.</p>
+        <p><strong>Constraints:</strong> Must work on any device, no app install required, zero learning curve.</p>
+
+        <h4>Design Decisions</h4>
+        <ul style="margin:12px 0 12px 24px">
+          <li><strong>Single HTML file</strong> — opens in any browser, works offline, no installation</li>
+          <li><strong>Mobile-first interface</strong> — designed for phone/tablet use in a gym</li>
+          <li><strong>Auto-scoring engine</strong> — built-in FitnessGram HFZ standards by age and gender</li>
+          <li><strong>Quick Entry mode</strong> — rapid score input for class-sized groups</li>
+          <li><strong>Roster import</strong> — paste from spreadsheet to add students instantly</li>
+          <li><strong>Print-ready reports</strong> — individual student reports and class summaries</li>
+        </ul>
+
+        <h4>Iteration</h4>
+        <p><strong>v1.0:</strong> Core scoring and class management. Shipped to Teachers Pay Teachers marketplace.</p>
+        <p><strong>v1.1:</strong> Fixed input sizing, improved Sit & Reach L/R handling, added roster import, optimized Quick Entry for no horizontal scrolling.</p>
+        <p><strong>v1.2 (in development):</strong> Enhanced print reports, student flags and notes, achievement certificates.</p>
+
+        <h4>Results</h4>
+        <p>A real product used by real teachers, available on TPT — a marketplace serving 50,000+ PE educators. Demonstrates full product lifecycle: problem identification, user research, design, development, deployment, iteration based on feedback.</p>
+
+        <button class="close-case" onclick="closeCase('case2')">Close Case Study</button>
+      </div>
+
+      <!-- CASE 3 -->
+      <div class="case-study" id="case3">
+        <h3>Case Study: K-5 Volleyball Unit</h3>
+
+        <h4>The Challenge</h4>
+        <p>Design a multi-week volleyball unit for K-5 students that progresses from zero experience to game play, differentiates across wide ability ranges, and aligns to Illinois State Learning Standards.</p>
+
+        <h4>Design Process</h4>
+        <div class="process-steps">
+          <div class="process-step"><div class="step-num">A</div><div class="step-label">Analyze</div></div>
+          <div class="process-step"><div class="step-num">D</div><div class="step-label">Design</div></div>
+          <div class="process-step"><div class="step-num">D</div><div class="step-label">Develop</div></div>
+          <div class="process-step"><div class="step-num">I</div><div class="step-label">Implement</div></div>
+          <div class="process-step"><div class="step-num">E</div><div class="step-label">Evaluate</div></div>
+        </div>
+
+        <h4>Analysis</h4>
+        <p><strong>Learner Profile:</strong> K-5 students across multiple schools, ages 5-11, wide range of motor development and prior experience.</p>
+        <p><strong>Standards:</strong> IL State Goal 19 (motor skills), Goal 20 (fitness), Goal 21 (teamwork and cooperation).</p>
+
+        <h4>Design — Scaffolded Skill Progression</h4>
+        <ul style="margin:12px 0 12px 24px">
+          <li><strong>Week 1:</strong> Underhand serving — individual wall practice with specific cues (step, hit with heel of hand, follow through)</li>
+          <li><strong>Week 2:</strong> Bumping/Forearm pass — individual drills progressing to partner passing with measurable outcomes</li>
+          <li><strong>Week 3:</strong> Setting/Overhand pass — technique with hoop targets for accuracy measurement</li>
+          <li><strong>Week 4:</strong> Overhand serving — advanced skill with biomechanical cues</li>
+          <li><strong>Week 5:</strong> Modified game play — applying all skills in game situations</li>
+        </ul>
+
+        <h4>Key Instructional Strategies</h4>
+        <ul style="margin:12px 0 12px 24px">
+          <li><strong>Explicit cue-based instruction</strong> — every skill broken into 3-5 observable cues</li>
+          <li><strong>Scaffolded complexity</strong> — individual practice → partner drills → small group → game</li>
+          <li><strong>Differentiation</strong> — beach balls/trainers for developing students, regulation balls for advanced</li>
+          <li><strong>Assessment</strong> — teacher observation against cue performance, student self-assessment, peer feedback</li>
+          <li><strong>SEL integration</strong> — reflection prompts, encouragement protocols, cooperation standards</li>
+          <li><strong>Bellringers</strong> — cognitive warm-ups connecting to lesson content</li>
+        </ul>
+
+        <h4>Results</h4>
+        <p>Delivered across 3 schools, K-5, with documented student progression from individual skill practice to cooperative game play. Unit demonstrates backward design, scaffolded instruction, standards alignment, differentiation, and formative assessment — core instructional design competencies.</p>
+
+        <button class="close-case" onclick="closeCase('case3')">Close Case Study</button>
+      </div>
+
+      <!-- CASE 4 -->
+      <div class="case-study" id="case4">
+        <h3>Case Study: FitnessGram Administration Training Guide</h3>
+
+        <h4>The Challenge</h4>
+        <p>New PE teachers and substitute instructors often administer FitnessGram tests incorrectly — inconsistent protocols lead to unreliable data. Design a training resource that ensures any teacher can administer tests correctly without one-on-one coaching.</p>
+
+        <h4>Design Process</h4>
+        <div class="process-steps">
+          <div class="process-step"><div class="step-num">A</div><div class="step-label">Analyze</div></div>
+          <div class="process-step"><div class="step-num">D</div><div class="step-label">Design</div></div>
+          <div class="process-step"><div class="step-num">D</div><div class="step-label">Develop</div></div>
+          <div class="process-step"><div class="step-num">I</div><div class="step-label">Implement</div></div>
+          <div class="process-step"><div class="step-num">E</div><div class="step-label">Evaluate</div></div>
+        </div>
+
+        <h4>Analysis</h4>
+        <p><strong>Learner Profile:</strong> Adult professional learners — PE teachers, substitutes, paraprofessionals. Varying levels of FitnessGram familiarity. Need quick-reference format, not a manual.</p>
+        <p><strong>Key Problems:</strong> Inconsistent test administration (especially PACER and Curl-Up cadence), incorrect scoring, confusion about age/gender HFZ thresholds.</p>
+
+        <h4>Design Approach</h4>
+        <ul style="margin:12px 0 12px 24px">
+          <li><strong>Scenario-based learning</strong> — "A student reaches the line late on the PACER beep. What do you do?"</li>
+          <li><strong>Quick-reference decision trees</strong> — for common judgment calls during testing</li>
+          <li><strong>Visual protocols</strong> — step-by-step with correct form illustrations</li>
+          <li><strong>Common mistakes section</strong> — what teachers get wrong most often and how to fix it</li>
+          <li><strong>Self-check quiz</strong> — verify understanding before administering tests</li>
+        </ul>
+
+        <h4>Results</h4>
+        <p>Demonstrates ability to design training materials for adult professional learners — a core requirement for corporate and K-12 instructional design roles. Combines domain expertise with learning design principles.</p>
+
+        <button class="close-case" onclick="closeCase('case4')">Close Case Study</button>
+      </div>
+
+    </div><!-- /portfolio-grid -->
+  </div>
+</section>
+
+<!-- ==================== SKILLS ==================== -->
+<section id="skills">
+  <div class="container">
+    <div class="section-header">
+      <h2>Skills & Tools</h2>
+      <p>Instructional design methodologies, learning technologies, and professional competencies.</p>
+    </div>
+
+    <div class="skills-grid">
+      <div class="skill-category">
+        <h3>Design & Methodology</h3>
+        <ul class="skill-list">
+          <li>ADDIE Model</li>
+          <li>SAM (Iterative Design)</li>
+          <li>Backward Design (Wiggins & McTighe)</li>
+          <li>Bloom's Taxonomy</li>
+          <li>Universal Design for Learning (UDL)</li>
+          <li>Differentiated Instruction</li>
+          <li>Scaffolded Learning Design</li>
+          <li>Standards Alignment (SHAPE, SEL, IL)</li>
+          <li>Assessment Design & Rubrics</li>
+        </ul>
+      </div>
+      <div class="skill-category">
+        <h3>Technology & Platforms</h3>
+        <ul class="skill-list">
+          <li>Google Classroom</li>
+          <li>Schoology</li>
+          <li>Panorama Education</li>
+          <li>Unified Talent</li>
+          <li>TAC (TeachPoint)</li>
+          <li>Perform (Evaluation Platform)</li>
+          <li>Canva</li>
+          <li>Kahoot / Quizizz</li>
+          <li>Google Forms</li>
+          <li>FitnessGram / PE Metrics</li>
+          <li>HTML / CSS / JavaScript</li>
+          <li>CapCut</li>
+        </ul>
+      </div>
+      <div class="skill-category">
+        <h3>Learning Science</h3>
+        <ul class="skill-list">
+          <li>Self-Efficacy Theory (Bandura)</li>
+          <li>Goal Setting Theory (Locke & Latham)</li>
+          <li>Social-Emotional Learning (CASEL)</li>
+          <li>Applied Behavior Analysis</li>
+          <li>Cognitive Load Theory</li>
+          <li>Performance Motivation</li>
+          <li>Behavioral Change Strategies</li>
+          <li>Data-Driven Instruction</li>
+          <li>Formative & Summative Assessment</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ==================== CONTACT ==================== -->
+<section id="contact">
+  <div class="container">
+    <div class="section-header">
+      <h2>Get In Touch</h2>
+      <p>Open to remote Instructional Design and Curriculum Development opportunities.</p>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-item">
+        <div class="icon">&#9993;</div>
+        <h3>Email</h3>
+        <p><a href="mailto:titan811@gmail.com">titan811@gmail.com</a></p>
+      </div>
+      <div class="contact-item">
+        <div class="icon">&#128100;</div>
+        <h3>LinkedIn</h3>
+        <p><a href="https://linkedin.com/in/kevin-terranova-b40903223" target="_blank">kevin-terranova</a></p>
+      </div>
+      <div class="contact-item">
+        <div class="icon">&#128222;</div>
+        <h3>Phone</h3>
+        <p>815-871-1653</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="footer">
+  <p>&copy; 2026 Kevin Terranova. All rights reserved. | Instructional Designer & Curriculum Developer</p>
+</footer>
+
+<script>
+function openCase(id) {
+  // Close all first
+  document.querySelectorAll('.case-study').forEach(c => c.classList.remove('open'));
+  const el = document.getElementById(id);
+  el.classList.add('open');
+  setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+}
+
+function closeCase(id) {
+  document.getElementById(id).classList.remove('open');
+}
+</script>
+</body>
+</html>

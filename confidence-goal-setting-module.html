@@ -1,0 +1,1951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Confidence Through Structured Goal Setting | Interactive Learning Module</title>
+<style>
+/* ============================================
+   RESET & BASE
+   ============================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --primary: #1e40af;
+  --primary-light: #3b82f6;
+  --primary-bg: #eff6ff;
+  --accent: #f59e0b;
+  --accent-hover: #d97706;
+  --success: #10b981;
+  --success-bg: #ecfdf5;
+  --error: #ef4444;
+  --error-bg: #fef2f2;
+  --text: #1e293b;
+  --text-light: #64748b;
+  --bg: #ffffff;
+  --bg-alt: #f8fafc;
+  --border: #e2e8f0;
+  --shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+  --radius: 8px;
+  --sidebar-w: 280px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  color: var(--text);
+  background: var(--bg-alt);
+  line-height: 1.6;
+  font-size: 16px;
+}
+
+/* ============================================
+   LAYOUT — Sidebar + Main
+   ============================================ */
+.app { display: flex; min-height: 100vh; }
+
+/* SIDEBAR */
+.sidebar {
+  width: var(--sidebar-w);
+  background: var(--primary);
+  color: #fff;
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  transition: transform 0.3s ease;
+}
+
+.sidebar-header {
+  padding: 24px 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.15);
+}
+
+.sidebar-header h1 {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1.4;
+}
+
+.sidebar-header .subtitle {
+  font-size: 12px;
+  opacity: 0.7;
+  margin-top: 4px;
+}
+
+.sidebar-nav {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px 0;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 20px;
+  cursor: pointer;
+  transition: background 0.2s;
+  font-size: 14px;
+  border: none;
+  background: none;
+  color: #fff;
+  width: 100%;
+  text-align: left;
+}
+
+.nav-item:hover { background: rgba(255,255,255,0.1); }
+.nav-item.active { background: rgba(255,255,255,0.2); font-weight: 600; }
+.nav-item.completed .nav-circle { background: var(--success); border-color: var(--success); }
+.nav-item.completed .nav-circle::after { content: '\2713'; font-size: 11px; }
+
+.nav-circle {
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.5);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700;
+  flex-shrink: 0;
+}
+
+.nav-item.active .nav-circle { border-color: var(--accent); background: var(--accent); color: var(--primary); }
+
+.sidebar-footer {
+  padding: 16px 20px;
+  border-top: 1px solid rgba(255,255,255,0.15);
+  font-size: 12px;
+  opacity: 0.6;
+  text-align: center;
+}
+
+/* MOBILE HAMBURGER */
+.hamburger {
+  display: none;
+  position: fixed;
+  top: 12px; left: 12px;
+  z-index: 200;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  width: 44px; height: 44px;
+  font-size: 22px;
+  cursor: pointer;
+  box-shadow: var(--shadow-lg);
+}
+
+.overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 90;
+}
+
+/* MAIN CONTENT */
+.main {
+  flex: 1;
+  margin-left: var(--sidebar-w);
+  display: flex;
+  flex-direction: column;
+}
+
+/* PROGRESS BAR */
+.progress-bar-container {
+  position: sticky;
+  top: 0;
+  background: var(--bg);
+  padding: 0;
+  z-index: 50;
+  border-bottom: 1px solid var(--border);
+}
+
+.progress-bar {
+  height: 4px;
+  background: var(--border);
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-light), var(--accent));
+  transition: width 0.5s ease;
+  width: 0%;
+}
+
+.progress-text {
+  padding: 8px 32px;
+  font-size: 13px;
+  color: var(--text-light);
+  display: flex;
+  justify-content: space-between;
+}
+
+/* CONTENT AREA */
+.content {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 40px 32px 80px;
+  width: 100%;
+}
+
+/* ============================================
+   CONTENT BLOCKS — Rise-style
+   ============================================ */
+.lesson-header {
+  margin-bottom: 40px;
+}
+
+.lesson-tag {
+  display: inline-block;
+  background: var(--primary-bg);
+  color: var(--primary);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-bottom: 12px;
+}
+
+.lesson-header h2 {
+  font-size: 32px;
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 12px;
+}
+
+.lesson-header .lead {
+  font-size: 18px;
+  color: var(--text-light);
+  line-height: 1.6;
+}
+
+/* Text block */
+.block {
+  margin-bottom: 32px;
+}
+
+.block h3 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: var(--primary);
+}
+
+.block p {
+  margin-bottom: 12px;
+  line-height: 1.7;
+}
+
+.block ul, .block ol {
+  margin: 12px 0 12px 24px;
+  line-height: 1.7;
+}
+
+.block li { margin-bottom: 6px; }
+
+/* Card block */
+.card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: var(--shadow);
+}
+
+/* Highlight / callout */
+.callout {
+  background: var(--primary-bg);
+  border-left: 4px solid var(--primary);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  padding: 20px 24px;
+  margin-bottom: 24px;
+}
+
+.callout.success {
+  background: var(--success-bg);
+  border-left-color: var(--success);
+}
+
+.callout.warning {
+  background: #fffbeb;
+  border-left-color: var(--accent);
+}
+
+.callout h4 {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+/* Key concept */
+.key-concept {
+  background: linear-gradient(135deg, var(--primary-bg), #dbeafe);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.key-concept .icon { font-size: 32px; margin-bottom: 8px; }
+.key-concept p { font-size: 18px; font-weight: 600; color: var(--primary); }
+
+/* Divider */
+.divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 40px 0;
+}
+
+/* ============================================
+   INTERACTIVE ELEMENTS
+   ============================================ */
+
+/* Accordion */
+.accordion-item {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 8px;
+  overflow: hidden;
+}
+
+.accordion-btn {
+  width: 100%;
+  background: var(--bg);
+  border: none;
+  padding: 16px 20px;
+  font-size: 15px;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background 0.2s;
+}
+
+.accordion-btn:hover { background: var(--bg-alt); }
+.accordion-btn .arrow { transition: transform 0.3s; font-size: 13px; }
+.accordion-btn.open .arrow { transform: rotate(180deg); }
+
+.accordion-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  padding: 0 20px;
+}
+
+.accordion-content.open {
+  max-height: 600px;
+  padding: 0 20px 16px;
+}
+
+/* Tabs */
+.tabs {
+  margin-bottom: 24px;
+}
+
+.tab-buttons {
+  display: flex;
+  border-bottom: 2px solid var(--border);
+  margin-bottom: 20px;
+  gap: 0;
+  overflow-x: auto;
+}
+
+.tab-btn {
+  padding: 12px 20px;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-light);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+
+.tab-btn:hover { color: var(--primary); }
+.tab-btn.active { color: var(--primary); border-bottom-color: var(--primary); }
+
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+/* Slider / Rating */
+.slider-group {
+  margin-bottom: 20px;
+}
+
+.slider-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 8px;
+  font-size: 15px;
+}
+
+.slider-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.slider-row input[type="range"] {
+  flex: 1;
+  accent-color: var(--primary);
+  height: 6px;
+}
+
+.slider-value {
+  background: var(--primary);
+  color: #fff;
+  border-radius: 20px;
+  padding: 2px 10px;
+  font-size: 13px;
+  font-weight: 700;
+  min-width: 36px;
+  text-align: center;
+}
+
+/* Matching / Drag */
+.match-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.match-column h4 {
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-light);
+  margin-bottom: 12px;
+}
+
+.match-item, .drop-zone {
+  padding: 12px 16px;
+  border-radius: var(--radius);
+  font-size: 14px;
+  cursor: grab;
+  transition: all 0.2s;
+}
+
+.match-item {
+  background: var(--primary-bg);
+  border: 2px solid var(--primary-light);
+  color: var(--primary);
+  font-weight: 500;
+  margin-bottom: 8px;
+  user-select: none;
+}
+
+.match-item:active { cursor: grabbing; opacity: 0.8; }
+.match-item.placed { opacity: 0.4; pointer-events: none; }
+
+.drop-zone {
+  background: var(--bg-alt);
+  border: 2px dashed var(--border);
+  min-height: 44px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+}
+
+.drop-zone.hover { border-color: var(--primary); background: var(--primary-bg); }
+.drop-zone.correct { border-color: var(--success); background: var(--success-bg); border-style: solid; }
+.drop-zone.incorrect { border-color: var(--error); background: var(--error-bg); border-style: solid; }
+
+.drop-zone .label {
+  font-size: 13px;
+  color: var(--text-light);
+  font-style: italic;
+}
+
+/* Knowledge Check */
+.quiz {
+  background: var(--bg);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px;
+  margin-bottom: 24px;
+}
+
+.quiz h4 {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.quiz h4::before {
+  content: '?';
+  background: var(--accent);
+  color: #fff;
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 800;
+  flex-shrink: 0;
+}
+
+.quiz-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 15px;
+}
+
+.quiz-option:hover { border-color: var(--primary-light); background: var(--primary-bg); }
+.quiz-option.selected { border-color: var(--primary); background: var(--primary-bg); font-weight: 500; }
+.quiz-option.correct { border-color: var(--success); background: var(--success-bg); }
+.quiz-option.incorrect { border-color: var(--error); background: var(--error-bg); }
+
+.quiz-option .letter {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 700;
+  flex-shrink: 0;
+}
+
+.quiz-option.selected .letter { background: var(--primary); color: #fff; border-color: var(--primary); }
+.quiz-option.correct .letter { background: var(--success); color: #fff; border-color: var(--success); }
+.quiz-option.incorrect .letter { background: var(--error); color: #fff; border-color: var(--error); }
+
+.quiz-feedback {
+  display: none;
+  padding: 12px 16px;
+  border-radius: var(--radius);
+  margin-top: 12px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.quiz-feedback.correct { display: block; background: var(--success-bg); color: #065f46; }
+.quiz-feedback.incorrect { display: block; background: var(--error-bg); color: #991b1b; }
+
+.quiz-submit {
+  margin-top: 12px;
+  padding: 10px 24px;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.quiz-submit:hover { background: var(--primary-light); }
+.quiz-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* Reflection box */
+.reflection {
+  background: #fefce8;
+  border: 2px solid #fde68a;
+  border-radius: var(--radius);
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.reflection h4 {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: #92400e;
+}
+
+.reflection textarea {
+  width: 100%;
+  min-height: 80px;
+  border: 1px solid #fde68a;
+  border-radius: var(--radius);
+  padding: 12px;
+  font-family: inherit;
+  font-size: 14px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.reflection textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(245,158,11,0.15);
+}
+
+/* Scenario */
+.scenario {
+  background: var(--bg);
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  margin-bottom: 24px;
+  box-shadow: var(--shadow);
+}
+
+.scenario-header {
+  background: var(--primary);
+  color: #fff;
+  padding: 16px 24px;
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.scenario-body {
+  padding: 24px;
+}
+
+.scenario-body .character {
+  font-style: italic;
+  color: var(--text-light);
+  margin-bottom: 12px;
+}
+
+/* Reframe exercise */
+.reframe-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding: 16px;
+  background: var(--bg-alt);
+  border-radius: var(--radius);
+}
+
+.reframe-item .negative {
+  background: var(--error-bg);
+  color: #991b1b;
+  padding: 8px 14px;
+  border-radius: var(--radius);
+  font-weight: 600;
+  font-size: 14px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.reframe-item .arrow-icon { font-size: 20px; color: var(--text-light); flex-shrink: 0; padding-top: 4px; }
+
+.reframe-item input {
+  flex: 1;
+  padding: 8px 12px;
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 14px;
+  font-family: inherit;
+}
+
+.reframe-item input:focus {
+  outline: none;
+  border-color: var(--success);
+  box-shadow: 0 0 0 3px rgba(16,185,129,0.15);
+}
+
+.reframe-item .hint {
+  font-size: 12px;
+  color: var(--text-light);
+  margin-top: 4px;
+}
+
+/* Sequence builder */
+.sequence-list {
+  list-style: none;
+  margin-bottom: 24px;
+}
+
+.sequence-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: var(--bg);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 8px;
+  cursor: grab;
+  user-select: none;
+  transition: all 0.2s;
+}
+
+.sequence-item:active { cursor: grabbing; box-shadow: var(--shadow-lg); }
+
+.sequence-num {
+  width: 28px; height: 28px;
+  background: var(--primary-bg);
+  color: var(--primary);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 700;
+  flex-shrink: 0;
+}
+
+.sequence-item.correct { border-color: var(--success); }
+.sequence-item.correct .sequence-num { background: var(--success-bg); color: #065f46; }
+
+/* Steps / Process */
+.steps {
+  position: relative;
+  padding-left: 32px;
+  margin-bottom: 24px;
+}
+
+.steps::before {
+  content: '';
+  position: absolute;
+  left: 11px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--border);
+}
+
+.step {
+  position: relative;
+  padding-bottom: 24px;
+}
+
+.step::before {
+  content: '';
+  position: absolute;
+  left: -32px;
+  top: 4px;
+  width: 24px; height: 24px;
+  background: var(--primary);
+  border-radius: 50%;
+  border: 3px solid var(--bg);
+  box-shadow: 0 0 0 2px var(--primary);
+}
+
+.step h4 { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+.step p { font-size: 14px; color: var(--text-light); }
+
+/* Navigation buttons */
+.nav-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 48px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+
+.btn {
+  padding: 12px 28px;
+  border-radius: var(--radius);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-primary { background: var(--primary); color: #fff; }
+.btn-primary:hover { background: var(--primary-light); }
+.btn-secondary { background: var(--bg); color: var(--text); border: 2px solid var(--border); }
+.btn-secondary:hover { border-color: var(--primary); color: var(--primary); }
+.btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* Confidence plan builder */
+.plan-builder {
+  background: var(--bg);
+  border: 2px solid var(--primary);
+  border-radius: var(--radius);
+  padding: 28px;
+  margin-bottom: 24px;
+}
+
+.plan-builder h3 {
+  text-align: center;
+  color: var(--primary);
+  margin-bottom: 20px;
+}
+
+.plan-field {
+  margin-bottom: 16px;
+}
+
+.plan-field label {
+  display: block;
+  font-weight: 700;
+  font-size: 14px;
+  margin-bottom: 6px;
+  color: var(--primary);
+}
+
+.plan-field input, .plan-field textarea {
+  width: 100%;
+  padding: 10px 14px;
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  font-family: inherit;
+  font-size: 14px;
+}
+
+.plan-field input:focus, .plan-field textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(30,64,175,0.1);
+}
+
+/* Certificate */
+.certificate {
+  background: linear-gradient(135deg, #1e3a5f, #1e40af);
+  color: #fff;
+  border-radius: 12px;
+  padding: 48px 40px;
+  text-align: center;
+  margin: 40px 0;
+  box-shadow: var(--shadow-lg);
+  position: relative;
+  overflow: hidden;
+}
+
+.certificate::before {
+  content: '';
+  position: absolute;
+  top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
+}
+
+.certificate .cert-badge {
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+
+.certificate h2 {
+  font-size: 28px;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+.certificate .cert-subtitle {
+  font-size: 16px;
+  opacity: 0.8;
+  margin-bottom: 24px;
+}
+
+.certificate .cert-name {
+  font-size: 24px;
+  font-weight: 700;
+  border-bottom: 2px solid rgba(255,255,255,0.3);
+  padding-bottom: 8px;
+  margin-bottom: 24px;
+  display: inline-block;
+  min-width: 240px;
+}
+
+.certificate .cert-footer {
+  font-size: 13px;
+  opacity: 0.6;
+}
+
+/* Standards tag */
+.standards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 24px;
+}
+
+.standard-tag {
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 12px;
+  color: var(--text-light);
+  font-weight: 500;
+}
+
+/* Lesson section (page) visibility */
+.lesson { display: none; }
+.lesson.active { display: block; }
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 768px) {
+  .sidebar { transform: translateX(-100%); }
+  .sidebar.open { transform: translateX(0); }
+  .hamburger { display: flex; align-items: center; justify-content: center; }
+  .overlay.open { display: block; }
+  .main { margin-left: 0; }
+  .content { padding: 24px 16px 80px; }
+  .lesson-header h2 { font-size: 24px; }
+  .match-container { grid-template-columns: 1fr; }
+  .reframe-item { flex-direction: column; }
+  .reframe-item .negative { white-space: normal; }
+  .nav-buttons { flex-direction: column; gap: 12px; }
+  .nav-buttons .btn { justify-content: center; }
+  .certificate { padding: 32px 20px; }
+  .certificate h2 { font-size: 22px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Mobile hamburger -->
+<button class="hamburger" onclick="toggleSidebar()" aria-label="Open navigation">&#9776;</button>
+<div class="overlay" onclick="toggleSidebar()"></div>
+
+<div class="app">
+  <!-- ==================== SIDEBAR ==================== -->
+  <aside class="sidebar" role="navigation" aria-label="Module navigation">
+    <div class="sidebar-header">
+      <h1>Confidence Through Structured Goal Setting</h1>
+      <div class="subtitle">Grades 6-8 | Sports Psychology</div>
+    </div>
+    <nav class="sidebar-nav" id="sidebarNav">
+      <button class="nav-item active" onclick="goToLesson(-1)">
+        <span class="nav-circle" style="font-size:14px">&#9776;</span>
+        <span>Module Overview</span>
+      </button>
+      <button class="nav-item" onclick="goToLesson(0)">
+        <span class="nav-circle">1</span>
+        <span>The Confidence Question</span>
+      </button>
+      <button class="nav-item" onclick="goToLesson(1)">
+        <span class="nav-circle">2</span>
+        <span>Goals That Actually Work</span>
+      </button>
+      <button class="nav-item" onclick="goToLesson(2)">
+        <span class="nav-circle">3</span>
+        <span>The Power of Small Wins</span>
+      </button>
+      <button class="nav-item" onclick="goToLesson(3)">
+        <span class="nav-circle">4</span>
+        <span>When Things Don't Go As Planned</span>
+      </button>
+      <button class="nav-item" onclick="goToLesson(4)">
+        <span class="nav-circle">5</span>
+        <span>Your Confidence Cycle</span>
+      </button>
+    </nav>
+    <div class="sidebar-footer">
+      Designed by Kevin Terranova, M.S.<br>
+      Curriculum &amp; Instruction | Sport Psychology
+    </div>
+  </aside>
+
+  <!-- ==================== MAIN ==================== -->
+  <div class="main">
+    <!-- Progress bar -->
+    <div class="progress-bar-container">
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+      <div class="progress-text">
+        <span id="progressLabel">Lesson 1 of 5</span>
+        <span id="progressPct">0% Complete</span>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <!-- ==================== MODULE INTRO ==================== -->
+      <div class="lesson active" id="lessonIntro">
+        <div class="lesson-header">
+          <span class="lesson-tag">Module Overview</span>
+          <h2>Confidence Through Structured Goal Setting</h2>
+          <p class="lead">A 5-lesson interactive module for grades 6-8 exploring how structured goal setting builds lasting confidence — in PE, in school, and in life.</p>
+        </div>
+
+        <div class="standards">
+          <span class="standard-tag">SHAPE America Standards 4 & 5</span>
+          <span class="standard-tag">CASEL SEL Framework</span>
+          <span class="standard-tag">IL State Goals 19, 20, 21</span>
+          <span class="standard-tag">Grades 6-8</span>
+        </div>
+
+        <div class="callout">
+          <h4>By the end of this module, you will be able to:</h4>
+          <ul style="margin:12px 0 0 20px;line-height:2">
+            <li>Define <strong>self-efficacy</strong> and identify the four sources of confidence (Bandura)</li>
+            <li>Create <strong>structured goals</strong> that are specific, measurable, achievable, relevant, and time-bound</li>
+            <li>Apply <strong>scaffolding</strong> to break big goals into small, achievable steps that build momentum</li>
+            <li>Use <strong>productive self-talk</strong> to reframe setbacks as feedback, not failure</li>
+            <li>Build a personal <strong>Confidence Cycle</strong> plan you can apply immediately</li>
+          </ul>
+        </div>
+
+        <div class="block">
+          <h3>What You'll Experience</h3>
+          <p>This isn't a lecture. Each lesson includes interactive activities, real scenarios, reflection prompts, and knowledge checks. You'll build a personal Confidence Plan as you go and earn a certificate of completion at the end.</p>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:32px">
+          <div class="card" style="text-align:center;padding:16px 8px">
+            <div style="font-size:24px;margin-bottom:6px">&#128161;</div>
+            <div style="font-size:12px;font-weight:700">Lesson 1</div>
+            <div style="font-size:11px;color:var(--text-light)">The Confidence Question</div>
+          </div>
+          <div class="card" style="text-align:center;padding:16px 8px">
+            <div style="font-size:24px;margin-bottom:6px">&#127919;</div>
+            <div style="font-size:12px;font-weight:700">Lesson 2</div>
+            <div style="font-size:11px;color:var(--text-light)">Goals That Actually Work</div>
+          </div>
+          <div class="card" style="text-align:center;padding:16px 8px">
+            <div style="font-size:24px;margin-bottom:6px">&#127947;</div>
+            <div style="font-size:12px;font-weight:700">Lesson 3</div>
+            <div style="font-size:11px;color:var(--text-light)">The Power of Small Wins</div>
+          </div>
+          <div class="card" style="text-align:center;padding:16px 8px">
+            <div style="font-size:24px;margin-bottom:6px">&#128170;</div>
+            <div style="font-size:12px;font-weight:700">Lesson 4</div>
+            <div style="font-size:11px;color:var(--text-light)">When Things Don't Go As Planned</div>
+          </div>
+          <div class="card" style="text-align:center;padding:16px 8px">
+            <div style="font-size:24px;margin-bottom:6px">&#11088;</div>
+            <div style="font-size:12px;font-weight:700">Lesson 5</div>
+            <div style="font-size:11px;color:var(--text-light)">Your Confidence Cycle</div>
+          </div>
+        </div>
+
+        <div class="key-concept">
+          <div class="icon">&#127891;</div>
+          <p>Designed by Kevin Terranova, M.S.<br>Curriculum & Instruction | Sport Psychology</p>
+        </div>
+
+        <div class="nav-buttons">
+          <div></div>
+          <button class="btn btn-primary" onclick="nextLesson()">Begin Lesson 1: The Confidence Question &#8594;</button>
+        </div>
+      </div>
+
+      <!-- ==================== LESSON 1 ==================== -->
+      <div class="lesson" id="lesson0">
+        <div class="lesson-header">
+          <span class="lesson-tag">Lesson 1</span>
+          <h2>The Confidence Question</h2>
+          <p class="lead">What is confidence, where does it come from, and why do some people seem to have more of it than others?</p>
+        </div>
+
+        <div class="standards">
+          <span class="standard-tag">SHAPE America Standard 5</span>
+          <span class="standard-tag">SEL: Self-Awareness</span>
+          <span class="standard-tag">IL Goal 19</span>
+        </div>
+
+        <div class="block">
+          <h3>Think About This</h3>
+          <p>Picture two students in PE class. The teacher introduces a new skill — let's say dribbling a basketball with their non-dominant hand.</p>
+          <p><strong>Student A</strong> tries it right away, messes up a few times, laughs it off, and keeps practicing. By the end of class, they're getting the hang of it.</p>
+          <p><strong>Student B</strong> watches everyone else first, tries once, loses control of the ball, and says "I can't do this." They stop trying.</p>
+          <p>Same skill. Same teacher. Same class. What's different?</p>
+        </div>
+
+        <div class="callout">
+          <h4>The answer isn't talent. It's confidence.</h4>
+          <p>Specifically, it's something psychologists call <strong>self-efficacy</strong> — your belief in your ability to succeed at a specific task. And here's the most important thing about it: <em>confidence isn't something you're born with. It's built.</em></p>
+        </div>
+
+        <div class="block">
+          <h3>The Four Sources of Confidence</h3>
+          <p>Psychologist Albert Bandura identified four ways people build (or lose) confidence:</p>
+        </div>
+
+        <!-- Accordion: 4 sources -->
+        <div class="accordion-item">
+          <button class="accordion-btn" onclick="toggleAccordion(this)">
+            <span>1. Mastery Experiences — "I did it before, I can do it again"</span>
+            <span class="arrow">&#9660;</span>
+          </button>
+          <div class="accordion-content">
+            <p>The single strongest source of confidence. When you successfully complete a challenge, your brain records it as evidence that you're capable. The more small wins you stack, the more you believe in yourself.</p>
+            <p><strong>PE Example:</strong> A student who makes 3 out of 5 free throws starts to believe they can actually shoot. That belief makes them try harder, practice more, and improve faster.</p>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-btn" onclick="toggleAccordion(this)">
+            <span>2. Vicarious Experience — "If they can do it, maybe I can too"</span>
+            <span class="arrow">&#9660;</span>
+          </button>
+          <div class="accordion-content">
+            <p>Watching someone similar to you succeed gives you evidence that it's possible. This is why seeing a classmate (not just the star athlete) nail a skill is so powerful.</p>
+            <p><strong>PE Example:</strong> A student who thinks they "can't serve" watches another kid who used to struggle land three serves in a row. Suddenly it feels possible.</p>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-btn" onclick="toggleAccordion(this)">
+            <span>3. Verbal Persuasion — "Someone I trust believes in me"</span>
+            <span class="arrow">&#9660;</span>
+          </button>
+          <div class="accordion-content">
+            <p>Encouragement from a coach, teacher, or peer can boost confidence — but only if it's specific and genuine. "Good job" means less than "Your follow-through was way better that time."</p>
+            <p><strong>PE Example:</strong> A teacher says "You kept your eyes up while dribbling — that's exactly what we practiced." The student now knows specifically what they did right.</p>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-btn" onclick="toggleAccordion(this)">
+            <span>4. Emotional State — "How I feel affects what I believe"</span>
+            <span class="arrow">&#9660;</span>
+          </button>
+          <div class="accordion-content">
+            <p>Anxiety, stress, and frustration can tank confidence. A calm, focused, positive emotional state helps you believe you can succeed. This is why warm-ups and positive environments matter.</p>
+            <p><strong>PE Example:</strong> A student who feels nervous about being watched during a fitness test performs worse than they do in practice. Their body is telling their brain "this is dangerous," even though it isn't.</p>
+          </div>
+        </div>
+
+        <hr class="divider">
+
+        <div class="block">
+          <h3>Check Your Own Confidence</h3>
+          <p>Rate how confident you feel in each of these areas. There are no right or wrong answers — this is just for you.</p>
+        </div>
+
+        <div class="card" id="confidenceRating">
+          <div class="slider-group">
+            <label>Trying a new sport or physical skill</label>
+            <div class="slider-row">
+              <span style="font-size:13px;color:var(--text-light)">Not at all</span>
+              <input type="range" min="1" max="10" value="5" oninput="this.nextElementSibling.textContent=this.value">
+              <span class="slider-value">5</span>
+              <span style="font-size:13px;color:var(--text-light)">Very</span>
+            </div>
+          </div>
+          <div class="slider-group">
+            <label>Performing in front of classmates</label>
+            <div class="slider-row">
+              <span style="font-size:13px;color:var(--text-light)">Not at all</span>
+              <input type="range" min="1" max="10" value="5" oninput="this.nextElementSibling.textContent=this.value">
+              <span class="slider-value">5</span>
+              <span style="font-size:13px;color:var(--text-light)">Very</span>
+            </div>
+          </div>
+          <div class="slider-group">
+            <label>Bouncing back after making a mistake</label>
+            <div class="slider-row">
+              <span style="font-size:13px;color:var(--text-light)">Not at all</span>
+              <input type="range" min="1" max="10" value="5" oninput="this.nextElementSibling.textContent=this.value">
+              <span class="slider-value">5</span>
+              <span style="font-size:13px;color:var(--text-light)">Very</span>
+            </div>
+          </div>
+          <div class="slider-group">
+            <label>Setting a goal and working toward it</label>
+            <div class="slider-row">
+              <span style="font-size:13px;color:var(--text-light)">Not at all</span>
+              <input type="range" min="1" max="10" value="5" oninput="this.nextElementSibling.textContent=this.value">
+              <span class="slider-value">5</span>
+              <span style="font-size:13px;color:var(--text-light)">Very</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="reflection">
+          <h4>Reflect</h4>
+          <p style="margin-bottom:10px;font-size:14px;">Think about a time you felt really confident about something. What happened right before that feeling? What caused it?</p>
+          <textarea placeholder="Write your reflection here..." aria-label="Reflection on confidence"></textarea>
+        </div>
+
+        <hr class="divider">
+
+        <!-- Knowledge Check -->
+        <div class="quiz" id="quiz1">
+          <h4>Knowledge Check</h4>
+          <p style="margin-bottom:16px">According to Bandura, what is the <strong>strongest</strong> source of self-efficacy (confidence)?</p>
+          <div class="quiz-option" onclick="selectOption(this)">
+            <span class="letter">A</span>
+            <span>Having a coach tell you that you're good</span>
+          </div>
+          <div class="quiz-option" data-correct="true" onclick="selectOption(this)">
+            <span class="letter">B</span>
+            <span>Successfully completing a challenge yourself</span>
+          </div>
+          <div class="quiz-option" onclick="selectOption(this)">
+            <span class="letter">C</span>
+            <span>Watching a professional athlete succeed</span>
+          </div>
+          <div class="quiz-option" onclick="selectOption(this)">
+            <span class="letter">D</span>
+            <span>Feeling calm and relaxed</span>
+          </div>
+          <button class="quiz-submit" onclick="checkQuiz(this)" disabled>Check Answer</button>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="key-concept">
+          <div class="icon">&#128161;</div>
+          <p>Confidence isn't something you're born with.<br>It's built through experience — one small win at a time.</p>
+        </div>
+
+        <div class="nav-buttons">
+          <div></div>
+          <button class="btn btn-primary" onclick="nextLesson()">Next: Goals That Actually Work &#8594;</button>
+        </div>
+      </div>
+
+      <!-- ==================== LESSON 2 ==================== -->
+      <div class="lesson" id="lesson1">
+        <div class="lesson-header">
+          <span class="lesson-tag">Lesson 2</span>
+          <h2>Goals That Actually Work</h2>
+          <p class="lead">Most goals fail — not because people are lazy, but because the goal itself was broken from the start.</p>
+        </div>
+
+        <div class="standards">
+          <span class="standard-tag">SHAPE America Standard 4</span>
+          <span class="standard-tag">SEL: Self-Management</span>
+          <span class="standard-tag">IL Goal 20</span>
+        </div>
+
+        <div class="block">
+          <h3>The Problem With Most Goals</h3>
+          <p>How many times have you heard (or said) something like this?</p>
+          <ul>
+            <li>"I want to get better at basketball."</li>
+            <li>"I'm going to run faster."</li>
+            <li>"I want to be more fit."</li>
+          </ul>
+          <p>These <em>feel</em> like goals, but they're really just wishes. There's no target. No way to know if you've actually made progress. And when you can't measure progress, you can't experience the small wins that build confidence.</p>
+        </div>
+
+        <div class="callout warning">
+          <h4>Wish vs. Goal</h4>
+          <p>A <strong>wish</strong> is something you hope happens. A <strong>goal</strong> is something you can plan for, measure, and achieve. The difference between them is structure.</p>
+        </div>
+
+        <div class="block">
+          <h3>What Makes a Goal Work?</h3>
+          <p>Researchers Edwin Locke and Gary Latham spent decades studying goal setting. They found that goals work best when they are:</p>
+        </div>
+
+        <!-- Tabs: Goal components -->
+        <div class="tabs">
+          <div class="tab-buttons">
+            <button class="tab-btn active" onclick="switchTab(this, 'tab-specific')">Specific</button>
+            <button class="tab-btn" onclick="switchTab(this, 'tab-measurable')">Measurable</button>
+            <button class="tab-btn" onclick="switchTab(this, 'tab-achievable')">Achievable</button>
+            <button class="tab-btn" onclick="switchTab(this, 'tab-relevant')">Relevant</button>
+            <button class="tab-btn" onclick="switchTab(this, 'tab-timebound')">Time-Bound</button>
+          </div>
+          <div class="tab-panel active" id="tab-specific">
+            <div class="card">
+              <h4 style="margin-bottom:8px">Specific</h4>
+              <p>Say exactly what you want to accomplish. Not "get better at basketball" but "make 7 out of 10 free throws."</p>
+              <p><strong>Ask yourself:</strong> Could someone else read this goal and know exactly what I'm trying to do?</p>
+            </div>
+          </div>
+          <div class="tab-panel" id="tab-measurable">
+            <div class="card">
+              <h4 style="margin-bottom:8px">Measurable</h4>
+              <p>Attach a number to it. If you can't measure it, you can't track it. Numbers give you proof of progress.</p>
+              <p><strong>Ask yourself:</strong> How will I know when I've achieved this? What number tells me I'm there?</p>
+            </div>
+          </div>
+          <div class="tab-panel" id="tab-achievable">
+            <div class="card">
+              <h4 style="margin-bottom:8px">Achievable</h4>
+              <p>The goal should stretch you but not break you. If you currently make 2 out of 10 free throws, aiming for 10 out of 10 by next week sets you up to fail. Aim for 4 or 5 first.</p>
+              <p><strong>Ask yourself:</strong> Is this challenging but realistic given where I am right now?</p>
+            </div>
+          </div>
+          <div class="tab-panel" id="tab-relevant">
+            <div class="card">
+              <h4 style="margin-bottom:8px">Relevant</h4>
+              <p>The goal should matter to YOU. Not your teacher, not your parents — you. When you care about the goal, you'll put in the effort.</p>
+              <p><strong>Ask yourself:</strong> Why does this goal matter to me? What will it feel like when I achieve it?</p>
+            </div>
+          </div>
+          <div class="tab-panel" id="tab-timebound">
+            <div class="card">
+              <h4 style="margin-bottom:8px">Time-Bound</h4>
+              <p>Give it a deadline. "Someday" is not a plan. A deadline creates urgency and gives you a window to measure progress.</p>
+              <p><strong>Ask yourself:</strong> When do I want to achieve this by? What's my checkpoint?</p>
+            </div>
+          </div>
+        </div>
+
+        <hr class="divider">
+
+        <div class="block">
+          <h3>Goal Makeover</h3>
+          <p>Let's transform some vague wishes into structured goals. For each wish below, write a goal that is specific, measurable, achievable, relevant, and time-bound.</p>
+        </div>
+
+        <div class="card">
+          <p style="font-weight:700;margin-bottom:6px;color:var(--error)">Wish: "I want to run faster."</p>
+          <div class="plan-field">
+            <label>Your Structured Goal:</label>
+            <input type="text" placeholder='Example: "I will improve my PACER score from 22 to 28 laps by the end of this month."' aria-label="Rewrite running goal">
+          </div>
+        </div>
+
+        <div class="card">
+          <p style="font-weight:700;margin-bottom:6px;color:var(--error)">Wish: "I want to be better at volleyball."</p>
+          <div class="plan-field">
+            <label>Your Structured Goal:</label>
+            <input type="text" placeholder='Example: "I will successfully serve the ball over the net 6 out of 10 times by Friday."' aria-label="Rewrite volleyball goal">
+          </div>
+        </div>
+
+        <div class="card">
+          <p style="font-weight:700;margin-bottom:6px;color:var(--error)">Wish: "I want to be more fit."</p>
+          <div class="plan-field">
+            <label>Your Structured Goal:</label>
+            <input type="text" placeholder='Example: "I will do 20 push-ups without stopping within 3 weeks."' aria-label="Rewrite fitness goal">
+          </div>
+        </div>
+
+        <hr class="divider">
+
+        <div class="quiz" id="quiz2">
+          <h4>Knowledge Check</h4>
+          <p style="margin-bottom:16px">What is the MAIN problem with the goal "I want to get better at sports"?</p>
+          <div class="quiz-option" onclick="selectOption(this)">
+            <span class="letter">A</span>
+            <span>It's too hard to achieve</span>
+          </div>
+          <div class="quiz-option" onclick="selectOption(this)">
+            <span class="letter">B</span>
+            <span>It's not related to sports</span>
+          </div>
+          <div class="quiz-option" data-correct="true" onclick="selectOption(this)">
+            <span class="letter">C</span>
+            <span>It's too vague to measure or act on</span>
+          </div>
+          <div class="quiz-option" onclick="selectOption(this)">
+            <span class="letter">D</span>
+            <span>It doesn't have enough steps</span>
+          </div>
+          <button class="quiz-submit" onclick="checkQuiz(this)" disabled>Check Answer</button>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="key-concept">
+          <div class="icon">&#127919;</div>
+          <p>A clear goal gives you a clear target.<br>When you hit it, confidence follows.</p>
+        </div>
+
+        <div class="nav-buttons">
+          <button class="btn btn-secondary" onclick="prevLesson()">&#8592; Previous</button>
+          <button class="btn btn-primary" onclick="nextLesson()">Next: The Power of Small Wins &#8594;</button>
+        </div>
+      </div>
+
+      <!-- ==================== LESSON 3 ==================== -->
+      <div class="lesson" id="lesson2">
+        <div class="lesson-header">
+          <span class="lesson-tag">Lesson 3</span>
+          <h2>The Power of Small Wins</h2>
+          <p class="lead">You don't build confidence by doing something incredible once. You build it by stacking small successes — over and over.</p>
+        </div>
+
+        <div class="standards">
+          <span class="standard-tag">SHAPE America Standard 4</span>
+          <span class="standard-tag">SHAPE America Standard 5</span>
+          <span class="standard-tag">SEL: Self-Management</span>
+          <span class="standard-tag">IL Goal 19</span>
+        </div>
+
+        <div class="scenario">
+          <div class="scenario-header">Scenario: Marcus and the Mile</div>
+          <div class="scenario-body">
+            <p class="character">Marcus is in 7th grade PE. His class is starting a running unit, and the first challenge is the one-mile run.</p>
+            <p>Marcus hasn't run a full mile before. Last year, he walked most of it and finished last. He's already telling himself, "I'm just not a runner."</p>
+            <p>His teacher doesn't ask him to run a mile on day one. Instead, here's what happens:</p>
+          </div>
+        </div>
+
+        <div class="steps">
+          <div class="step">
+            <h4>Day 1: Run to the first cone and walk back</h4>
+            <p>That's it. About 100 yards. Marcus does it easily. "OK, that wasn't bad."</p>
+          </div>
+          <div class="step">
+            <h4>Day 3: Run one full lap without stopping</h4>
+            <p>Marcus finishes the lap. He's breathing hard but he did it. Small win logged.</p>
+          </div>
+          <div class="step">
+            <h4>Day 5: Run two laps, walk one, run one more</h4>
+            <p>He's doing more than he thought he could. His internal voice shifts from "I can't" to "maybe I can."</p>
+          </div>
+          <div class="step">
+            <h4>Day 8: Run the full mile</h4>
+            <p>Marcus finishes. Not fast. Not pretty. But he finishes. And for the first time, he believes he's a runner.</p>
+          </div>
+        </div>
+
+        <div class="callout success">
+          <h4>What happened here?</h4>
+          <p>Marcus's teacher used <strong>structured goal setting</strong> to create a series of <strong>mastery experiences</strong>. Each step was achievable. Each success built evidence. By the time Marcus attempted the full mile, he had already proven to himself — four times — that he could do hard things.</p>
+        </div>
+
+        <div class="block">
+          <h3>The Scaffolding Formula</h3>
+          <p>This approach has a name in education: <strong>scaffolding</strong>. And it follows a simple pattern:</p>
+        </div>
+
+        <div class="key-concept">
+          <p>Start Simple &#8594; Build Success &#8594; Increase Challenge &#8594; Confidence Grows</p>
+        </div>
+
+        <hr class="divider">
+
+        <div class="block">
+          <h3>Break It Down</h3>
+          <p>Take a big goal and break it into 3-4 smaller steps that build on each other. Start with something you know you can do. Each step should be slightly harder than the last.</p>
+        </div>
+
+        <div class="plan-builder">
+          <h3>Goal Breakdown Builder</h3>
+          <div class="plan-field">
+            <label>My Big Goal:</label>
+            <input type="text" placeholder="Example: Complete 25 consecutive jump rope jumps" aria-label="Big goal">
+          </div>
+          <div class="plan-field">
+            <label>Step 1 (Easy win — I know I can do this):</label>
+            <input type="text" placeholder="Example: Complete 5 consecutive jumps" aria-label="Step 1">
+          </div>
+          <div class="plan-field">
+            <label>Step 2 (A little harder):</label>
+            <input type="text" placeholder="Example: Complete 10 consecutive jumps" aria-label="Step 2">
+          </div>
+          <div class="plan-field">
+            <label>Step 3 (Challenging but doable):</label>
+            <input type="text" placeholder="Example: Complete 18 consecutive jumps" aria-label="Step 3">
+          </div>
+          <div class="plan-field">
+            <label>Step 4 (The big goal):</label>
+            <input type="text" placeholder="Example: Complete 25 consecutive jumps" aria-label="Step 4">
+          </div>
+        </div>
+
+        <div class="reflection">
+          <h4>Reflect</h4>
+          <p style="margin-bottom:10px;font-size:14px">Why is it important to start with a step you KNOW you can succeed at? How does that first easy win change the way you approach the harder steps?</p>
+          <textarea placeholder="Write your reflection here..." aria-label="Reflection on small wins"></textarea>
+        </div>
+
+        <hr class="divider">
+
+        <div class="quiz" id="quiz3">
+          <h4>Knowledge Check</h4>
+          <p style="margin-bottom:16px">In Marcus's story, why did his teacher start with short distances instead of asking him to run a full mile on day one?</p>
+          <div class="quiz-option" onclick="selectOption(this)">
+            <span class="letter">A</span>
+            <span>Because Marcus was out of shape</span>
+          </div>
+          <div class="quiz-option" onclick="selectOption(this)">
+            <span class="letter">B</span>
+            <span>Because the school only had a short track</span>
+          </div>
+          <div class="quiz-option" data-correct="true" onclick="selectOption(this)">
+            <span class="letter">C</span>
+            <span>To create small successes that would build Marcus's confidence</span>
+          </div>
+          <div class="quiz-option" onclick="selectOption(this)">
+            <span class="letter">D</span>
+            <span>Because running a mile is too dangerous for 7th graders</span>
+          </div>
+          <button class="quiz-submit" onclick="checkQuiz(this)" disabled>Check Answer</button>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="key-concept">
+          <div class="icon">&#127947;</div>
+          <p>Start simple. Build success. Increase challenge.<br>Confidence grows with every small win you stack.</p>
+        </div>
+
+        <div class="nav-buttons">
+          <button class="btn btn-secondary" onclick="prevLesson()">&#8592; Previous</button>
+          <button class="btn btn-primary" onclick="nextLesson()">Next: When Things Don't Go As Planned &#8594;</button>
+        </div>
+      </div>
+
+      <!-- ==================== LESSON 4 ==================== -->
+      <div class="lesson" id="lesson3">
+        <div class="lesson-header">
+          <span class="lesson-tag">Lesson 4</span>
+          <h2>When Things Don't Go As Planned</h2>
+          <p class="lead">Setbacks happen to everyone. What separates confident people from everyone else isn't avoiding failure — it's how they talk to themselves about it.</p>
+        </div>
+
+        <div class="standards">
+          <span class="standard-tag">SHAPE America Standard 4</span>
+          <span class="standard-tag">SEL: Self-Awareness</span>
+          <span class="standard-tag">SEL: Self-Management</span>
+          <span class="standard-tag">IL Goal 21</span>
+        </div>
+
+        <div class="scenario">
+          <div class="scenario-header">Scenario: Aaliyah's Setback</div>
+          <div class="scenario-body">
+            <p class="character">Aaliyah set a goal to complete 15 curl-ups during the fitness test. She's been practicing and hit 12 last week — a personal best.</p>
+            <p>Test day arrives. She's nervous. Her stomach is tight. She starts strong but loses her rhythm at rep 9 and stops at 11.</p>
+            <p>She didn't hit her goal. Now two voices in her head start talking:</p>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px">
+          <div class="card" style="border-top:3px solid var(--error)">
+            <h4 style="color:var(--error);margin-bottom:8px">The Destructive Voice</h4>
+            <p style="font-style:italic;font-size:14px">"I knew I'd mess up. I'm terrible at this. Everyone else did better than me. Why do I even try?"</p>
+          </div>
+          <div class="card" style="border-top:3px solid var(--success)">
+            <h4 style="color:var(--success);margin-bottom:8px">The Productive Voice</h4>
+            <p style="font-style:italic;font-size:14px">"11 is still more than I could do a month ago. I got nervous and lost my rhythm — I can work on that. I'll hit 15 next time."</p>
+          </div>
+        </div>
+
+        <div class="callout">
+          <h4>Same situation. Two completely different outcomes.</h4>
+          <p>The destructive voice treats the setback as proof of failure. The productive voice treats it as <strong>data</strong> — information about what to adjust next time. This is called <strong>self-talk</strong>, and it's one of the most powerful tools in sports psychology.</p>
+        </div>
+
+        <div class="block">
+          <h3>The Reframe</h3>
+          <p>Productive self-talk doesn't mean being fake positive. It means being <strong>accurate</strong>. Most negative self-talk is actually an exaggeration. Let's practice reframing:</p>
+        </div>
+
+        <div class="reframe-item">
+          <span class="negative">"I can't do this."</span>
+          <span class="arrow-icon">&#8594;</span>
+          <div style="flex:1">
+            <input type="text" placeholder='Try: "I can\'t do this YET."' aria-label="Reframe I can't do this">
+            <div class="hint">Hint: Add one word that changes everything.</div>
+          </div>
+        </div>
+
+        <div class="reframe-item">
+          <span class="negative">"Everyone is better than me."</span>
+          <span class="arrow-icon">&#8594;</span>
+          <div style="flex:1">
+            <input type="text" placeholder='Try: "I\'m comparing my start to their middle."' aria-label="Reframe comparison">
+            <div class="hint">Hint: Are you really comparing fairly?</div>
+          </div>
+        </div>
+
+        <div class="reframe-item">
+          <span class="negative">"I always mess up."</span>
+          <span class="arrow-icon">&#8594;</span>
+          <div style="flex:1">
+            <input type="text" placeholder='Try: "I made a mistake this time. I also improved last time."' aria-label="Reframe always mess up">
+            <div class="hint">Hint: Is "always" actually true?</div>
+          </div>
+        </div>
+
+        <div class="reframe-item">
+          <span class="negative">"I'm just not athletic."</span>
+          <span class="arrow-icon">&#8594;</span>
+          <div style="flex:1">
+            <input type="text" placeholder='Try: "I haven\'t found my sport yet" or "I\'m still building my skills."' aria-label="Reframe not athletic">
+            <div class="hint">Hint: Is this a permanent truth or a current state?</div>
+          </div>
+        </div>
+
+        <hr class="divider">
+
+        <div class="block">
+          <h3>The Setback Formula</h3>
+          <p>When something doesn't go as planned, use these three steps:</p>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px">
+          <div class="card" style="text-align:center">
+            <div style="font-size:28px;margin-bottom:8px">1</div>
+            <h4 style="margin-bottom:6px">Acknowledge It</h4>
+            <p style="font-size:14px">"That didn't go the way I wanted."</p>
+          </div>
+          <div class="card" style="text-align:center">
+            <div style="font-size:28px;margin-bottom:8px">2</div>
+            <h4 style="margin-bottom:6px">Analyze It</h4>
+            <p style="font-size:14px">"What specifically went wrong? What can I adjust?"</p>
+          </div>
+          <div class="card" style="text-align:center">
+            <div style="font-size:28px;margin-bottom:8px">3</div>
+            <h4 style="margin-bottom:6px">Adjust It</h4>
+            <p style="font-size:14px">"Here's what I'll do differently next time."</p>
+          </div>
+        </div>
+
+        <div class="reflection">
+          <h4>Your Turn</h4>
+          <p style="margin-bottom:10px;font-size:14px">Think about a recent time something didn't go the way you planned (in PE, school, or life). Use the three steps above:</p>
+          <textarea placeholder="1. Acknowledge: What happened?&#10;2. Analyze: What specifically went wrong?&#10;3. Adjust: What will I do differently?" aria-label="Setback reflection" style="min-height:120px"></textarea>
+        </div>
+
+        <hr class="divider">
+
+        <div class="quiz" id="quiz4">
+          <h4>Knowledge Check</h4>
+          <p style="margin-bottom:16px">Aaliyah got 11 curl-ups instead of her goal of 15. Which response shows <strong>productive self-talk</strong>?</p>
+          <div class="quiz-option" onclick="selectOption(this)">
+            <span class="letter">A</span>
+            <span>"Whatever, curl-ups are stupid anyway."</span>
+          </div>
+          <div class="quiz-option" onclick="selectOption(this)">
+            <span class="letter">B</span>
+            <span>"I should have tried harder. I'm so lazy."</span>
+          </div>
+          <div class="quiz-option" data-correct="true" onclick="selectOption(this)">
+            <span class="letter">C</span>
+            <span>"11 is better than before. I got nervous — I can practice managing that."</span>
+          </div>
+          <div class="quiz-option" onclick="selectOption(this)">
+            <span class="letter">D</span>
+            <span>"I'll just set an easier goal next time so I don't fail."</span>
+          </div>
+          <button class="quiz-submit" onclick="checkQuiz(this)" disabled>Check Answer</button>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="key-concept">
+          <div class="icon">&#128170;</div>
+          <p>Setbacks aren't failure. They're feedback.<br>Acknowledge it. Analyze it. Adjust it.</p>
+        </div>
+
+        <div class="nav-buttons">
+          <button class="btn btn-secondary" onclick="prevLesson()">&#8592; Previous</button>
+          <button class="btn btn-primary" onclick="nextLesson()">Next: Your Confidence Cycle &#8594;</button>
+        </div>
+      </div>
+
+      <!-- ==================== LESSON 5 ==================== -->
+      <div class="lesson" id="lesson4">
+        <div class="lesson-header">
+          <span class="lesson-tag">Lesson 5</span>
+          <h2>Your Confidence Cycle</h2>
+          <p class="lead">Confidence isn't a destination. It's a cycle — and now you have every tool you need to keep it spinning.</p>
+        </div>
+
+        <div class="standards">
+          <span class="standard-tag">SHAPE America Standard 4</span>
+          <span class="standard-tag">SHAPE America Standard 5</span>
+          <span class="standard-tag">SEL: Self-Awareness</span>
+          <span class="standard-tag">SEL: Self-Management</span>
+          <span class="standard-tag">IL Goal 19, 20, 21</span>
+        </div>
+
+        <div class="block">
+          <h3>Everything You've Learned</h3>
+          <p>Over the last four lessons, you've built a complete toolkit:</p>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px">
+          <div class="card">
+            <h4 style="color:var(--primary);margin-bottom:6px">Lesson 1</h4>
+            <p style="font-size:14px">Confidence is built through experience — especially <strong>mastery experiences</strong> (small wins).</p>
+          </div>
+          <div class="card">
+            <h4 style="color:var(--primary);margin-bottom:6px">Lesson 2</h4>
+            <p style="font-size:14px">Goals need structure — <strong>specific, measurable, achievable, relevant, and time-bound</strong>.</p>
+          </div>
+          <div class="card">
+            <h4 style="color:var(--primary);margin-bottom:6px">Lesson 3</h4>
+            <p style="font-size:14px">Break big goals into small steps — <strong>start simple, build success, increase challenge</strong>.</p>
+          </div>
+          <div class="card">
+            <h4 style="color:var(--primary);margin-bottom:6px">Lesson 4</h4>
+            <p style="font-size:14px">Setbacks are data, not failure — <strong>acknowledge, analyze, adjust</strong>.</p>
+          </div>
+        </div>
+
+        <div class="block">
+          <h3>The Confidence Cycle</h3>
+          <p>Put it all together and you get a cycle that feeds itself:</p>
+        </div>
+
+        <!-- Visual cycle -->
+        <div style="text-align:center;margin:32px 0">
+          <svg viewBox="0 0 400 400" width="320" height="320" style="max-width:100%" aria-label="The Confidence Cycle diagram showing: Set a Clear Goal, Take Action, Experience Success, Confidence Grows, Set a Bigger Goal" role="img">
+            <!-- Circle path -->
+            <circle cx="200" cy="200" r="150" fill="none" stroke="#e2e8f0" stroke-width="3"/>
+            <!-- Arrow path -->
+            <path d="M 200 50 A 150 150 0 0 1 345 225" fill="none" stroke="#3b82f6" stroke-width="3" marker-end="url(#arrowhead)"/>
+            <path d="M 345 225 A 150 150 0 0 1 200 350" fill="none" stroke="#3b82f6" stroke-width="3" marker-end="url(#arrowhead)"/>
+            <path d="M 200 350 A 150 150 0 0 1 55 225" fill="none" stroke="#3b82f6" stroke-width="3" marker-end="url(#arrowhead)"/>
+            <path d="M 55 225 A 150 150 0 0 1 110 80" fill="none" stroke="#3b82f6" stroke-width="3" marker-end="url(#arrowhead)"/>
+            <path d="M 110 80 A 150 150 0 0 1 200 50" fill="none" stroke="#3b82f6" stroke-width="3" marker-end="url(#arrowhead)"/>
+            <defs><marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#3b82f6"/></marker></defs>
+            <!-- Nodes -->
+            <circle cx="200" cy="50" r="36" fill="#1e40af"/><text x="200" y="46" text-anchor="middle" fill="#fff" font-size="10" font-weight="700">Set a Clear</text><text x="200" y="58" text-anchor="middle" fill="#fff" font-size="10" font-weight="700">Goal</text>
+            <circle cx="345" cy="225" r="36" fill="#1e40af"/><text x="345" y="221" text-anchor="middle" fill="#fff" font-size="10" font-weight="700">Take</text><text x="345" y="233" text-anchor="middle" fill="#fff" font-size="10" font-weight="700">Action</text>
+            <circle cx="200" cy="350" r="36" fill="#1e40af"/><text x="200" y="346" text-anchor="middle" fill="#fff" font-size="10" font-weight="700">Experience</text><text x="200" y="358" text-anchor="middle" fill="#fff" font-size="10" font-weight="700">Success</text>
+            <circle cx="55" cy="225" r="36" fill="#f59e0b"/><text x="55" y="221" text-anchor="middle" fill="#fff" font-size="10" font-weight="700">Confidence</text><text x="55" y="233" text-anchor="middle" fill="#fff" font-size="10" font-weight="700">Grows</text>
+            <circle cx="110" cy="80" r="36" fill="#10b981"/><text x="110" y="76" text-anchor="middle" fill="#fff" font-size="10" font-weight="700">Set a Bigger</text><text x="110" y="88" text-anchor="middle" fill="#fff" font-size="10" font-weight="700">Goal</text>
+          </svg>
+        </div>
+
+        <div class="callout success">
+          <h4>This cycle never ends — and that's the point.</h4>
+          <p>Every time you complete the cycle, you start again with a slightly bigger goal. Your confidence grows not because someone told you that you're good, but because you have <strong>proof</strong> — evidence from your own experience — that you can do hard things.</p>
+        </div>
+
+        <hr class="divider">
+
+        <div class="block">
+          <h3>Build Your Confidence Plan</h3>
+          <p>Before you finish this module, create your own confidence plan. This is YOUR plan — something real you'll work on this week.</p>
+        </div>
+
+        <div class="plan-builder" id="finalPlan">
+          <h3>My Confidence Plan</h3>
+          <div class="plan-field">
+            <label>My Goal (specific, measurable, time-bound):</label>
+            <input type="text" id="planGoal" placeholder="Example: I will make 5 out of 10 basketball free throws by next Friday." aria-label="Your goal">
+          </div>
+          <div class="plan-field">
+            <label>Why This Matters to Me:</label>
+            <input type="text" id="planWhy" placeholder="Example: I want to make the team next year and this is a skill I need." aria-label="Why it matters">
+          </div>
+          <div class="plan-field">
+            <label>My First Small Win (Step 1):</label>
+            <input type="text" id="planStep1" placeholder="Example: Make 2 out of 10 free throws" aria-label="First step">
+          </div>
+          <div class="plan-field">
+            <label>My Next Step (Step 2):</label>
+            <input type="text" id="planStep2" placeholder="Example: Make 3 out of 10 free throws" aria-label="Second step">
+          </div>
+          <div class="plan-field">
+            <label>My Stretch Goal (Step 3):</label>
+            <input type="text" id="planStep3" placeholder="Example: Make 5 out of 10 free throws" aria-label="Third step">
+          </div>
+          <div class="plan-field">
+            <label>If I Hit a Setback, I Will:</label>
+            <textarea id="planSetback" placeholder="Example: Acknowledge it, figure out what went wrong (was I rushing? not following through?), and adjust my practice." style="min-height:60px" aria-label="Setback plan"></textarea>
+          </div>
+          <div class="plan-field">
+            <label>My Positive Self-Talk Statement:</label>
+            <input type="text" id="planSelfTalk" placeholder='Example: "I am building this skill one rep at a time."' aria-label="Self-talk statement">
+          </div>
+        </div>
+
+        <div class="reflection">
+          <h4>Final Reflection</h4>
+          <p style="margin-bottom:10px;font-size:14px">What is one thing you learned in this module that you'll actually use — in PE, in school, or in life?</p>
+          <textarea placeholder="Write your final reflection here..." aria-label="Final reflection"></textarea>
+        </div>
+
+        <hr class="divider">
+
+        <div class="quiz" id="quiz5">
+          <h4>Final Knowledge Check</h4>
+          <p style="margin-bottom:16px">What is the correct order of the Confidence Cycle?</p>
+          <div class="quiz-option" onclick="selectOption(this)">
+            <span class="letter">A</span>
+            <span>Take Action &#8594; Set a Goal &#8594; Confidence Grows &#8594; Experience Success</span>
+          </div>
+          <div class="quiz-option" data-correct="true" onclick="selectOption(this)">
+            <span class="letter">B</span>
+            <span>Set a Clear Goal &#8594; Take Action &#8594; Experience Success &#8594; Confidence Grows &#8594; Set a Bigger Goal</span>
+          </div>
+          <div class="quiz-option" onclick="selectOption(this)">
+            <span class="letter">C</span>
+            <span>Confidence Grows &#8594; Set a Goal &#8594; Experience Success &#8594; Take Action</span>
+          </div>
+          <div class="quiz-option" onclick="selectOption(this)">
+            <span class="letter">D</span>
+            <span>Set a Goal &#8594; Confidence Grows &#8594; Take Action &#8594; Experience Success</span>
+          </div>
+          <button class="quiz-submit" onclick="checkQuiz(this)" disabled>Check Answer</button>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Certificate -->
+        <div class="certificate" id="certificate">
+          <div class="cert-badge">&#127942;</div>
+          <h2>Module Complete</h2>
+          <div class="cert-subtitle">Confidence Through Structured Goal Setting</div>
+          <div class="cert-name" contenteditable="true" aria-label="Type your name">[ Type Your Name ]</div>
+          <p>Has completed all 5 lessons in the Confidence Through Structured Goal Setting module, demonstrating understanding of self-efficacy, structured goal setting, scaffolded skill building, productive self-talk, and the Confidence Cycle.</p>
+          <div class="cert-footer" style="margin-top:20px">
+            Designed by Kevin Terranova, M.S. | Curriculum & Instruction | Sport Psychology<br>
+            Aligned to SHAPE America Standards 4 & 5 | CASEL SEL Competencies | Illinois State Goals 19, 20, 21
+          </div>
+        </div>
+
+        <div class="key-concept">
+          <div class="icon">&#11088;</div>
+          <p>Confidence isn't something you wait for.<br>It's something you build — one goal, one win, one cycle at a time.</p>
+        </div>
+
+        <div class="nav-buttons">
+          <button class="btn btn-secondary" onclick="prevLesson()">&#8592; Previous</button>
+          <button class="btn btn-primary" onclick="window.print()">Print My Confidence Plan &#128424;</button>
+        </div>
+      </div>
+
+    </div><!-- /content -->
+  </div><!-- /main -->
+</div><!-- /app -->
+
+<script>
+/* ============================================
+   STATE
+   currentLesson: -1 = intro, 0-4 = lessons 1-5
+   ============================================ */
+let currentLesson = -1;
+const totalLessons = 5;
+const completedLessons = new Set();
+
+// Try to restore state
+try {
+  const saved = JSON.parse(localStorage.getItem('confidenceModule') || '{}');
+  if (saved.current !== undefined) currentLesson = saved.current;
+  if (saved.completed) saved.completed.forEach(i => completedLessons.add(i));
+} catch(e) {}
+
+/* ============================================
+   NAVIGATION
+   ============================================ */
+function goToLesson(index) {
+  if (index > currentLesson && currentLesson >= 0) completedLessons.add(currentLesson);
+  currentLesson = index;
+  updateUI();
+  saveState();
+  closeSidebar();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function nextLesson() {
+  if (currentLesson < totalLessons - 1) {
+    if (currentLesson >= 0) completedLessons.add(currentLesson);
+    currentLesson++;
+    updateUI();
+    saveState();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+}
+
+function prevLesson() {
+  if (currentLesson > -1) {
+    currentLesson--;
+    updateUI();
+    saveState();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+}
+
+function updateUI() {
+  // All lesson divs: intro is index 0, lessons 1-5 are index 1-5
+  const allPages = document.querySelectorAll('.lesson');
+  allPages.forEach((el, i) => {
+    // i=0 is intro (currentLesson=-1), i=1 is lesson0, etc.
+    el.classList.toggle('active', i === currentLesson + 1);
+  });
+
+  // Nav items: 0=overview, 1-5=lessons
+  document.querySelectorAll('.nav-item').forEach((el, i) => {
+    const navIndex = i - 1; // -1=overview, 0-4=lessons
+    el.classList.toggle('active', navIndex === currentLesson);
+    el.classList.toggle('completed', completedLessons.has(navIndex));
+  });
+
+  // Progress
+  const progress = Math.round((completedLessons.size / totalLessons) * 100);
+  document.getElementById('progressFill').style.width = progress + '%';
+  if (currentLesson === -1) {
+    document.getElementById('progressLabel').textContent = 'Module Overview';
+  } else {
+    document.getElementById('progressLabel').textContent = `Lesson ${currentLesson + 1} of ${totalLessons}`;
+  }
+  document.getElementById('progressPct').textContent = progress + '% Complete';
+}
+
+function saveState() {
+  try {
+    localStorage.setItem('confidenceModule', JSON.stringify({
+      current: currentLesson,
+      completed: [...completedLessons]
+    }));
+  } catch(e) {}
+}
+
+/* ============================================
+   SIDEBAR (Mobile)
+   ============================================ */
+function toggleSidebar() {
+  document.querySelector('.sidebar').classList.toggle('open');
+  document.querySelector('.overlay').classList.toggle('open');
+}
+
+function closeSidebar() {
+  document.querySelector('.sidebar').classList.remove('open');
+  document.querySelector('.overlay').classList.remove('open');
+}
+
+/* ============================================
+   ACCORDION
+   ============================================ */
+function toggleAccordion(btn) {
+  const content = btn.nextElementSibling;
+  const isOpen = content.classList.contains('open');
+  btn.classList.toggle('open', !isOpen);
+  content.classList.toggle('open', !isOpen);
+}
+
+/* ============================================
+   TABS
+   ============================================ */
+function switchTab(btn, panelId) {
+  const tabs = btn.parentElement;
+  tabs.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  const container = tabs.parentElement;
+  container.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById(panelId).classList.add('active');
+}
+
+/* ============================================
+   QUIZ
+   ============================================ */
+function selectOption(el) {
+  const quiz = el.closest('.quiz');
+  if (quiz.classList.contains('answered')) return;
+
+  quiz.querySelectorAll('.quiz-option').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  quiz.querySelector('.quiz-submit').disabled = false;
+}
+
+function checkQuiz(btn) {
+  const quiz = btn.closest('.quiz');
+  if (quiz.classList.contains('answered')) return;
+  quiz.classList.add('answered');
+
+  const selected = quiz.querySelector('.quiz-option.selected');
+  const feedback = quiz.querySelector('.quiz-feedback');
+
+  if (selected.dataset.correct === 'true') {
+    selected.classList.add('correct');
+    feedback.className = 'quiz-feedback correct';
+    feedback.textContent = 'Correct! Great understanding of the concept.';
+  } else {
+    selected.classList.add('incorrect');
+    const correct = quiz.querySelector('[data-correct="true"]');
+    correct.classList.add('correct');
+    feedback.className = 'quiz-feedback incorrect';
+    feedback.textContent = 'Not quite. The correct answer is highlighted in green. Review the content above and think about why.';
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Answered';
+}
+
+/* ============================================
+   INIT
+   ============================================ */
+updateUI();
+</script>
+</body>
+</html>
