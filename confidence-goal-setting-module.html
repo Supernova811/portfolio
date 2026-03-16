@@ -983,6 +983,11 @@ body {
           </ul>
         </div>
 
+        <div class="callout" style="background:#f0fdf4;border-left-color:#10b981">
+          <h4>A Note on Design Context</h4>
+          <p>While this module targets middle school learners, the instructional design principles demonstrated here — scaffolded skill building, structured goal setting, self-efficacy development, and scenario-based learning — are directly applicable to adult and workplace learning contexts. Confidence through structured success is how people learn at any age.</p>
+        </div>
+
         <div class="block">
           <h3>What You'll Experience</h3>
           <p>This isn't a lecture. Each lesson includes interactive activities, real scenarios, reflection prompts, and knowledge checks. You'll build a personal Confidence Plan as you go and earn a certificate of completion at the end.</p>
@@ -1762,14 +1767,20 @@ body {
 
         <!-- Certificate -->
         <div class="certificate" id="certificate">
+          <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.15em;opacity:0.5;margin-bottom:8px">Certificate of Completion</div>
           <div class="cert-badge">&#127942;</div>
           <h2>Module Complete</h2>
           <div class="cert-subtitle">Confidence Through Structured Goal Setting</div>
+          <div style="font-size:14px;opacity:0.7;margin-bottom:16px">Grades 6-8 | Sports Psychology & Social-Emotional Learning</div>
+          <div style="font-size:14px;opacity:0.8;margin-bottom:20px">This certifies that</div>
           <div class="cert-name" contenteditable="true" aria-label="Type your name">[ Type Your Name ]</div>
-          <p>Has completed all 5 lessons in the Confidence Through Structured Goal Setting module, demonstrating understanding of self-efficacy, structured goal setting, scaffolded skill building, productive self-talk, and the Confidence Cycle.</p>
-          <div class="cert-footer" style="margin-top:20px">
-            Designed by Kevin Terranova, M.S. | Curriculum & Instruction | Sport Psychology<br>
-            Aligned to SHAPE America Standards 4 & 5 | CASEL SEL Competencies | Illinois State Goals 19, 20, 21
+          <p style="max-width:500px;margin:0 auto;font-size:14px;line-height:1.7">has successfully completed all five lessons covering self-efficacy theory, structured goal setting, scaffolded skill development, productive self-talk strategies, and the Confidence Cycle framework.</p>
+          <div style="display:flex;justify-content:center;gap:40px;margin-top:24px;font-size:13px;opacity:0.7">
+            <div style="border-top:1px solid rgba(255,255,255,0.3);padding-top:8px;min-width:160px">Kevin Terranova, M.S.<br>Module Designer</div>
+            <div style="border-top:1px solid rgba(255,255,255,0.3);padding-top:8px;min-width:160px">Date Completed<br><span id="certDate"></span></div>
+          </div>
+          <div class="cert-footer" style="margin-top:24px">
+            Aligned to SHAPE America Standards 4 & 5 | CASEL SEL Framework | Illinois State Goals 19, 20, 21
           </div>
         </div>
 
@@ -1946,6 +1957,10 @@ function checkQuiz(btn) {
    INIT
    ============================================ */
 updateUI();
+// Set certificate date
+const d = new Date();
+const dateEl = document.getElementById('certDate');
+if (dateEl) dateEl.textContent = d.toLocaleDateString('en-US', {month:'long',day:'numeric',year:'numeric'});
 </script>
 </body>
 </html>

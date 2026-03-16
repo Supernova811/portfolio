@@ -538,7 +538,7 @@ section:nth-child(even) { background: var(--bg-alt); }
 <!-- ==================== HERO ==================== -->
 <header class="hero">
   <!-- Headshot placeholder — replace src with your actual photo -->
-  <div style="width:120px;height:120px;border-radius:50%;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;font-size:40px;font-weight:800;margin:0 auto 20px;border:4px solid #fff;box-shadow:var(--shadow-lg)">KT</div>
+  <div style="width:120px;height:120px;border-radius:50%;background:var(--bg-alt);border:3px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:var(--text-light);margin:0 auto 20px;box-shadow:var(--shadow-lg);text-align:center;line-height:1.3">Photo<br>Coming Soon</div>
   <h1>Kevin Terranova</h1>
   <div class="title">Instructional Designer | Curriculum Developer | Learning & Performance Specialist</div>
   <p class="lead" style="font-style:italic;font-weight:500;color:var(--primary);max-width:680px">"My focus is helping learners experience small wins early so they build confidence and stay engaged in learning. Start simple. Build success. Increase challenge. Confidence grows."</p>
@@ -547,12 +547,12 @@ section:nth-child(even) { background: var(--bg-alt); }
     <span class="badge">M.S. Curriculum & Instruction</span>
     <span class="badge">M.S. Sport Psychology</span>
     <span class="badge">B.S. Kinesiology</span>
-    <span class="badge">K-8 Educator</span>
+    <span class="badge">Instructional Designer</span>
     <span class="badge">Digital Product Builder</span>
   </div>
   <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
     <a href="#portfolio" class="hero-cta">View My Work &#8595;</a>
-    <a href="Kevin_Terranova_Resume.pdf" class="hero-cta" style="background:#fff;color:var(--primary);border:2px solid var(--primary)" download>Download Resume &#128196;</a>
+    <a href="Kevin_Terranova_Resume.html" class="hero-cta" style="background:#fff;color:var(--primary);border:2px solid var(--primary)" target="_blank">View Resume &#128196;</a>
   </div>
 </header>
 
@@ -618,7 +618,25 @@ section:nth-child(even) { background: var(--bg-alt); }
 
     <div class="portfolio-grid" id="portfolioGrid">
 
-      <!-- PROJECT 1: Interactive Module -->
+      <!-- PROJECT 1: TitanPE (strongest piece — shipped product) -->
+      <div class="project-card" onclick="openCase('case2')">
+        <div class="card-banner green" role="img" aria-label="Digital product icon">&#127939;</div>
+        <div class="card-body">
+          <div class="card-type">Shipped Digital Product</div>
+          <h3>TitanPE — FitnessGram Assessment Tracker</h3>
+          <p>A web-based fitness assessment tracker for K-8 PE teachers. Designed, built, iterated, and shipped to a marketplace of 50,000+ educators.</p>
+          <div class="card-tags">
+            <span class="tag">Product Design</span>
+            <span class="tag">FitnessGram</span>
+            <span class="tag">K-8</span>
+            <span class="tag">Data Tracking</span>
+            <span class="tag">Iteration</span>
+          </div>
+          <span class="card-link">View Case Study &#8594;</span>
+        </div>
+      </div>
+
+      <!-- PROJECT 2: Interactive Module -->
       <div class="project-card" onclick="openCase('case1')">
         <div class="card-banner blue" role="img" aria-label="Interactive module icon">&#129504;</div>
         <div class="card-body">
@@ -632,24 +650,6 @@ section:nth-child(even) { background: var(--bg-alt); }
             <span class="tag">SEL</span>
             <span class="tag">SHAPE America</span>
             <span class="tag">Interactive</span>
-          </div>
-          <span class="card-link">View Case Study &#8594;</span>
-        </div>
-      </div>
-
-      <!-- PROJECT 2: TitanPE -->
-      <div class="project-card" onclick="openCase('case2')">
-        <div class="card-banner green" role="img" aria-label="Digital product icon">&#127939;</div>
-        <div class="card-body">
-          <div class="card-type">Shipped Digital Product</div>
-          <h3>TitanPE — FitnessGram Assessment Tracker</h3>
-          <p>A web-based fitness assessment tracker for K-8 PE teachers. Designed, built, iterated, and shipped to a marketplace of 50,000+ educators.</p>
-          <div class="card-tags">
-            <span class="tag">Product Design</span>
-            <span class="tag">FitnessGram</span>
-            <span class="tag">K-8</span>
-            <span class="tag">Data Tracking</span>
-            <span class="tag">Iteration</span>
           </div>
           <span class="card-link">View Case Study &#8594;</span>
         </div>

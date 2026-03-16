@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kevin Terranova — Resume</title>
+<style>
+@media print {
+  body { margin: 0; font-size: 11pt; }
+  .page { box-shadow: none; max-width: 100%; padding: 0.5in 0.6in; }
+  .no-print { display: none; }
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+  color: #1a1a1a;
+  background: #f0f0f0;
+  line-height: 1.5;
+  font-size: 10.5pt;
+}
+
+.page {
+  max-width: 8.5in;
+  margin: 20px auto;
+  background: #fff;
+  padding: 0.55in 0.65in;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+}
+
+/* Header */
+.header { text-align: center; margin-bottom: 20px; border-bottom: 2px solid #1e40af; padding-bottom: 16px; }
+.header h1 { font-size: 22pt; font-weight: 800; color: #1e40af; letter-spacing: 0.02em; margin-bottom: 4px; }
+.header .title { font-size: 11pt; font-weight: 600; color: #444; margin-bottom: 8px; }
+.header .contact { font-size: 9.5pt; color: #555; }
+.header .contact a { color: #1e40af; text-decoration: none; }
+
+/* Sections */
+.section { margin-bottom: 18px; }
+.section-title {
+  font-size: 10.5pt;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #1e40af;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 4px;
+  margin-bottom: 10px;
+}
+
+/* Summary */
+.summary { font-size: 10.5pt; color: #333; line-height: 1.6; }
+
+/* Skills grid */
+.skills-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px 24px; }
+.skill-cat { font-weight: 700; font-size: 9.5pt; color: #1e40af; margin-bottom: 2px; }
+.skill-list { font-size: 9.5pt; color: #333; line-height: 1.6; }
+
+/* Experience */
+.job { margin-bottom: 14px; }
+.job-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 2px; }
+.job-title { font-weight: 700; font-size: 10.5pt; }
+.job-date { font-size: 9.5pt; color: #666; font-style: italic; }
+.job-company { font-size: 10pt; color: #555; margin-bottom: 4px; }
+.job ul { margin-left: 18px; font-size: 10pt; color: #333; }
+.job li { margin-bottom: 3px; line-height: 1.5; }
+
+/* Education */
+.edu-item { margin-bottom: 8px; }
+.edu-degree { font-weight: 700; font-size: 10.5pt; }
+.edu-school { font-size: 9.5pt; color: #666; }
+.edu-focus { font-size: 9pt; color: #888; }
+
+/* Tools */
+.tools-grid { display: flex; flex-wrap: wrap; gap: 6px; }
+.tool-tag {
+  background: #eff6ff;
+  border: 1px solid #dbeafe;
+  border-radius: 3px;
+  padding: 2px 8px;
+  font-size: 9pt;
+  color: #1e40af;
+  font-weight: 500;
+}
+
+/* Print button */
+.print-btn {
+  display: block;
+  margin: 16px auto;
+  padding: 10px 24px;
+  background: #1e40af;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.print-btn:hover { background: #3b82f6; }
+</style>
+</head>
+<body>
+
+<button class="print-btn no-print" onclick="window.print()">Print / Save as PDF</button>
+
+<div class="page">
+  <!-- HEADER -->
+  <div class="header">
+    <h1>KEVIN TERRANOVA</h1>
+    <div class="title">Instructional Designer | Curriculum Developer | Learning & Performance Specialist</div>
+    <div class="contact">
+      Rockford, IL &nbsp;|&nbsp; Open to Remote &nbsp;|&nbsp;
+      <a href="mailto:titan811@gmail.com">titan811@gmail.com</a> &nbsp;|&nbsp;
+      815-871-1653 &nbsp;|&nbsp;
+      <a href="https://linkedin.com/in/kevin-terranova-b40903223">LinkedIn</a> &nbsp;|&nbsp;
+      <a href="#">Portfolio</a>
+    </div>
+  </div>
+
+  <!-- SUMMARY -->
+  <div class="section">
+    <div class="section-title">Professional Summary</div>
+    <div class="summary">
+      Instructional designer and curriculum developer with two master's degrees and nearly a decade of experience designing, implementing, and iterating structured learning programs. Skilled at translating learning goals into measurable, standards-aligned experiences using backward design, scaffolded instruction, and data-driven iteration. Background in applied psychology and performance science brings a research-grounded approach to learning experience design. Builder of interactive digital learning tools used by educators nationwide.
+    </div>
+  </div>
+
+  <!-- CORE SKILLS -->
+  <div class="section">
+    <div class="section-title">Core Skills</div>
+    <div class="skills-grid">
+      <div>
+        <div class="skill-cat">Design & Methodology</div>
+        <div class="skill-list">Instructional Design (ADDIE/SAM)<br>Backward Design<br>Curriculum Development<br>Learning Experience Design<br>Differentiated Instruction</div>
+      </div>
+      <div>
+        <div class="skill-cat">Assessment & Analytics</div>
+        <div class="skill-list">Performance Assessment<br>Rubric Development<br>Data-Driven Iteration<br>Formative & Summative Assessment<br>Standards Alignment</div>
+      </div>
+      <div>
+        <div class="skill-cat">Learning Science</div>
+        <div class="skill-list">Self-Efficacy Theory (Bandura)<br>Goal Setting Theory (Locke & Latham)<br>Social-Emotional Learning (CASEL)<br>Behavioral Change Strategies<br>Cognitive Load Theory</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOOLS & TECHNOLOGY -->
+  <div class="section">
+    <div class="section-title">Tools & Technology</div>
+    <div class="tools-grid">
+      <span class="tool-tag">HTML / CSS / JavaScript</span>
+      <span class="tool-tag">Custom eLearning Development</span>
+      <span class="tool-tag">Google Classroom</span>
+      <span class="tool-tag">Schoology</span>
+      <span class="tool-tag">Panorama Education</span>
+      <span class="tool-tag">Canva</span>
+      <span class="tool-tag">CapCut</span>
+      <span class="tool-tag">Kahoot / Quizizz</span>
+      <span class="tool-tag">Google Forms</span>
+      <span class="tool-tag">FitnessGram / PE Metrics</span>
+      <span class="tool-tag">Unified Talent</span>
+      <span class="tool-tag">TAC (TeachPoint)</span>
+    </div>
+  </div>
+
+  <!-- EXPERIENCE -->
+  <div class="section">
+    <div class="section-title">Professional Experience</div>
+
+    <div class="job">
+      <div class="job-header">
+        <span class="job-title">Instructional Designer & Learning Program Lead</span>
+        <span class="job-date">Aug 2023 – Present</span>
+      </div>
+      <div class="job-company">Rockford Public Schools (RPS 205) | Rockford, IL</div>
+      <ul>
+        <li>Design and develop structured learning programs from needs analysis through evaluation, aligning curriculum to state standards (IL Goals 19-21) and SHAPE America frameworks using backward design methodology</li>
+        <li>Build performance assessments and scoring rubrics to measure learner outcomes, using data to identify skill gaps and drive iterative program improvements</li>
+        <li>Create differentiated learning experiences across diverse learner populations (K-8, 30+ per session), adapting content delivery and scaffolding based on formative assessment data</li>
+        <li>Apply self-efficacy theory and structured goal-setting frameworks to increase learner engagement, persistence, and measurable skill progression</li>
+        <li>Design and ship digital learning tools — including an interactive fitness assessment tracker used by PE educators nationwide — demonstrating full product lifecycle from ideation through deployment</li>
+        <li>Integrate social-emotional learning competencies (CASEL framework) into instructional sequences, with embedded reflection and self-assessment protocols</li>
+      </ul>
+    </div>
+
+    <div class="job">
+      <div class="job-header">
+        <span class="job-title">Instructional Support Specialist</span>
+        <span class="job-date">Aug 2016 – Apr 2021</span>
+      </div>
+      <div class="job-company">Rockford Public Schools (RPS 205) | Rockford, IL</div>
+      <ul>
+        <li>Designed and implemented individualized learning support plans for students with diverse cognitive, physical, and behavioral needs, ensuring alignment with IEP objectives</li>
+        <li>Collected and analyzed behavioral and performance data to inform instructional decisions and support evidence-based progress monitoring</li>
+        <li>Collaborated with cross-functional teams (teachers, specialists, administrators) to iterate on support strategies and improve learner outcomes</li>
+        <li>Applied Applied Behavior Analysis (ABA) frameworks and de-escalation protocols to maintain safe, productive learning environments</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- EDUCATION -->
+  <div class="section">
+    <div class="section-title">Education</div>
+    <div class="edu-item">
+      <span class="edu-degree">Master of Science, Sport Psychology</span>
+      <span class="edu-school"> — Capella University | 2025</span><br>
+      <span class="edu-focus">Performance Motivation | Cognitive Psychology | Behavioral Change | Social-Emotional Learning</span>
+    </div>
+    <div class="edu-item">
+      <span class="edu-degree">Master of Science, Curriculum and Instruction</span>
+      <span class="edu-school"> — Western Governors University | 2024</span><br>
+      <span class="edu-focus">Instructional Design | Curriculum Development | Backward Design | Differentiated Instruction</span>
+    </div>
+    <div class="edu-item">
+      <span class="edu-degree">Bachelor of Science, Kinesiology, Health & Physical Education</span>
+      <span class="edu-school"> — Rockford University | 2022</span><br>
+      <span class="edu-focus">Exercise Physiology | Functional Movement | Human Anatomy | Injury Prevention</span>
+    </div>
+  </div>
+
+  <!-- PORTFOLIO HIGHLIGHTS -->
+  <div class="section">
+    <div class="section-title">Portfolio Highlights</div>
+    <ul style="margin-left:18px;font-size:10pt;color:#333">
+      <li><strong>TitanPE — FitnessGram Assessment Tracker:</strong> Designed, built, and shipped a web-based fitness assessment tool to a marketplace of 50,000+ educators. Multiple iterations based on user feedback.</li>
+      <li><strong>Confidence Through Structured Goal Setting:</strong> Interactive 5-lesson eLearning module for grades 6-8 grounded in Bandura's self-efficacy theory. Built with HTML/CSS/JS — knowledge checks, progress tracking, and completion certification.</li>
+      <li><strong>K-5 Volleyball Curriculum Unit:</strong> Multi-week standards-aligned unit demonstrating full ADDIE process with scaffolded skill progression and differentiated assessment.</li>
+    </ul>
+  </div>
+</div>
+
+</body>
+</html>
