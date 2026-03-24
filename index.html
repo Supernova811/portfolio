@@ -508,12 +508,12 @@ section:nth-child(even) { background: var(--bg-alt); }
   <div class="nav-inner">
     <div class="nav-brand">Kevin Terranova</div>
     <button class="nav-hamburger" onclick="this.nextElementSibling.classList.toggle('open')" aria-label="Toggle navigation">&#9776;</button>
-    <ul class="nav-links">
-      <li><a href="#about">About</a></li>
-      <li><a href="#research">Research</a></li>
-      <li><a href="#portfolio">Portfolio</a></li>
-      <li><a href="#skills">Skills</a></li>
-      <li><a href="#contact">Contact</a></li>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#about" onclick="document.getElementById('navLinks').classList.remove('open')">About</a></li>
+      <li><a href="#research" onclick="document.getElementById('navLinks').classList.remove('open')">Research</a></li>
+      <li><a href="#portfolio" onclick="document.getElementById('navLinks').classList.remove('open')">Portfolio</a></li>
+      <li><a href="#skills" onclick="document.getElementById('navLinks').classList.remove('open')">Skills</a></li>
+      <li><a href="#contact" onclick="document.getElementById('navLinks').classList.remove('open')">Contact</a></li>
     </ul>
   </div>
 </nav>
@@ -666,7 +666,7 @@ section:nth-child(even) { background: var(--bg-alt); }
     <div class="portfolio-grid" id="portfolioGrid">
 
       <!-- PROJECT 1: TitanPE (strongest piece - shipped product) -->
-      <div class="project-card" onclick="openCase('case2')">
+      <div class="project-card" tabindex="0" role="button" onclick="openCase('case2')" onkeydown="if(event.key==='Enter'||event.key===' ')openCase('case2')">
         <div class="card-banner green" role="img" aria-label="Digital product icon">&#127939;</div>
         <div class="card-body">
           <div class="card-type">Shipped Digital Product</div>
@@ -684,7 +684,7 @@ section:nth-child(even) { background: var(--bg-alt); }
       </div>
 
       <!-- PROJECT 5: Strike Zone (shipped digital product) -->
-      <div class="project-card" onclick="openCase('case5')">
+      <div class="project-card" tabindex="0" role="button" onclick="openCase('case5')" onkeydown="if(event.key==='Enter'||event.key===' ')openCase('case5')">
         <div class="card-banner red" role="img" aria-label="Bowling icon">&#127923;</div>
         <div class="card-body">
           <div class="card-type">Shipped Digital Product</div>
@@ -703,7 +703,7 @@ section:nth-child(even) { background: var(--bg-alt); }
       </div>
 
       <!-- PROJECT 2: Interactive Module -->
-      <div class="project-card" onclick="openCase('case1')">
+      <div class="project-card" tabindex="0" role="button" onclick="openCase('case1')" onkeydown="if(event.key==='Enter'||event.key===' ')openCase('case1')">
         <div class="card-banner blue" role="img" aria-label="Interactive module icon">&#129504;</div>
         <div class="card-body">
           <div class="card-type">Interactive Learning Module</div>
@@ -722,7 +722,7 @@ section:nth-child(even) { background: var(--bg-alt); }
       </div>
 
       <!-- PROJECT 3: PE Volleyball Unit -->
-      <div class="project-card" onclick="openCase('case3')">
+      <div class="project-card" tabindex="0" role="button" onclick="openCase('case3')" onkeydown="if(event.key==='Enter'||event.key===' ')openCase('case3')">
         <div class="card-banner amber" role="img" aria-label="Curriculum icon">&#127952;</div>
         <div class="card-body">
           <div class="card-type">Curriculum Design: ADDIE Process</div>
@@ -740,7 +740,7 @@ section:nth-child(even) { background: var(--bg-alt); }
       </div>
 
       <!-- PROJECT 4: Teacher Training -->
-      <div class="project-card" onclick="openCase('case4')">
+      <div class="project-card" tabindex="0" role="button" onclick="openCase('case4')" onkeydown="if(event.key==='Enter'||event.key===' ')openCase('case4')">
         <div class="card-banner purple" role="img" aria-label="Training icon">&#128218;</div>
         <div class="card-body">
           <div class="card-type">Adult Learning / Training Design</div>
@@ -1054,7 +1054,6 @@ section:nth-child(even) { background: var(--bg-alt); }
   <div class="container">
     <div class="section-header">
       <h2>Get In Touch</h2>
-      <p></p>
     </div>
     <div class="contact-grid">
       <div class="contact-item">
