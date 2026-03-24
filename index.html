@@ -264,6 +264,7 @@ section:nth-child(even) { background: var(--bg-alt); }
 .card-banner.green { background: linear-gradient(135deg, #065f46, #10b981); }
 .card-banner.amber { background: linear-gradient(135deg, #78350f, #f59e0b); }
 .card-banner.purple { background: linear-gradient(135deg, #4c1d95, #8b5cf6); }
+.card-banner.red { background: linear-gradient(135deg, #7f1d1d, #dc2626); }
 
 .card-body { padding: 24px; }
 
@@ -429,9 +430,11 @@ section:nth-child(even) { background: var(--bg-alt); }
    ============================================ */
 .contact-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 24px;
   text-align: center;
+  max-width: 640px;
+  margin: 0 auto;
 }
 
 .contact-item {
@@ -680,6 +683,25 @@ section:nth-child(even) { background: var(--bg-alt); }
         </div>
       </div>
 
+      <!-- PROJECT 5: Strike Zone (shipped digital product) -->
+      <div class="project-card" onclick="openCase('case5')">
+        <div class="card-banner red" role="img" aria-label="Bowling icon">&#127923;</div>
+        <div class="card-body">
+          <div class="card-type">Shipped Digital Product</div>
+          <h3>Strike Zone — Bowling Scoring Companion</h3>
+          <p>An interactive bowling scoring web app for K-8 PE classrooms. Real 10-frame scoring, three game modes, 17 achievement badges, mascot-based vocabulary instruction, and a hidden teacher dashboard.</p>
+          <div class="card-tags">
+            <span class="tag">Product Design</span>
+            <span class="tag">K-8</span>
+            <span class="tag">Gamification</span>
+            <span class="tag">localStorage</span>
+            <span class="tag">Chromebook-Ready</span>
+            <span class="tag">Interactive</span>
+          </div>
+          <span class="card-link">View Case Study &#8594;</span>
+        </div>
+      </div>
+
       <!-- PROJECT 2: Interactive Module -->
       <div class="project-card" onclick="openCase('case1')">
         <div class="card-banner blue" role="img" aria-label="Interactive module icon">&#129504;</div>
@@ -812,7 +834,7 @@ section:nth-child(even) { background: var(--bg-alt); }
         <h4>Iteration</h4>
         <p><strong>v1.0:</strong> Core scoring and class management. Shipped to Teachers Pay Teachers marketplace.</p>
         <p><strong>v1.1:</strong> Fixed input sizing, improved Sit & Reach L/R handling, added roster import, optimized Quick Entry for no horizontal scrolling.</p>
-        <p><strong>v1.2 (in development):</strong> Enhanced print reports, student flags and notes, achievement certificates.</p>
+        <p><strong>v1.2 — shipped:</strong> Achievement certificates, student flags and notes, enhanced print reports.</p>
 
         <h4>Results</h4>
         <p>A real product used by real teachers, available on TPT, a marketplace serving 50,000+ PE educators. Demonstrates full product lifecycle: problem identification, user research, design, development, deployment, iteration based on feedback.</p>
@@ -902,6 +924,51 @@ section:nth-child(even) { background: var(--bg-alt); }
         <p style="margin-top:20px"><a href="fitnessgram-training-guide.html" class="card-link" style="font-size:16px" target="_blank">Launch the Training Guide &#8594;</a></p>
 
         <button class="close-case" onclick="closeCase('case4')">Close Case Study</button>
+      </div>
+
+      <!-- CASE 5 -->
+      <div class="case-study" id="case5">
+        <h3>Case Study: Strike Zone — Bowling Scoring Companion</h3>
+
+        <h4>The Challenge</h4>
+        <p>K-8 PE bowling units lack a digital scoring tool. Students struggle with manual scoring, and teachers have no way to track progress or celebrate achievements across classes.</p>
+
+        <h4>Design Process</h4>
+        <div class="process-steps">
+          <div class="process-step"><div class="step-num">A</div><div class="step-label">Analyze</div></div>
+          <div class="process-step"><div class="step-num">D</div><div class="step-label">Design</div></div>
+          <div class="process-step"><div class="step-num">D</div><div class="step-label">Develop</div></div>
+          <div class="process-step"><div class="step-num">I</div><div class="step-label">Implement</div></div>
+          <div class="process-step"><div class="step-num">E</div><div class="step-label">Evaluate</div></div>
+        </div>
+
+        <h4>Analysis</h4>
+        <p><strong>Learner Profile:</strong> K-8 students on school Chromebooks, wide range of bowling experience.</p>
+        <p><strong>Needs:</strong> Real bowling scoring (not simplified), grade-appropriate content, engagement features, teacher oversight.</p>
+        <p><strong>Constraints:</strong> Must work offline, no accounts, no installation, single HTML file, Chromebook-compatible.</p>
+
+        <h4>Design Decisions</h4>
+        <ul style="margin:12px 0 12px 24px">
+          <li><strong>Real 10-frame scoring:</strong> strikes, spares, and 10th frame bonus rules — not a simplified version</li>
+          <li><strong>Three game modes:</strong> Solo, Party (2-6 players pass-and-play), Team (A vs B)</li>
+          <li><strong>Mascot teaching system:</strong> Pinky the Pin and Bowlie the Ball deliver grade-filtered vocabulary, etiquette tips, and bowling facts</li>
+          <li><strong>17 achievement badges:</strong> First Strike, Turkey, 200 Club, Perfect Game, and more — designed to drive engagement across all skill levels</li>
+          <li><strong>Leaderboards:</strong> grade-based and school-wide with a Hall of Fame</li>
+          <li><strong>Projectable awards page:</strong> end-of-unit class celebration screen</li>
+          <li><strong>Hidden teacher dashboard:</strong> 5-tap access + PIN for player management and data reset</li>
+          <li><strong>Dark arcade aesthetic:</strong> intentionally designed to appeal to students</li>
+          <li><strong>K-2 printable score sheets:</strong> for younger students not using the app independently</li>
+        </ul>
+
+        <h4>Development</h4>
+        <p>Single HTML file, vanilla JavaScript, no dependencies. localStorage for persistent data per device. SVG mascot characters with animated reactions. Responsive design optimized for Chromebooks. Deployed to Netlify.</p>
+
+        <h4>Results</h4>
+        <p>Live product used in classroom bowling units. Second commercial product on Teachers Pay Teachers. Zero competition in the PE bowling digital tools category on TPT.</p>
+
+        <p style="margin-top:20px"><a href="https://strikezone-pe.netlify.app" class="card-link" style="font-size:16px" target="_blank">Launch Strike Zone &#8594;</a></p>
+
+        <button class="close-case" onclick="closeCase('case5')">Close Case Study</button>
       </div>
 
     </div><!-- /portfolio-grid -->
@@ -999,11 +1066,6 @@ section:nth-child(even) { background: var(--bg-alt); }
         <div class="icon">&#128100;</div>
         <h3>LinkedIn</h3>
         <p><a href="https://linkedin.com/in/kevin-terranova-b40903223" target="_blank">kevin-terranova</a></p>
-      </div>
-      <div class="contact-item">
-        <div class="icon">&#128222;</div>
-        <h3>Phone</h3>
-        <p>815-871-1653</p>
       </div>
     </div>
   </div>
