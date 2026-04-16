@@ -1,0 +1,1356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MS Flag Football Unit — TitanPE</title>
+<style>
+  /* ─── CSS VARIABLES (color picker controls these) ─── */
+  :root {
+    --primary: #111111;
+    --accent:  #cc0000;
+    --primary-dark: #000000;
+    --accent-light: #f5e6e6;
+    --accent-text: var(--accent);
+  }
+
+  /* ─── COLOR PICKER UI (hidden when printing) ─── */
+  .color-picker-ui {
+    background: #1a1a1a;
+    color: white;
+    padding: 18px 24px;
+    font-family: Arial, sans-serif;
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    flex-wrap: wrap;
+  }
+  .color-picker-ui h2 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    flex: 0 0 auto;
+  }
+  .color-picker-ui .picker-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .color-picker-ui label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #aaa;
+  }
+  .color-picker-ui input[type="color"] {
+    width: 44px;
+    height: 34px;
+    border: 2px solid #444;
+    border-radius: 4px;
+    cursor: pointer;
+    background: none;
+    padding: 2px;
+  }
+  .color-picker-ui .preview-text {
+    font-size: 11px;
+    color: #888;
+    flex: 1;
+  }
+  .print-btn {
+    margin-left: auto;
+    background: #cc0000;
+    color: white;
+    border: none;
+    padding: 9px 20px;
+    font-size: 13px;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+  }
+  .print-btn:hover { background: #aa0000; }
+
+  /* ─── BASE PAGE STYLES ─── */
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: Arial, sans-serif;
+    background: #666;
+    padding: 0;
+  }
+
+  .page {
+    background: white;
+    width: 8.5in;
+    min-height: 11in;
+    margin: 24px auto;
+    overflow: hidden;
+    page-break-after: always;
+    display: flex;
+    flex-direction: column;
+  }
+  .page:last-of-type { page-break-after: avoid; }
+
+  /* ─── HEADER ─── */
+  .page-header {
+    background: var(--primary);
+    color: white;
+    padding: 14px 22px 11px;
+  }
+  .unit-title {
+    font-size: 20px;
+    font-weight: bold;
+    letter-spacing: 2px;
+  }
+
+  .day-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--primary-dark);
+    padding: 6px 22px;
+    border-bottom: 3px solid var(--accent);
+  }
+  .day-num {
+    font-size: 13px;
+    font-weight: bold;
+    color: white;
+    letter-spacing: 1px;
+  }
+  .day-topic {
+    font-size: 12px;
+    font-weight: bold;
+    color: var(--accent);
+    letter-spacing: 0.5px;
+  }
+
+  /* ─── INFO GRID (targets / equipment / standards) ─── */
+  .info-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    border-bottom: 2px solid var(--accent);
+  }
+  .info-cell {
+    padding: 8px 14px;
+    border-right: 1px solid #e0e0e0;
+    font-size: 10.5px;
+    color: #333;
+    line-height: 1.6;
+  }
+  .info-cell:last-child { border-right: none; }
+  .cell-label {
+    font-size: 8px;
+    font-weight: bold;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+  }
+
+  /* ─── SECTION HEADERS ─── */
+  .sh-primary {
+    background: var(--primary);
+    color: white;
+    padding: 5px 14px;
+    font-size: 9px;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+  .sh-accent {
+    background: var(--accent);
+    color: white;
+    padding: 5px 14px;
+    font-size: 9px;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+  .sh-light {
+    background: var(--accent-light);
+    color: var(--primary);
+    padding: 5px 14px;
+    font-size: 9px;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    border-top: 1px solid #ddd;
+  }
+
+  /* ─── SECTION BODY ─── */
+  .sb {
+    padding: 8px 14px 9px;
+    color: #333;
+    font-size: 10.5px;
+    line-height: 1.6;
+    border-bottom: 1px solid #eee;
+  }
+  .sb p { margin-bottom: 5px; }
+  .sb p:last-child { margin-bottom: 0; }
+  .sb em { color: #555; }
+
+  /* ─── SKILL CUE CALLOUT ─── */
+  .cue {
+    background: #f7f7f7;
+    border-left: 3px solid var(--accent);
+    padding: 4px 10px;
+    margin: 4px 0;
+    font-size: 10px;
+    line-height: 1.5;
+  }
+  .cue strong { color: var(--primary); }
+
+  /* ─── TWO-COLUMN LAYOUT ─── */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .col {
+    padding: 8px 14px 9px;
+    font-size: 10.5px;
+    color: #333;
+    line-height: 1.6;
+    border-right: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+  }
+  .col:last-child { border-right: none; }
+  .col-label {
+    font-size: 8px;
+    font-weight: bold;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+  }
+
+  /* ─── ESSENTIAL QUESTION ─── */
+  .eq {
+    padding: 6px 14px;
+    font-size: 10.5px;
+    color: #444;
+    font-style: italic;
+    border-bottom: 1px solid #eee;
+    line-height: 1.6;
+  }
+
+  /* ─── FLEX SPACER ─── */
+  .spacer { flex: 1; }
+
+  /* ─── STANDARDS BADGES WITH TOOLTIPS ─── */
+  .std-badge {
+    display: inline-block;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 8px;
+    font-weight: bold;
+    cursor: help;
+    position: relative;
+    margin: 1px 2px 1px 0;
+    line-height: 1.4;
+  }
+  .std-il {
+    background: #e8e8e8;
+    color: #333;
+    border: 1px solid #bbb;
+  }
+  .std-shape {
+    background: var(--accent);
+    color: white;
+  }
+  /* Tooltip bubble */
+  .std-badge::after {
+    content: attr(data-tip);
+    position: absolute;
+    bottom: calc(100% + 4px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: #222;
+    color: #fff;
+    padding: 5px 8px;
+    border-radius: 4px;
+    font-size: 9px;
+    font-weight: normal;
+    width: 200px;
+    white-space: normal;
+    text-align: center;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.15s;
+    z-index: 999;
+    line-height: 1.4;
+  }
+  .std-badge:hover::after { opacity: 1; }
+  /* Keep standards cell visible so tooltip isn't clipped */
+  .info-cell { overflow: visible; }
+  .info-grid { overflow: visible; }
+
+  /* ─── PRINT STYLES ─── */
+  @media print {
+    .color-picker-ui { display: none !important; }
+    body { background: white; padding: 0; }
+    .page {
+      margin: 0;
+      width: 100%;
+      min-height: auto;
+      box-shadow: none;
+    }
+    /* Hide tooltips when printing */
+    .std-badge::after { display: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ─── COLOR PICKER UI ─── -->
+<div class="color-picker-ui">
+  <h2>CUSTOMIZE YOUR SCHOOL COLORS</h2>
+  <div class="picker-group">
+    <label>Header Color</label>
+    <input type="color" id="primaryPicker" value="#111111" oninput="updateColors()" onchange="updateColors()">
+  </div>
+  <div class="picker-group">
+    <label>Accent Color</label>
+    <input type="color" id="accentPicker" value="#cc0000" oninput="updateColors()" onchange="updateColors()">
+  </div>
+  <button style="background:#444;color:white;border:none;padding:9px 16px;font-size:13px;font-weight:bold;border-radius:4px;cursor:pointer;letter-spacing:0.5px;" onclick="updateColors()">&#10003; Apply Colors</button>
+  <div class="preview-text">Pick your school colors → click Apply → hit Print → done.</div>
+  <button class="print-btn" onclick="window.print()">&#128438; Print / Save PDF</button>
+</div>
+
+<!-- ════════════════════════════════════════════════ -->
+<!-- COVER PAGE -->
+<div class="page" style="justify-content:space-between;">
+
+  <!-- Top bar -->
+  <div style="background:var(--primary); padding:18px 28px; display:flex; justify-content:flex-end; align-items:center;">
+    <div style="color:var(--accent); font-size:11px; font-weight:bold; letter-spacing:1px;">Grades 6–8</div>
+  </div>
+
+  <!-- Hero section -->
+  <div style="background:var(--primary); flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:40px 28px; text-align:center;">
+    <!-- Football icon made with CSS -->
+    <div style="width:90px; height:55px; background:var(--accent); border-radius:50%; display:flex; align-items:center; justify-content:center; margin-bottom:28px; position:relative; box-shadow: 0 4px 20px rgba(0,0,0,0.4);">
+      <div style="color:white; font-size:36px;">🏈</div>
+    </div>
+    <div style="color:white; font-size:13px; letter-spacing:4px; text-transform:uppercase; opacity:0.6; margin-bottom:10px;">Middle School Physical Education</div>
+    <div style="color:white; font-size:44px; font-weight:900; letter-spacing:3px; line-height:1.1; text-transform:uppercase; margin-bottom:8px;">FLAG<br>FOOTBALL</div>
+    <div style="background:var(--accent); color:white; font-size:14px; font-weight:bold; letter-spacing:2px; padding:8px 24px; margin:16px 0; text-transform:uppercase;">Complete 9-Day Unit Plan</div>
+    <div style="color:white; opacity:0.6; font-size:11px; letter-spacing:1px; margin-top:8px;">Customize to your school colors before printing</div>
+  </div>
+
+  <!-- Feature strip -->
+  <div style="background:var(--accent); padding:14px 28px; display:grid; grid-template-columns:1fr 1fr 1fr 1fr; text-align:center; gap:0;">
+    <div style="color:white; border-right:1px solid rgba(255,255,255,0.3); padding:4px 0;">
+      <div style="font-size:20px; font-weight:900;">9</div>
+      <div style="font-size:9px; letter-spacing:1px; text-transform:uppercase; opacity:0.85;">Days</div>
+    </div>
+    <div style="color:white; border-right:1px solid rgba(255,255,255,0.3); padding:4px 0;">
+      <div style="font-size:20px; font-weight:900;">45+</div>
+      <div style="font-size:9px; letter-spacing:1px; text-transform:uppercase; opacity:0.85;">Skill Cues</div>
+    </div>
+    <div style="color:white; border-right:1px solid rgba(255,255,255,0.3); padding:4px 0;">
+      <div style="font-size:14px; font-weight:900; line-height:1.2;">IL + SHAPE</div>
+      <div style="font-size:9px; letter-spacing:1px; text-transform:uppercase; opacity:0.85;">Standards Aligned</div>
+    </div>
+    <div style="color:white; padding:4px 0;">
+      <div style="font-size:20px; font-weight:900;">PDF</div>
+      <div style="font-size:9px; letter-spacing:1px; text-transform:uppercase; opacity:0.85;">Print Ready</div>
+    </div>
+  </div>
+
+  <!-- What's included -->
+  <div style="padding:20px 28px; background:white; flex:0;">
+    <div style="font-size:9px; font-weight:bold; color:var(--accent); text-transform:uppercase; letter-spacing:1px; margin-bottom:10px;">What's Included — Every Day Has:</div>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:4px 20px; font-size:10.5px; color:#333; line-height:1.7;">
+      <div>✓ IL + SHAPE America Standards</div>
+      <div>✓ Warm-Up with coaching cues</div>
+      <div>✓ Learning Targets (SWBAT)</div>
+      <div>✓ Skill cue callout boxes</div>
+      <div>✓ Essential Questions</div>
+      <div>✓ Full game with rules</div>
+      <div>✓ Equipment list</div>
+      <div>✓ Closure + Assessment</div>
+      <div>✓ Differentiation (modify up/down)</div>
+      <div>✓ Teacher Notes</div>
+    </div>
+  </div>
+
+  <!-- Unit at a glance -->
+  <div style="background:#f7f7f7; padding:14px 28px; border-top:2px solid var(--accent);">
+    <div style="font-size:9px; font-weight:bold; color:var(--accent); text-transform:uppercase; letter-spacing:1px; margin-bottom:8px;">Unit at a Glance</div>
+    <div style="display:grid; grid-template-columns:repeat(9,1fr); gap:4px; text-align:center; font-size:8.5px;">
+      <div style="background:var(--primary);color:white;padding:4px 2px;border-radius:2px;"><strong>D1</strong><br>Intro &amp; Throwing</div>
+      <div style="background:var(--primary);color:white;padding:4px 2px;border-radius:2px;"><strong>D2</strong><br>Catching &amp; REEF</div>
+      <div style="background:var(--accent);color:white;padding:4px 2px;border-radius:2px;"><strong>D3</strong><br>Route Running</div>
+      <div style="background:var(--primary);color:white;padding:4px 2px;border-radius:2px;"><strong>D4</strong><br>QB/WR/DB</div>
+      <div style="background:var(--accent);color:white;padding:4px 2px;border-radius:2px;"><strong>D5</strong><br>Handoffs</div>
+      <div style="background:var(--primary);color:white;padding:4px 2px;border-radius:2px;"><strong>D6</strong><br>Punting</div>
+      <div style="background:var(--accent);color:white;padding:4px 2px;border-radius:2px;"><strong>D7</strong><br>Defense</div>
+      <div style="background:var(--primary);color:white;padding:4px 2px;border-radius:2px;"><strong>D8</strong><br>Mini Game</div>
+      <div style="background:var(--accent);color:white;padding:4px 2px;border-radius:2px;"><strong>D9</strong><br>Tournament</div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div style="background:var(--primary); color:#aaa; padding:8px 28px; font-size:8.5px; display:flex; justify-content:space-between;">
+    <span>TitanPE by Kevin Terranova</span>
+    <span>© 2026 · All Rights Reserved · Teachers Pay Teachers</span>
+  </div>
+
+</div>
+<!-- DAY 1 -->
+<!-- ════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <div class="unit-title">MIDDLE SCHOOL FLAG FOOTBALL</div>
+  </div>
+  <div class="day-row">
+    <div class="day-num">DAY 1 OF 9</div>
+    <div class="day-topic">Introduction &amp; Throwing Mechanics</div>
+  </div>
+
+  <div class="info-grid">
+    <div class="info-cell">
+      <div class="cell-label">Learning Targets (SWBAT)</div>
+      • I can correctly put on and wear a flag belt<br>
+      • I can explain at least 3 safety rules for flag football<br>
+      • I can demonstrate the throwing grip and release using the three cues
+    </div>
+    <div class="info-cell">
+      <div class="cell-label">Equipment</div>
+      • Flag belts (1 per student)<br>
+      • Footballs (1 per pair)<br>
+      • Cones · Pinnies
+    </div>
+    <div class="info-cell">
+      <div class="cell-label">Standards</div>
+      <span class="std-badge std-il" data-tip="IL 19.A — Demonstrate competency in locomotor, non-locomotor, and manipulative skills">19.A</span><span class="std-badge std-il" data-tip="IL 19.B — Analyze and apply movement concepts to learning new skills">19.B</span><span class="std-badge std-il" data-tip="IL 21.A — Personal responsibility and safe practices in group settings">21.A</span><br>
+      <span class="std-badge std-shape" data-tip="SHAPE S1 — Demonstrates competency in a variety of motor skills and movement patterns">S1</span><span class="std-badge std-shape" data-tip="SHAPE S4 — Exhibits responsible personal and social behavior that respects self and others">S4</span>
+    </div>
+  </div>
+
+  <div class="sh-light">Essential Question</div>
+  <div class="eq">What makes flag football different from tackle football — and how does that change how we play defense? &nbsp;|&nbsp; Why does proper throwing mechanics matter more than just throwing hard?</div>
+
+  <div class="sh-accent">Warm-Up — Flag Tag &nbsp;(5–8 min)</div>
+  <div class="sb">
+    <p>Students each get a flag belt. Everyone is "it" — pull anyone's flag, drop it on the ground (person picks it up and reattaches). Count how many flags you pull. No running outside boundaries. No contact. No grabbing clothing.</p>
+    <p>Play 2 rounds (90 seconds each). Between rounds: <em>"How did you protect your flags? Did you turn your hips? Cut? Use your arms?"</em> Brief discussion, then round 2.</p>
+    <p><em>This is the first time most students are wearing flag belts — let them figure out the feel before you teach anything.</em></p>
+  </div>
+
+  <div class="sh-primary">Lesson Focus — Throwing Mechanics &nbsp;(20–25 min)</div>
+  <div class="sb">
+    <p><strong>Skill Cues — teach one, practice, then add the next:</strong></p>
+    <div class="cue"><strong>Squish the Bug</strong> — Back foot rotates on the ball of the foot as you throw. Demonstrate without it (push throw, no power), then with it. <em>"Your back foot is loading the gun. No pivot = no power."</em></div>
+    <div class="cue"><strong>Wipe the Windshield</strong> — Wrist snaps all the way through the throw, index finger last off the ball. Throwing hand finishes like wiping a windshield across the body. This puts spiral on the ball.</div>
+    <div class="cue"><strong>Flick the Booger</strong> — Index finger is the last thing to touch the ball and flicks off the tip. That's what makes the spiral spin tight.</div>
+    <p style="margin-top:6px;">Have students air-throw through all 3 cues before picking up a football. Then partner throw — 10–15 yards apart. Coach from center; if mechanics break down, stop the group and re-demo the one cue they're missing.</p>
+    <p><strong>Catching Cues (add at 8-min mark):</strong></p>
+    <div class="cue"><strong>Diamond Hands</strong> — Ball chest-high or above: thumbs + index fingers form a diamond. Catch in front of your face. Don't swipe — let it come to your hands.</div>
+    <div class="cue"><strong>Pinkies Together / Basket</strong> — Ball below the chest: pinkies come together and form a basket. Scoop it in.</div>
+    <p style="margin-top:4px;">Have pairs throw 10 passes each way. Count completions. No moving yet.</p>
+  </div>
+
+  <div class="sh-accent">Game — Pin Football &nbsp;(10–15 min)</div>
+  <div class="sb">
+    <p>Two teams. Each team has a line of pins (bowling pins, cones, or poly spots) on their side. Teams throw footballs to knock down opponent's pins while protecting their own. <strong>No running with the ball.</strong></p>
+    <p>Round 1 only today — one pin per team. Students are learning the game AND the flag belt AND the throwing cues. Don't rush to multiple pins yet.</p>
+  </div>
+
+  <div class="sh-primary">Closure &amp; Assessment &nbsp;(3–5 min)</div>
+  <div class="two-col">
+    <div class="col">
+      <div class="col-label">Closure</div>
+      Students sit with partner. "What are the three throwing cues? Say them to your partner." "What's one rule from today you didn't know before?" Preview: next class we level up throwing AND add catching on the move.
+    </div>
+    <div class="col">
+      <div class="col-label">Assessment</div>
+      Observe partner throw — are students applying all three throwing cues? Exit question: Can students name all three throwing cues unprompted? Observe Flag Tag — are students using hips/cuts to protect flags?
+    </div>
+  </div>
+
+  <div class="sh-light">Differentiation &amp; Teacher Notes</div>
+  <div class="sb" style="border-bottom:none;">
+    <strong>Modify down:</strong> Smaller ball or foam football for grip issues; step closer during partner throw. &nbsp;<strong>Modify up:</strong> Increase partner distance; add a target (hoop, cone) to throw through.<br>
+    <strong>Note:</strong> Flag belts always go on BEFORE any activity begins — build the habit from Day 1. Common mistake: kids holding the ball with a full-hand grip like a baseball. Get their fingers on the seams early. Non-judgment, skill-focused tone matters from the start.
+  </div>
+  <div class="spacer"></div>
+</div>
+
+<!-- ════════════════════════════════════════════════ -->
+<!-- DAY 2 -->
+<!-- ════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <div class="unit-title">MIDDLE SCHOOL FLAG FOOTBALL</div>
+  </div>
+  <div class="day-row">
+    <div class="day-num">DAY 2 OF 9</div>
+    <div class="day-topic">Throwing, Catching &amp; REEF</div>
+  </div>
+
+  <div class="info-grid">
+    <div class="info-cell">
+      <div class="cell-label">Learning Targets (SWBAT)</div>
+      • I can use all three throwing cues consistently when passing to a partner<br>
+      • I can use the correct hand position (Diamond or Basket) based on where the ball is going<br>
+      • I can work with my team to knock down opponent's pins
+    </div>
+    <div class="info-cell">
+      <div class="cell-label">Equipment</div>
+      • Flag belts (1 per student)<br>
+      • Footballs (1 per pair for warm-up; 1 per group for Pin Football)<br>
+      • Bowling pins / tall cones · Cones for boundaries
+    </div>
+    <div class="info-cell">
+      <div class="cell-label">Standards</div>
+      <span class="std-badge std-il" data-tip="IL 19.A — Demonstrate competency in locomotor, non-locomotor, and manipulative skills">19.A</span><span class="std-badge std-il" data-tip="IL 19.B — Analyze and apply movement concepts to learning new skills">19.B</span><span class="std-badge std-il" data-tip="IL 21.B — Cooperative skills — work with others to accomplish tasks and achieve group goals">21.B</span><br>
+      <span class="std-badge std-shape" data-tip="SHAPE S1 — Demonstrates competency in a variety of motor skills and movement patterns">S1</span><span class="std-badge std-shape" data-tip="SHAPE S2 — Applies knowledge of concepts, principles, strategies and tactics related to movement and performance">S2</span>
+    </div>
+  </div>
+
+  <div class="sh-light">Essential Question</div>
+  <div class="eq">How do Diamond Hands vs. the Basket change based on where the ball is thrown? &nbsp;|&nbsp; What does a good spiral look like and why does it matter for accuracy?</div>
+
+  <div class="sh-accent">Warm-Up — Two-Line Passing &nbsp;(5–8 min)</div>
+  <div class="sb">
+    <p>Two lines facing each other, 10–15 yards apart. Line A throws to Line B. Receiver catches, steps to the back of Line B. Thrower jogs to back of Line A. Continuous flow.</p>
+    <p>Coaching cues: <em>"Squish the bug — I want to see that back foot pivot!" &nbsp;·&nbsp; "Wrist through — Wipe the Windshield!" &nbsp;·&nbsp; "Diamond hands if it's coming at your face — show me the diamond before it gets there!"</em></p>
+    <p>Run 4–5 minutes. <strong>This warm-up runs every class for the rest of the unit.</strong></p>
+  </div>
+
+  <div class="sh-primary">Lesson Focus — Moving Catch &amp; REEF &nbsp;(20–25 min)</div>
+  <div class="sb">
+    <p><strong>Introduce REEF (ball carrying):</strong></p>
+    <div class="cue"><strong>R — Ribs</strong>: Ball pressed tight against your ribs</div>
+    <div class="cue"><strong>E — Elbow</strong>: Elbow clamped down on the ball from above</div>
+    <div class="cue"><strong>E — Eagle Claw</strong>: Fingers spread wide, gripping the tip of the ball</div>
+    <div class="cue"><strong>F — Forearm</strong>: Forearm runs under the length of the ball</div>
+    <p style="margin-top:5px;">Demo it. Have every student hold an imaginary ball in REEF position for 10 seconds. Call a few up to demo. <em>"When you're running with the ball, you protect it with REEF. If someone reaches for your flag, don't drop the ball — protect the ball, let them pull the flag."</em></p>
+    <p style="margin-top:6px;"><strong>Partner Throw and Catch — Moving Catch:</strong> Same pairs as Day 1, but now the receiver takes 3 steps sideways before the throw, catches on the move. Rotate roles every 5 catches. Coach: <em>"Throw to where they're GOING, not where they ARE."</em> After 8 minutes: increase to 5 steps diagonally.</p>
+  </div>
+
+  <div class="sh-accent">Game — Pin Football All Rounds &nbsp;(10–15 min)</div>
+  <div class="sb">
+    <p>Same field setup as Day 1. Run all three rounds today with full time each.</p>
+    <p><strong>Round 1:</strong> 1 pin per team (review) &nbsp;·&nbsp; <strong>Round 2:</strong> 2 pins per team (harder to defend) &nbsp;·&nbsp; <strong>Round 3:</strong> 3 pins per team</p>
+    <p>Teams choose where to set their pins. Defense strategy becomes real. Let them figure it out. No running with the ball. Flag belts stay on.</p>
+  </div>
+
+  <div class="sh-primary">Closure &amp; Assessment &nbsp;(3–5 min)</div>
+  <div class="two-col">
+    <div class="col">
+      <div class="col-label">Closure</div>
+      Students find a partner from the opposing team and share one answer each: "What's one thing your team did well on defense?" "What's one catching or throwing thing you're going to fix next class?" Teacher: "Two-Line Passing is our warm-up from now on. Every class starts there."
+    </div>
+    <div class="col">
+      <div class="col-label">Assessment</div>
+      Observe Two-Line Passing — are students leading the receiver? Check REEF position during drill — are students tucking the ball after the catch? Pin Football — are teams making decisions about where to place and defend pins?
+    </div>
+  </div>
+
+  <div class="sh-light">Differentiation &amp; Teacher Notes</div>
+  <div class="sb" style="border-bottom:none;">
+    <strong>Modify down:</strong> Focus on thumb-under-ball grip and wrist snap only — don't pile on all 3 cues at once for struggling throwers. Adjust pin placement distance closer for struggling teams. &nbsp;<strong>Modify up:</strong> Increase distance in Two-Line Passing; have advanced throwers throw on the run.<br>
+    <strong>Note:</strong> Two-Line Passing is your permanent warm-up — establish the routine hard this week so it runs itself. REEF is easy to teach, hard to remember under pressure — remind them again in Day 4 and Day 6.
+  </div>
+  <div class="spacer"></div>
+</div>
+
+<!-- ════════════════════════════════════════════════ -->
+<!-- DAY 3 -->
+<!-- ════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <div class="unit-title">MIDDLE SCHOOL FLAG FOOTBALL</div>
+  </div>
+  <div class="day-row">
+    <div class="day-num">DAY 3 OF 9</div>
+    <div class="day-topic">Route Running &amp; Flickerball</div>
+  </div>
+
+  <div class="info-grid">
+    <div class="info-cell">
+      <div class="cell-label">Learning Targets (SWBAT)</div>
+      • I can run a called route (fly, curl, out) with correct timing and separation<br>
+      • I can throw a lead pass to a moving receiver<br>
+      • I can explain and apply the basic rules of Flickerball
+    </div>
+    <div class="info-cell">
+      <div class="cell-label">Equipment</div>
+      • Flag belts (1 per student)<br>
+      • Footballs (1 per group of 3)<br>
+      • Cones for route markers &amp; Flickerball boundaries<br>
+      • Basketballs (optional for hoops)
+    </div>
+    <div class="info-cell">
+      <div class="cell-label">Standards</div>
+      <span class="std-badge std-il" data-tip="IL 19.B — Analyze and apply movement concepts to learning new skills">19.B</span><span class="std-badge std-il" data-tip="IL 19.C — Demonstrate knowledge of rules, safety, and strategies during physical activity">19.C</span><br>
+      <span class="std-badge std-shape" data-tip="SHAPE S1 — Demonstrates competency in a variety of motor skills and movement patterns">S1</span><span class="std-badge std-shape" data-tip="SHAPE S2 — Applies knowledge of concepts, principles, strategies and tactics related to movement and performance">S2</span>
+    </div>
+  </div>
+
+  <div class="sh-light">Essential Question</div>
+  <div class="eq">Why does a receiver need to separate from the defender before the throw? &nbsp;|&nbsp; How does running a route help the quarterback know where to throw before the receiver gets there?</div>
+
+  <div class="sh-accent">Warm-Up — Tick Tick Boom &nbsp;(5–8 min)</div>
+  <div class="sb">
+    <p>Groups of 8–10 in a circle, one football. Students pass the football around the circle — any order, focus on throwing and catching form. One student kneels in the center next to a cone and continuously tries to flip it upright.</p>
+    <p>When the cone lands upright — <strong>BOOM.</strong> Whoever has the football at that moment takes a lap or performs a quick exercise (5 burpees, 10 jumping jacks — teacher's call). Once done, that student goes to the middle to flip the cone, the previous flipper joins the circle, and the game continues.</p>
+    <p><em>Keep the ball moving — no holding. Coaching cue: "Diamond hands or basket — read where it's coming." This is throwing and catching reps disguised as a game.</em></p>
+  </div>
+
+  <div class="sh-primary">Lesson Focus — Route Running &nbsp;(20–25 min)</div>
+  <div class="sb">
+    <p><strong>Teach three routes using cones as markers. Walk first, then half-speed, then full speed.</strong></p>
+    <div class="cue"><strong>Fly Route</strong> — Run straight downfield at full speed. No cut. QB throws deep.</div>
+    <div class="cue"><strong>Curl Route</strong> — Run 8–10 steps downfield, plant foot hard, spin back toward the QB. QB throws as receiver turns.</div>
+    <div class="cue"><strong>Out Route</strong> — Run 6–8 steps straight, plant hard, break 90 degrees to the sideline. QB leads to the outside.</div>
+    <div class="cue"><strong>Plant — Break — Look</strong> — Universal cue for ALL routes: every route ends with a hard plant, a cut, and eyes finding the ball.</div>
+    <p style="margin-top:6px;"><strong>Route Running — Groups of 3:</strong> QB, WR, cone line. QB calls the route. WR runs it. QB throws the lead pass. Rotate positions after every 3 routes. Run all three routes each rotation.</p>
+    <p>Coach: QB — throw to where they're GOING. WR — plant is the most important part of the route. Everyone tracks the ball with Diamond Hands or Basket based on height.</p>
+    <p>After 12 minutes: let each group self-select their favorite route and run it 5 times in a row at full speed. Track completions within the group.</p>
+  </div>
+
+  <div class="sh-accent">Game — Flickerball &nbsp;(10–15 min)</div>
+  <div class="sb">
+    <p>Basketball court or large open space. Two teams. <strong>No moving with the ball — feet must be planted when throwing. No guarding the ball carrier. 5 different teammates must touch the ball before a shot on goal.</strong></p>
+    <p>Scoring: Shooter's Square = 1 pt &nbsp;·&nbsp; Basket = 2 pts &nbsp;·&nbsp; 3-point line = 3 pts</p>
+    <p><em>Let them try it once with minimal coaching, then pause at the 5-minute mark: "What strategy is your team using? Are you spacing out or bunching up?" Let them adjust and resume.</em></p>
+  </div>
+
+  <div class="sh-primary">Closure &amp; Assessment &nbsp;(3–5 min)</div>
+  <div class="two-col">
+    <div class="col">
+      <div class="col-label">Closure</div>
+      Students sit by position group (QBs together, WRs together). "Which route is hardest to throw to? Why?" "Which is hardest to run? Why?" "What does the QB need to know before the receiver cuts?" Connect to real game: routes exist to create separation.
+    </div>
+    <div class="col">
+      <div class="col-label">Assessment</div>
+      Route running drill — are WRs planting hard before their cut? QB decision-making — throwing to where the receiver is going, or where they were? Flickerball — are teams completing the 5-touch sequence, or skipping to the shot?
+    </div>
+  </div>
+
+  <div class="sh-light">Differentiation &amp; Teacher Notes</div>
+  <div class="sb" style="border-bottom:none;">
+    <strong>Modify down:</strong> Slow the cut to walking pace, then add speed. Have QBs who throw late call out "now" at the moment to release — verbal trigger helps timing. Allow more than 5 touches in Flickerball for struggling teams. &nbsp;<strong>Modify up:</strong> Add a passive defender in route running groups.<br>
+    <strong>Note:</strong> Groups of 3 is the sweet spot — no standing around. Watch for QBs who wait until the receiver stops moving before throwing — timing is the whole lesson today. Flickerball will feel chaotic at first — let it run a few minutes before coaching strategy.
+  </div>
+  <div class="spacer"></div>
+</div>
+
+<!-- ════════════════════════════════════════════════ -->
+<!-- DAY 4 -->
+<!-- ════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <div class="unit-title">MIDDLE SCHOOL FLAG FOOTBALL</div>
+  </div>
+  <div class="day-row">
+    <div class="day-num">DAY 4 OF 9</div>
+    <div class="day-topic">QB / WR / DB Rotation — Defense Introduced</div>
+  </div>
+
+  <div class="info-grid">
+    <div class="info-cell">
+      <div class="cell-label">Learning Targets (SWBAT)</div>
+      • I can snap the ball and execute a throw after a QB drop<br>
+      • I can run a called route against live defense and work to get open<br>
+      • I can play defensive back and use pursuit angle to get to the ball carrier
+    </div>
+    <div class="info-cell">
+      <div class="cell-label">Equipment</div>
+      • Flag belts — flags active<br>
+      • Footballs (1 per group of 3)<br>
+      • Cones for routes &amp; boundaries<br>
+      • Pinnies for DB ID (optional)
+    </div>
+    <div class="info-cell">
+      <div class="cell-label">Standards</div>
+      <span class="std-badge std-il" data-tip="IL 19.B — Analyze and apply movement concepts to learning new skills">19.B</span><span class="std-badge std-il" data-tip="IL 19.C — Demonstrate knowledge of rules, safety, and strategies during physical activity">19.C</span><br>
+      <span class="std-badge std-shape" data-tip="SHAPE S2 — Applies knowledge of concepts, principles, strategies and tactics related to movement and performance">S2</span><span class="std-badge std-shape" data-tip="SHAPE S4 — Exhibits responsible personal and social behavior that respects self and others">S4</span>
+    </div>
+  </div>
+
+  <div class="sh-light">Essential Question</div>
+  <div class="eq">How does playing defense change your understanding of offense? &nbsp;|&nbsp; What does "attack the hip, not the flag" mean — and why does it work?</div>
+
+  <div class="sh-accent">Warm-Up — Two-Line Passing &nbsp;(5–8 min)</div>
+  <div class="sb">
+    <p>Standard Two-Line Passing with coaching cue: <em>"If you're catching, MOVE before the throw — shuffle two steps, then catch. Throwers, lead them."</em> 4–5 minutes. This skill gets applied in the main activity today.</p>
+  </div>
+
+  <div class="sh-primary">Lesson Focus — QB + WR + DB Rotation &nbsp;(20–25 min)</div>
+  <div class="sb">
+    <p><strong>Teach defense first:</strong></p>
+    <div class="cue"><strong>Attack the Hip, Not the Flag</strong> — If you chase the flag, you're always behind the ball carrier. Identify which hip the flag is on, attack the hip, and the flag is right there. Demo: chase the flag → miss. Attack the hip → pull.</div>
+    <div class="cue"><strong>3-Step QB Drop</strong> — QB holds ball, takes 3 steps back to create throwing distance. Self-snap (QB holds and drops) keeps the drill running without needing a center.</div>
+    <div class="cue"><strong>DB Stance</strong> — Face the ball carrier, stay on the balls of your feet, weight forward. Don't reach until close enough to pull cleanly.</div>
+    <p style="margin-top:5px;"><strong>QB + WR + DB Rotation Drill:</strong> Groups of 3 — QB at line, WR at line, DB lined up 3 yards off the WR. QB calls the route → 3-step drop → WR runs route → DB defends → QB throws. Completion + no flag pulled = offense wins. Flag pulled = defense wins. Rotate positions every 3 plays. Each student plays all three positions.</p>
+    <p>Final 5 minutes: compete — track offense wins vs. defense wins per group. Groups report out.</p>
+  </div>
+
+  <div class="sh-accent">Game — Ultimate Football &nbsp;(10–15 min)</div>
+  <div class="sb">
+    <p>Large rectangular field with two end zones. Two teams. <strong>No running with the ball — 3 steps maximum after a catch. Complete a pass in the end zone to score. Defense wins ball on interceptions or incompletions. No contact.</strong></p>
+    <p><em>Ultimate Football is the bridge game between route running and Mini Flag Football. It requires reading coverage, running routes, and defending passes — without the complexity of downs yet.</em></p>
+  </div>
+
+  <div class="sh-primary">Closure &amp; Assessment &nbsp;(3–5 min)</div>
+  <div class="two-col">
+    <div class="col">
+      <div class="col-label">Closure</div>
+      Each group reports: "How many plays did offense win? How many did defense?" "What did defense do that made it hard to get open?" "Did knowing the defense's job help you play better offense?" Teacher: "Today you played every single position — the best players understand what the other side is doing."
+    </div>
+    <div class="col">
+      <div class="col-label">Assessment</div>
+      Rotation compliance — did every student play all three positions? DB technique — attacking the hip or chasing the flag? QB decision-making — throwing away from coverage?
+    </div>
+  </div>
+
+  <div class="sh-light">Differentiation &amp; Teacher Notes</div>
+  <div class="sb" style="border-bottom:none;">
+    <strong>Modify down:</strong> Shorten route to 5 yards for DBs struggling to pull flags. Have QBs call Fly only until mechanics are there. Let WRs run without a defender for 1 rotation to reset confidence. &nbsp;<strong>Modify up:</strong> QB must throw within 3 seconds after the drop.<br>
+    <strong>Note:</strong> This is the most important teaching day for game-readiness. Enforce rotation strictly — don't let dominant throwers hog QB. Watch for DBs who grab clothing — flag pulling only, call it immediately.
+  </div>
+  <div class="spacer"></div>
+</div>
+
+<!-- ════════════════════════════════════════════════ -->
+<!-- DAY 5 -->
+<!-- ════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <div class="unit-title">MIDDLE SCHOOL FLAG FOOTBALL</div>
+  </div>
+  <div class="day-row">
+    <div class="day-num">DAY 5 OF 9</div>
+    <div class="day-topic">Handoffs, Gauntlet &amp; Flag Pull Top Gun</div>
+  </div>
+
+  <div class="info-grid">
+    <div class="info-cell">
+      <div class="cell-label">Learning Targets (SWBAT)</div>
+      • I can execute a clean handoff using Football Hot Potato<br>
+      • I can pull flags under pressure in the Gauntlet drill<br>
+      • I can apply REEF when carrying the ball through defenders
+    </div>
+    <div class="info-cell">
+      <div class="cell-label">Equipment</div>
+      • Flag belts — flags active<br>
+      • Footballs (1 per group for hot potato; 1–2 per gauntlet lane)<br>
+      • Cones for Gauntlet lanes · Pinnies (optional)
+    </div>
+    <div class="info-cell">
+      <div class="cell-label">Standards</div>
+      <span class="std-badge std-il" data-tip="IL 19.A — Demonstrate competency in locomotor, non-locomotor, and manipulative skills">19.A</span><span class="std-badge std-il" data-tip="IL 19.C — Demonstrate knowledge of rules, safety, and strategies during physical activity">19.C</span><span class="std-badge std-il" data-tip="IL 21.B — Cooperative skills — work with others to accomplish tasks and achieve group goals">21.B</span><br>
+      <span class="std-badge std-shape" data-tip="SHAPE S1 — Demonstrates competency in a variety of motor skills and movement patterns">S1</span><span class="std-badge std-shape" data-tip="SHAPE S2 — Applies knowledge of concepts, principles, strategies and tactics related to movement and performance">S2</span>
+    </div>
+  </div>
+
+  <div class="sh-light">Essential Question</div>
+  <div class="eq">Why is a clean handoff important when the defense is reading the backfield? &nbsp;|&nbsp; What's the hardest part about pulling flags — and how do you get better at it?</div>
+
+  <div class="sh-accent">Warm-Up — Two-Line Passing &nbsp;(5–8 min)</div>
+  <div class="sb">
+    <p>Standard Two-Line Passing. Coaching cue: <em>"After you catch it, tuck it into REEF before you jog to the back of the line. REEF every time. Build the habit."</em> Look for students who catch and swing the ball around loosely — redirect to REEF immediately.</p>
+  </div>
+
+  <div class="sh-primary">Lesson Focus — Handoffs + Gauntlet &nbsp;(20–25 min)</div>
+  <div class="sb">
+    <p><strong>Handoff Mechanics:</strong></p>
+    <div class="cue"><strong>Giving:</strong> Extend ball with both hands at belly-button height. Place it firmly — don't toss, don't flip, PLACE it. Eyes forward, not on the exchange.</div>
+    <div class="cue"><strong>Receiving:</strong> Inside arm up at chest level, outside arm below — form a shelf (pocket). Feel the ball land in the shelf → immediately apply REEF. Don't grab — let it come to you, then secure.</div>
+    <p style="margin-top:5px;">Demo it wrong first (toss/flip), then right (firm placement into pocket). Students can see the difference immediately.</p>
+    <p style="margin-top:6px;"><strong>Drill 1 — Football Hot Potato (10 min):</strong> Groups of 5–6 in a circle, one football. Pass around using handoff technique — no throwing. Speed builds as they get comfortable. Drop = 3 jumping jacks, continue. After 4 minutes: mix in one throw every 3 handoffs — call "Pass!" or "Hand!" Final 2 minutes: count total handoffs without a drop in 60 seconds.</p>
+    <p style="margin-top:6px;"><strong>Drill 2 — Flag Pull Gauntlet (10 min):</strong> 2–3 lanes, 15 yards long. Ball carrier runs the lane. 3–4 defenders spaced along the lane — each gets ONE attempt to pull the ball carrier's flag as they pass. Ball carrier goal: get through with both flags. Defender goal: pull one flag cleanly. Run 5 min, then add a required cut — defenders adjust pursuit angle. Run another 5 min.</p>
+    <div class="cue"><strong>Attack the Hip, Not the Flag</strong> — Coach defenders: "If you go for the flag and miss, you're done. If you attack the hip, you're always in position."</div>
+  </div>
+
+  <div class="sh-accent">Game — Flag Pull Top Gun &nbsp;(10–15 min)</div>
+  <div class="sb">
+    <p>1v1 flag pulling contest. Pair students by size/athletic level (teacher discretion). Both players have flag belts. Start 5 yards apart. On "Go!" — both try to pull the other's flag. First pull wins. Winner stays, loser rotates. Tournament bracket style — 2–3 rounds.</p>
+    <p><em>Keep energy high — call out great pulls, great cuts, clean escapes. This is a competitive drill with high buy-in.</em></p>
+  </div>
+
+  <div class="sh-primary">Closure &amp; Assessment &nbsp;(3–5 min)</div>
+  <div class="two-col">
+    <div class="col">
+      <div class="col-label">Closure</div>
+      Students pair up: "One thing that helped you survive the Gauntlet." "One thing that made it easy to pull flags in Top Gun." Teacher: "Defense in flag football is not about being faster. It's about angles. You attack the hip, you always have a chance — even against the fastest kid in the class."
+    </div>
+    <div class="col">
+      <div class="col-label">Assessment</div>
+      Handoff technique — are students creating the pocket and placing the ball, or tossing/grabbing? REEF under pressure — are ball carriers tucking the ball during the Gauntlet? Top Gun — using hip-attacking angles or just lunging at the flags?
+    </div>
+  </div>
+
+  <div class="sh-light">Differentiation &amp; Teacher Notes</div>
+  <div class="sb" style="border-bottom:none;">
+    <strong>Modify down:</strong> Two-handed exchanges at slower speed before building to full speed for Hot Potato. Reduce Gauntlet to 2 defenders for early success. Pair Top Gun thoughtfully — avoid mismatches. &nbsp;<strong>Modify up:</strong> Full-speed Gauntlet with cuts in both directions.<br>
+    <strong>Note:</strong> Hot Potato = highest reps, lowest threat in the unit. The Gauntlet creates natural urgency. Top Gun will be the most popular activity of the unit — use it as an earned reward in future classes if needed. Watch for ball carriers who stop and spin — keep them moving forward.
+  </div>
+  <div class="spacer"></div>
+</div>
+
+<!-- ════════════════════════════════════════════════ -->
+<!-- DAY 6 -->
+<!-- ════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <div class="unit-title">MIDDLE SCHOOL FLAG FOOTBALL</div>
+  </div>
+  <div class="day-row">
+    <div class="day-num">DAY 6 OF 9</div>
+    <div class="day-topic">Punting &amp; Agility</div>
+  </div>
+
+  <div class="info-grid">
+    <div class="info-cell">
+      <div class="cell-label">Learning Targets (SWBAT)</div>
+      • I can execute a stationary drop punt using correct mechanics<br>
+      • I can catch a punted ball using the correct hand position<br>
+      • I can communicate with a partner to call for and catch punts safely
+    </div>
+    <div class="info-cell">
+      <div class="cell-label">Equipment</div>
+      • Flag belts (1 per student)<br>
+      • Footballs (1 per pair)<br>
+      • Cones for agility circuit &amp; boundaries<br>
+      • Poly spots for punt zones
+    </div>
+    <div class="info-cell">
+      <div class="cell-label">Standards</div>
+      <span class="std-badge std-il" data-tip="IL 19.A — Demonstrate competency in locomotor, non-locomotor, and manipulative skills">19.A</span><span class="std-badge std-il" data-tip="IL 19.B — Analyze and apply movement concepts to learning new skills">19.B</span><span class="std-badge std-il" data-tip="IL 21.B — Cooperative skills — work with others to accomplish tasks and achieve group goals">21.B</span><br>
+      <span class="std-badge std-shape" data-tip="SHAPE S1 — Demonstrates competency in a variety of motor skills and movement patterns">S1</span><span class="std-badge std-shape" data-tip="SHAPE S3 — Demonstrates knowledge and skills to achieve and maintain a health-enhancing level of physical activity and fitness">S3</span>
+    </div>
+  </div>
+
+  <div class="sh-light">Essential Question</div>
+  <div class="eq">When would a team choose to punt in flag football? &nbsp;|&nbsp; Why does dropping the ball flat (parallel to the ground) matter for a clean punt?</div>
+
+  <div class="sh-accent">Warm-Up — Football Agility Circuit &nbsp;(5–8 min)</div>
+  <div class="sb">
+    <p>Set up 3–4 cone stations with 8–10 students rotating through. 20 seconds per station, rotate on whistle. Two full rotations.</p>
+    <p><strong>Station 1 — Lateral Shuffle:</strong> Shuffle between two cones 10 yards apart, touch cone, change direction. &nbsp;<strong>Station 2 — Backpedal to Sprint:</strong> Backpedal 5 yards, plant, sprint forward 10 yards. &nbsp;<strong>Station 3 — Two-Line Passing Mini:</strong> 8 yards apart, throw-and-go. &nbsp;<strong>Station 4 — Cone Cuts:</strong> Sprint to a cone, plant hard, cut left or right, sprint out.</p>
+  </div>
+
+  <div class="sh-primary">Lesson Focus — Punting &nbsp;(20–25 min)</div>
+  <div class="sb">
+    <p><strong>Four-Step Punt Sequence — teach each step separately, then combine:</strong></p>
+    <div class="cue"><strong>Step and Drop</strong> — Take a small step forward with your kicking-side foot. Drop the ball — don't toss it up. Drop it.</div>
+    <div class="cue"><strong>Drop it Flat</strong> — Ball held parallel to the ground, nose slightly angled down. When you drop it, it falls in a flat spin. End-over-end punts go nowhere.</div>
+    <div class="cue"><strong>Lock the Ankle</strong> — Point your toe down, lock your ankle. Kick with the top of your foot, not your toe. A floppy foot kills the punt.</div>
+    <div class="cue"><strong>Follow Through</strong> — Kicking leg follows straight through and up toward your shoulder.</div>
+    <p style="margin-top:5px;">Have all students air-kick through the sequence twice before picking up a football. Common mistake: students hold the ball with one hand and swing it as they kick — force two-hand hold and deliberate drop.</p>
+    <p style="margin-top:6px;"><strong>Partner Punt and Catch — 3 Rounds:</strong> Pairs, 15–20 yards apart. Round 1 (5 min): stationary punt, technique focus. Round 2 (5 min): catcher calls "I got it!" before it lands — communication drill. Round 3 (5 min): increase to 20–25 yards, catcher tracks ball from the kick. Challenge: 3 punts in a row without a drop.</p>
+  </div>
+
+  <div class="sh-accent">Game — Ultimate Football with Punt Variation &nbsp;(10–15 min)</div>
+  <div class="sb">
+    <p>Standard Ultimate Football rules: no running with ball (3 steps max), score in end zone by completed pass, defense takes over on drops or interceptions, no contact.</p>
+    <p><strong>Punt variation:</strong> If your team is 4+ steps from the end zone and wants to flip field position, a player can call "PUNT!" and punt downfield. Opposing team catches or retrieves it. Keeps the punt skill active in a game context.</p>
+  </div>
+
+  <div class="sh-primary">Closure &amp; Assessment &nbsp;(3–5 min)</div>
+  <div class="two-col">
+    <div class="col">
+      <div class="col-label">Closure</div>
+      Students rate their punt on a 1–3 scale with fingers: 1 = "I'm still figuring out the drop." 2 = "I get the mechanics, needs more reps." 3 = "I feel consistent." Teacher: "The drop is the whole skill. Everything else follows from a clean drop."
+    </div>
+    <div class="col">
+      <div class="col-label">Assessment</div>
+      Observe partner punt — flat drop or end-over-end? Self-assessment scale — are students accurately rating their own skill level? Game — did any teams use the punt play variation? Were they successful?
+    </div>
+  </div>
+
+  <div class="sh-light">Differentiation &amp; Teacher Notes</div>
+  <div class="sb" style="border-bottom:none;">
+    <strong>Modify down:</strong> Place a cone on the ground, have students drop the ball to the top of it repeatedly — builds muscle memory before adding the kick. Reduce distance to 10 yards. &nbsp;<strong>Modify up:</strong> Challenge for hang time — high punts over distance.<br>
+    <strong>Note:</strong> Punting is the hardest skill in the unit for middle schoolers — most will have zero experience. The flat drop is the single most important coaching point. If class time is short, cut the agility circuit to 2 stations and keep the full punt lesson.
+  </div>
+  <div class="spacer"></div>
+</div>
+
+<!-- ════════════════════════════════════════════════ -->
+<!-- DAY 7 -->
+<!-- ════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <div class="unit-title">MIDDLE SCHOOL FLAG FOOTBALL</div>
+  </div>
+  <div class="day-row">
+    <div class="day-num">DAY 7 OF 9</div>
+    <div class="day-topic">Receivers vs. Defenders — Reading the Route</div>
+  </div>
+
+  <div class="info-grid">
+    <div class="info-cell">
+      <div class="cell-label">Learning Targets (SWBAT)</div>
+      • I can use route running to create separation from a defender<br>
+      • I can play defensive back position, reading the receiver's hips and hands<br>
+      • I can apply all throwing, catching, and carrying cues in a live game situation
+    </div>
+    <div class="info-cell">
+      <div class="cell-label">Equipment</div>
+      • Flag belts — flags active<br>
+      • Footballs (1 per group)<br>
+      • Cones for field setup &amp; zones<br>
+      • Pinnies (2 colors)
+    </div>
+    <div class="info-cell">
+      <div class="cell-label">Standards</div>
+      <span class="std-badge std-il" data-tip="IL 19.C — Demonstrate knowledge of rules, safety, and strategies during physical activity">19.C</span><span class="std-badge std-il" data-tip="IL 21.A — Personal responsibility and safe practices in group settings">21.A</span><br>
+      <span class="std-badge std-shape" data-tip="SHAPE S2 — Applies knowledge of concepts, principles, strategies and tactics related to movement and performance">S2</span><span class="std-badge std-shape" data-tip="SHAPE S4 — Exhibits responsible personal and social behavior that respects self and others">S4</span>
+    </div>
+  </div>
+
+  <div class="sh-light">Essential Question</div>
+  <div class="eq">What does a receiver do after they make the catch that changes what the defense does next? &nbsp;|&nbsp; How do you read the receiver's body language as a defender?</div>
+
+  <div class="sh-accent">Warm-Up — Two-Line Passing Competitive &nbsp;(5–8 min)</div>
+  <div class="sb">
+    <p>Two-Line Passing with competitive scoring. Line A vs. Line B — track completions for 3 minutes, switch direction and track again. Winning line picks first group activity position.</p>
+    <p>Coaching cue: <em>"Throwers — call your receiver's name before you throw. WRs — show your hands early, give the QB a target."</em></p>
+  </div>
+
+  <div class="sh-primary">Lesson Focus — Receivers vs. Defenders &nbsp;(20–25 min)</div>
+  <div class="sb">
+    <p><strong>Teach defensive reading:</strong></p>
+    <div class="cue"><strong>Read the Hips, Not the Eyes</strong> — Wherever the hips go, the body goes. Eyes and head fake. Hips don't lie. Demo: QB throws a Curl — show the DB following hips vs. biting on head fake. The student who follows hips defends it.</div>
+    <div class="cue"><strong>Watch the Hands</strong> — When the receiver shows their hands, the ball is coming. DB closes on the ball immediately.</div>
+    <p style="margin-top:5px;"><strong>Receivers vs. Defenders Drill:</strong> Groups of 4 — 1 QB, 2 WRs, 2 DBs (or 1 QB, 1 WR, 1 DB for smaller class). Two route trees run simultaneously (left side, right side). QB snaps and reads — throws to whichever WR has separation. DBs cover their WR, attack the hip on the catch.</p>
+    <p>Scoring: Offense point = completion + WR keeps both flags for 3 steps after catch. Defense point = flag pull, interception, or incompletion. Rotate positions every 4 plays. Run for the full 20 minutes. Final 5 minutes: "Offense vs. Defense Challenge" — each group goes 5 plays, tracks score.</p>
+  </div>
+
+  <div class="sh-accent">Game — Ultimate Football Full Rules &nbsp;(10–15 min)</div>
+  <div class="sb">
+    <p>Two teams, full field. Standard Ultimate Football: no running (3 steps max), score in end zone by completed pass, defense takes over on drops or interceptions, no contact.</p>
+    <p><em>Today's emphasis: "Use what you learned in the drill. Receivers — run real routes, not just random zigzags. Defense — read hips, attack hip on the catch."</em></p>
+  </div>
+
+  <div class="sh-primary">Closure &amp; Assessment &nbsp;(3–5 min)</div>
+  <div class="two-col">
+    <div class="col">
+      <div class="col-label">Closure</div>
+      Students reflect 30 seconds, then share with a partner: "One offensive thing you did well today." "One thing defense did that you couldn't beat." Class share-out: build a board of "what works" for offense and defense — students carry this into Mini Flag Football.
+    </div>
+    <div class="col">
+      <div class="col-label">Assessment</div>
+      DB technique — reading hips or biting on head fakes? QB decision-making — choosing the open receiver based on coverage, or defaulting to the same target? Group score tracking — which groups had balanced offense vs. defense scores?
+    </div>
+  </div>
+
+  <div class="sh-light">Differentiation &amp; Teacher Notes</div>
+  <div class="sb" style="border-bottom:none;">
+    <strong>Modify down:</strong> Reduce to Fly route only for DBs getting beat. Slow drill to half-speed for WRs who don't get open. Simplify to 1 WR / 1 DB for QBs struggling to read two routes. &nbsp;<strong>Modify up:</strong> Add a 3-second throw clock for QBs.<br>
+    <strong>Note:</strong> This is the last skill-building day before Mini Flag Football — treat it as review and refinement. Watch for students avoiding QB in rotations — coach them up specifically today. "Read the hips, not the eyes" will stick. Students will quote it back in the game.
+  </div>
+  <div class="spacer"></div>
+</div>
+
+<!-- ════════════════════════════════════════════════ -->
+<!-- DAY 8 -->
+<!-- ════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <div class="unit-title">MIDDLE SCHOOL FLAG FOOTBALL</div>
+  </div>
+  <div class="day-row">
+    <div class="day-num">DAY 8 OF 9</div>
+    <div class="day-topic">Mini Flag Football</div>
+  </div>
+
+  <div class="info-grid">
+    <div class="info-cell">
+      <div class="cell-label">Learning Targets (SWBAT)</div>
+      • I can apply offensive and defensive strategies in a flag football game<br>
+      • I can follow flag football rules including 4-down structure and flag pulling<br>
+      • I can work cooperatively with my team to move the ball and score
+    </div>
+    <div class="info-cell">
+      <div class="cell-label">Equipment</div>
+      • Flag belts — flags active<br>
+      • Footballs (1 per field)<br>
+      • Cones for mini fields &amp; end zones<br>
+      • Pinnies (multiple colors) · Footballs for warm-up rotation
+    </div>
+    <div class="info-cell">
+      <div class="cell-label">Standards</div>
+      <span class="std-badge std-il" data-tip="IL 19.C — Demonstrate knowledge of rules, safety, and strategies during physical activity">19.C</span><span class="std-badge std-il" data-tip="IL 21.A — Personal responsibility and safe practices in group settings">21.A</span><span class="std-badge std-il" data-tip="IL 21.B — Cooperative skills — work with others to accomplish tasks and achieve group goals">21.B</span><br>
+      <span class="std-badge std-shape" data-tip="SHAPE S2 — Applies knowledge of concepts, principles, strategies and tactics related to movement and performance">S2</span><span class="std-badge std-shape" data-tip="SHAPE S4 — Exhibits responsible personal and social behavior that respects self and others">S4</span>
+    </div>
+  </div>
+
+  <div class="sh-light">Essential Question</div>
+  <div class="eq">How do you call a play when you only have 10 seconds before the snap? &nbsp;|&nbsp; What does your team do differently on 4th down vs. 1st down?</div>
+
+  <div class="sh-accent">Warm-Up — QB / WR / DB Rotation Review &nbsp;(5–8 min)</div>
+  <div class="sb">
+    <p>Quick review of the Day 4 rotation drill. Groups of 3 — QB, WR, DB. QB calls a route (Fly, Curl, or Out), WR runs it, DB defends. QB throws. Rotate positions every 2 plays. Keep it fast — this is warm-up pace, not teaching pace. Students already know the drill.</p>
+    <p><em>Coaching cue: "Read the hips, not the eyes. Attack the hip, not the flag. You've got 5 minutes — use them."</em> This gets every student mentally into QB/WR/DB roles before Mini Flag Football starts.</p>
+  </div>
+
+  <div class="sh-primary">Lesson Focus — Mini Flag Football Rules &amp; 5 Passes &nbsp;(20–25 min)</div>
+  <div class="sb">
+    <p><strong>Walk through Mini Flag Football rules before playing:</strong></p>
+    <div class="cue"><strong>10-Second Huddle</strong> — Teams get 10 seconds before each play. QB calls the play: name the route and the receiver. <em>"Jordan, run a curl. Alex, run a fly. I'm throwing to whoever's open."</em></div>
+    <div class="cue"><strong>4-Down Structure</strong> — 4 downs to score (reach opponent's end zone). No score in 4 downs: possession switches.</div>
+    <div class="cue"><strong>5-Count Rush Rule</strong> — No rushing the QB until 5 seconds after the snap.</div>
+    <div class="cue"><strong>QB Cannot Run</strong> — QB must pass or hand off on every play. No contact, no blocking.</div>
+    <p style="margin-top:5px;">Walk through one "practice play" with a demo group before games start.</p>
+    <p style="margin-top:6px;"><strong>5 Passes Warm-Up Game (5–6 min):</strong> Teams must complete 5 consecutive passes to score a point. Knocked down or intercepted = possession switches. No running with the ball. Count each complete pass aloud as a team. Warms up decision-making and spacing without the complexity of downs.</p>
+    <p style="margin-top:6px;"><strong>Mini Flag Football (15–20 min):</strong> Groups of 6, multiple mini fields. Teacher role: rotate between fields, enforce 5-count rush rule, call obvious flags. Encourage huddles — if teams aren't huddling, stop the game and make them. "You have 10 seconds. Use them." At 10-min mark: stop all games, give one whole-class coaching point on the most common mistake seen, then resume.</p>
+  </div>
+
+  <div class="sh-primary">Closure &amp; Assessment &nbsp;(3–5 min)</div>
+  <div class="two-col">
+    <div class="col">
+      <div class="col-label">Closure</div>
+      Teams stay together, self-evaluate: "What play worked best for your offense? Why?" "What did defense do to stop the other team?" "What's one thing your team needs to fix for the tournament?" Teacher: "Tomorrow is the tournament. You've built these skills across 8 days — now put it all together."
+    </div>
+    <div class="col">
+      <div class="col-label">Assessment</div>
+      Huddle compliance — are teams huddling and calling plays, or just snapping randomly? 5-count rush — are defenders counting before rushing? 5 Passes — are teams spreading the floor and creating passing lanes, or bunching?
+    </div>
+  </div>
+
+  <div class="sh-light">Differentiation &amp; Teacher Notes</div>
+  <div class="sb" style="border-bottom:none;">
+    <strong>Modify down:</strong> Reduce to 3v3, smaller field, eliminate the 4-down structure and just play keep-away first. &nbsp;<strong>Modify up:</strong> Add a running play option for one designated player who isn't the QB.<br>
+    <strong>Note:</strong> Zombie Tag burns energy fast, students love it, and requires zero football skill — great equalizer before competition. The 10-second huddle rule is the biggest game-changer — enforce it hard today so Day 9 runs itself. Common issue: students who played tackle football outside school will try option routes or blocking assignments — keep it simple and redirect.
+  </div>
+  <div class="spacer"></div>
+</div>
+
+<!-- ════════════════════════════════════════════════ -->
+<!-- DAY 9 -->
+<!-- ════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <div class="unit-title">MIDDLE SCHOOL FLAG FOOTBALL</div>
+  </div>
+  <div class="day-row">
+    <div class="day-num">DAY 9 OF 9</div>
+    <div class="day-topic">Tournament Day</div>
+  </div>
+
+  <div class="info-grid">
+    <div class="info-cell">
+      <div class="cell-label">Learning Targets (SWBAT)</div>
+      • I can compete in a flag football tournament applying skills from the full unit<br>
+      • I can demonstrate sportsmanship and teamwork throughout competition<br>
+      • I can self-evaluate my skill growth from Day 1 to Day 9
+    </div>
+    <div class="info-cell">
+      <div class="cell-label">Equipment</div>
+      • Flag belts — flags active<br>
+      • Footballs (1 per field)<br>
+      • Cones for fields, end zones &amp; boundaries<br>
+      • Pinnies (4–6 colors, 1 per team)<br>
+      • Whiteboard for bracket (recommended)
+    </div>
+    <div class="info-cell">
+      <div class="cell-label">Standards</div>
+      <span class="std-badge std-il" data-tip="IL 19.C — Demonstrate knowledge of rules, safety, and strategies during physical activity">19.C</span><span class="std-badge std-il" data-tip="IL 21.A — Personal responsibility and safe practices in group settings">21.A</span><span class="std-badge std-il" data-tip="IL 21.B — Cooperative skills — work with others to accomplish tasks and achieve group goals">21.B</span><br>
+      <span class="std-badge std-shape" data-tip="SHAPE S4 — Exhibits responsible personal and social behavior that respects self and others">S4</span><span class="std-badge std-shape" data-tip="SHAPE S5 — Recognizes the value of physical activity for health, enjoyment, challenge, self-expression and/or social interaction">S5</span>
+    </div>
+  </div>
+
+  <div class="sh-light">Essential Question</div>
+  <div class="eq">What does sportsmanship look like in a competitive game? &nbsp;|&nbsp; How have your skills changed from when you started this unit?</div>
+
+  <div class="sh-accent">Warm-Up — Two-Line Passing Final Reps &nbsp;(5–8 min)</div>
+  <div class="sb">
+    <p>Last time running Two-Line Passing as a class. Students know the drill. Run it with intensity — competitive tracking. Line A vs. Line B, count completions in 3 minutes.</p>
+    <p><em>"Last warm-up of the unit. These are your final reps before the tournament. Make them count."</em></p>
+  </div>
+
+  <div class="sh-primary">Tournament Setup &amp; Games &nbsp;(25–30 min)</div>
+  <div class="sb">
+    <p><strong>Teams of 4–5 players.</strong> Option A — students count off by number, teacher controls size, 60 seconds to choose a team name. Option B — teacher pre-assigns balanced teams based on skill level. Write team names on board. Set up bracket (round robin if 4 teams; single elimination if 6+).</p>
+    <p style="margin-top:5px;"><strong>Tournament Rules:</strong> Each game — 10 minutes, continuous play. 4 downs to score. Flag pulling. 5-count rush. QB cannot run. Teams keep their own score, teacher verifies. Report score, rotate to next opponent.</p>
+    <p style="margin-top:5px;"><em>Run 2–3 round-robin games per team. Teacher rotates between fields — be visible, call obvious violations, give live coaching feedback. Between games (90-sec transition): teams huddle, teacher gives one whole-class positive note, teams adjust and rotate.</em></p>
+    <p style="margin-top:5px;"><strong>Sportsmanship Standard (non-negotiable):</strong> Before each game — both teams shake hands or fist bump. After each game — both teams shake hands AND say one positive thing about the opposing team out loud before walking away. Teacher enforces without exception.</p>
+    <p style="margin-top:5px;"><strong>Championship Game (if time allows):</strong> Top 2 teams from round robin. Class gathers at one field to watch. Same game, same standards. Spectators cheer for both teams.</p>
+  </div>
+
+  <div class="sh-primary">Unit Reflection &amp; Closure &nbsp;(8–10 min)</div>
+  <div class="two-col">
+    <div class="col">
+      <div class="col-label">Reflection Questions</div>
+      1. "What skill improved the most for you from Day 1 to today?" (Throwing, catching, route running, defense, pulling flags — pick one and explain.)<br>
+      2. "Name one thing you learned about being a teammate or competitor in this unit."<br>
+      3. "What rule or cue from this unit will you remember 5 years from now? Say it out loud."<br><br>
+      After individual reflection: open share-out. Collect cue answers on the board — students will almost always say REEF, Squish the Bug, attack the hip. Validate these.
+    </div>
+    <div class="col">
+      <div class="col-label">Assessment + Teacher Close</div>
+      Tournament — applying skills from Days 1–8 in live game? Sportsmanship — completing handshake + positive comment without prompting? Reflection quality — specific about skill growth, or vague?<br><br>
+      <em>"Flag football is not about being the fastest or the strongest. It's about knowing your job, trusting your teammates, and making smart decisions under pressure. You just spent 9 days building that. That transfers — not just to football, but to every team situation you'll ever be in. Nice work."</em>
+    </div>
+  </div>
+
+  <div class="sh-light">Differentiation &amp; Teacher Notes</div>
+  <div class="sb" style="border-bottom:none;">
+    <strong>Skill balancing:</strong> If one team dominates, add a rule mid-tournament (e.g., every player must touch the ball before a score — forces everyone in). &nbsp;<strong>Limited mobility:</strong> Allow permanent QB role or "coach on the field" if full participation isn't possible. &nbsp;<strong>High-competition students:</strong> Address sportsmanship privately before the tournament, not publicly during.<br>
+    <strong>Note:</strong> Pre-assign teams the night before — Day 9 transitions take time and student drama over teams slows everything down. Post the bracket where students can see it — even a rough whiteboard bracket creates investment. The written reflection closes the unit with intentionality — don't skip it even if you're running short on time. One question is better than zero.
+  </div>
+  <div class="spacer"></div>
+</div>
+
+<!-- ════════════════════════════════════════════════ -->
+<!-- TEACHER RUBRIC -->
+<!-- ════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <div class="unit-title">MIDDLE SCHOOL FLAG FOOTBALL</div>
+  </div>
+  <div class="day-row">
+    <div class="day-num">TEACHER SKILL RUBRIC</div>
+    <div class="day-topic">Unit Assessment · Grades 6–8</div>
+  </div>
+
+  <div style="padding:12px 14px 6px; font-size:10.5px; color:#333; border-bottom:1px solid #eee;">
+    <strong>Directions:</strong> Rate each student on the five skill areas using the 1–4 scale below. Observe students across multiple days — do not base scores on a single class. Record scores at the end of the unit (Day 8–9).
+  </div>
+
+  <!-- Scale legend -->
+  <div style="display:grid; grid-template-columns:1fr 1fr 1fr 1fr; border-bottom:2px solid var(--accent);">
+    <div style="padding:5px 12px; border-right:1px solid #eee;">
+      <div style="font-size:8.5px; font-weight:bold; color:var(--accent); text-transform:uppercase; letter-spacing:1px;">1 — Beginning</div>
+      <div style="font-size:8.5px; color:#555; margin-top:2px;">Rarely demonstrates the skill. Requires constant redirection.</div>
+    </div>
+    <div style="padding:5px 12px; border-right:1px solid #eee;">
+      <div style="font-size:8.5px; font-weight:bold; color:var(--accent); text-transform:uppercase; letter-spacing:1px;">2 — Developing</div>
+      <div style="font-size:8.5px; color:#555; margin-top:2px;">Sometimes demonstrates. Inconsistent under pressure.</div>
+    </div>
+    <div style="padding:5px 12px; border-right:1px solid #eee;">
+      <div style="font-size:8.5px; font-weight:bold; color:var(--accent); text-transform:uppercase; letter-spacing:1px;">3 — Proficient</div>
+      <div style="font-size:8.5px; color:#555; margin-top:2px;">Consistent in drills. Applying in games with some success.</div>
+    </div>
+    <div style="padding:5px 12px;">
+      <div style="font-size:8.5px; font-weight:bold; color:var(--accent); text-transform:uppercase; letter-spacing:1px;">4 — Exemplary</div>
+      <div style="font-size:8.5px; color:#555; margin-top:2px;">Consistent independently in both drills and live games.</div>
+    </div>
+  </div>
+
+  <!-- Rubric table -->
+  <div style="padding:10px 14px 0;">
+    <table style="width:100%; border-collapse:collapse; font-size:10px;">
+      <thead>
+        <tr style="background:var(--primary); color:white;">
+          <th style="padding:7px 10px; text-align:left; width:22%; font-size:9px; letter-spacing:1px; text-transform:uppercase;">Student Name</th>
+          <th style="padding:7px 8px; text-align:center; width:13%; font-size:9px; letter-spacing:1px; text-transform:uppercase; border-left:1px solid rgba(255,255,255,0.2);">Throwing<br><span style="opacity:0.7; font-weight:normal;">Squish Bug · Wipe · Flick</span></th>
+          <th style="padding:7px 8px; text-align:center; width:13%; font-size:9px; letter-spacing:1px; text-transform:uppercase; border-left:1px solid rgba(255,255,255,0.2);">Catching<br><span style="opacity:0.7; font-weight:normal;">Diamond · Basket · REEF</span></th>
+          <th style="padding:7px 8px; text-align:center; width:13%; font-size:9px; letter-spacing:1px; text-transform:uppercase; border-left:1px solid rgba(255,255,255,0.2);">Route Running<br><span style="opacity:0.7; font-weight:normal;">Plant · Break · Look</span></th>
+          <th style="padding:7px 8px; text-align:center; width:13%; font-size:9px; letter-spacing:1px; text-transform:uppercase; border-left:1px solid rgba(255,255,255,0.2);">Defense<br><span style="opacity:0.7; font-weight:normal;">Attack Hip · Read Hips</span></th>
+          <th style="padding:7px 8px; text-align:center; width:13%; font-size:9px; letter-spacing:1px; text-transform:uppercase; border-left:1px solid rgba(255,255,255,0.2);">Sportsmanship<br><span style="opacity:0.7; font-weight:normal;">Teamwork · Fair Play</span></th>
+          <th style="padding:7px 8px; text-align:center; width:13%; font-size:9px; letter-spacing:1px; text-transform:uppercase; border-left:1px solid rgba(255,255,255,0.2);">Total<br><span style="opacity:0.7; font-weight:normal;">/20</span></th>
+        </tr>
+      </thead>
+      <tbody id="rubric-rows"></tbody>
+    </table>
+  </div>
+
+  <div style="padding:10px 14px; font-size:9.5px; color:#666; border-top:1px solid #eee; margin-top:auto;">
+    <strong>Grading Guide:</strong> &nbsp;18–20 = Exemplary &nbsp;·&nbsp; 14–17 = Proficient &nbsp;·&nbsp; 10–13 = Developing &nbsp;·&nbsp; Below 10 = Beginning &nbsp;·&nbsp; Sportsmanship counts — a student who excels physically but disrespects teammates cannot score a 4 in sportsmanship.
+  </div>
+  <div class="spacer"></div>
+</div>
+
+<!-- ════════════════════════════════════════════════ -->
+<!-- STUDENT SELF-ASSESSMENT -->
+<!-- ════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <div class="unit-title">MIDDLE SCHOOL FLAG FOOTBALL</div>
+  </div>
+  <div class="day-row">
+    <div class="day-num">STUDENT SELF-ASSESSMENT</div>
+    <div class="day-topic">How did you grow? · Complete on Day 9</div>
+  </div>
+
+  <div style="padding:10px 14px 8px; border-bottom:1px solid #eee;">
+    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; font-size:10.5px; color:#333;">
+      <div>Name: <span style="display:inline-block; border-bottom:1px solid #999; width:160px;">&nbsp;</span></div>
+      <div>Class Period: <span style="display:inline-block; border-bottom:1px solid #999; width:80px;">&nbsp;</span></div>
+      <div>Date: <span style="display:inline-block; border-bottom:1px solid #999; width:100px;">&nbsp;</span></div>
+    </div>
+  </div>
+
+  <!-- Scale -->
+  <div style="background:var(--accent-light); border-bottom:2px solid var(--accent); padding:8px 14px;">
+    <div style="font-size:9px; font-weight:bold; color:var(--accent); text-transform:uppercase; letter-spacing:1px; margin-bottom:5px;">Rating Scale</div>
+    <div style="display:grid; grid-template-columns:1fr 1fr 1fr 1fr; font-size:9.5px; color:#444; gap:6px;">
+      <div><strong>1</strong> — I don't have this yet. I'm still figuring it out.</div>
+      <div><strong>2</strong> — I get it in practice but lose it in games.</div>
+      <div><strong>3</strong> — I do this consistently in drills and sometimes in games.</div>
+      <div><strong>4</strong> — I do this well in both drills AND live game situations.</div>
+    </div>
+  </div>
+
+  <!-- Skill ratings -->
+  <div style="padding:10px 14px;">
+
+    <div style="border:1px solid #eee; border-radius:3px; margin-bottom:8px; overflow:hidden;">
+      <div style="display:grid; grid-template-columns:1fr auto; align-items:center; background:var(--primary); color:white; padding:5px 12px;">
+        <div>
+          <div style="font-size:10px; font-weight:bold;">Throwing Mechanics</div>
+          <div style="font-size:8px; opacity:0.75;">Squish the Bug · Wipe the Windshield · Flick the Booger</div>
+        </div>
+        <div style="display:flex; gap:10px; align-items:center;">
+          <label style="display:flex;flex-direction:column;align-items:center;cursor:pointer;"><input type="radio" name="skill0" value="1"><span style="font-size:9px;font-weight:bold;">1</span></label>
+          <label style="display:flex;flex-direction:column;align-items:center;cursor:pointer;"><input type="radio" name="skill0" value="2"><span style="font-size:9px;font-weight:bold;">2</span></label>
+          <label style="display:flex;flex-direction:column;align-items:center;cursor:pointer;"><input type="radio" name="skill0" value="3"><span style="font-size:9px;font-weight:bold;">3</span></label>
+          <label style="display:flex;flex-direction:column;align-items:center;cursor:pointer;"><input type="radio" name="skill0" value="4"><span style="font-size:9px;font-weight:bold;">4</span></label>
+        </div>
+      </div>
+      <div style="padding:6px 12px; font-size:9.5px; color:#555; font-style:italic;">When I throw, I pivot my back foot, snap my wrist, and let my index finger be the last thing off the ball.</div>
+    </div>
+
+    <div style="border:1px solid #eee; border-radius:3px; margin-bottom:8px; overflow:hidden;">
+      <div style="display:grid; grid-template-columns:1fr auto; align-items:center; background:var(--accent); color:white; padding:5px 12px;">
+        <div>
+          <div style="font-size:10px; font-weight:bold;">Catching</div>
+          <div style="font-size:8px; opacity:0.75;">Diamond Hands · Pinkies Together · REEF</div>
+        </div>
+        <div style="display:flex; gap:10px; align-items:center;">
+          <label style="display:flex;flex-direction:column;align-items:center;cursor:pointer;"><input type="radio" name="skill1" value="1"><span style="font-size:9px;font-weight:bold;">1</span></label>
+          <label style="display:flex;flex-direction:column;align-items:center;cursor:pointer;"><input type="radio" name="skill1" value="2"><span style="font-size:9px;font-weight:bold;">2</span></label>
+          <label style="display:flex;flex-direction:column;align-items:center;cursor:pointer;"><input type="radio" name="skill1" value="3"><span style="font-size:9px;font-weight:bold;">3</span></label>
+          <label style="display:flex;flex-direction:column;align-items:center;cursor:pointer;"><input type="radio" name="skill1" value="4"><span style="font-size:9px;font-weight:bold;">4</span></label>
+        </div>
+      </div>
+      <div style="padding:6px 12px; font-size:9.5px; color:#555; font-style:italic;">I use the right hand shape based on where the ball is coming, and I tuck into REEF after every catch.</div>
+    </div>
+
+    <div style="border:1px solid #eee; border-radius:3px; margin-bottom:8px; overflow:hidden;">
+      <div style="display:grid; grid-template-columns:1fr auto; align-items:center; background:var(--primary); color:white; padding:5px 12px;">
+        <div>
+          <div style="font-size:10px; font-weight:bold;">Route Running</div>
+          <div style="font-size:8px; opacity:0.75;">Fly · Curl · Out · Plant — Break — Look</div>
+        </div>
+        <div style="display:flex; gap:10px; align-items:center;">
+          <label style="display:flex;flex-direction:column;align-items:center;cursor:pointer;"><input type="radio" name="skill2" value="1"><span style="font-size:9px;font-weight:bold;">1</span></label>
+          <label style="display:flex;flex-direction:column;align-items:center;cursor:pointer;"><input type="radio" name="skill2" value="2"><span style="font-size:9px;font-weight:bold;">2</span></label>
+          <label style="display:flex;flex-direction:column;align-items:center;cursor:pointer;"><input type="radio" name="skill2" value="3"><span style="font-size:9px;font-weight:bold;">3</span></label>
+          <label style="display:flex;flex-direction:column;align-items:center;cursor:pointer;"><input type="radio" name="skill2" value="4"><span style="font-size:9px;font-weight:bold;">4</span></label>
+        </div>
+      </div>
+      <div style="padding:6px 12px; font-size:9.5px; color:#555; font-style:italic;">I run my routes with a hard plant before every cut, and I find the ball with my eyes immediately after the break.</div>
+    </div>
+
+    <div style="border:1px solid #eee; border-radius:3px; margin-bottom:8px; overflow:hidden;">
+      <div style="display:grid; grid-template-columns:1fr auto; align-items:center; background:var(--accent); color:white; padding:5px 12px;">
+        <div>
+          <div style="font-size:10px; font-weight:bold;">Defense — Flag Pulling</div>
+          <div style="font-size:8px; opacity:0.75;">Attack the Hip, Not the Flag · Read the Hips, Not the Eyes</div>
+        </div>
+        <div style="display:flex; gap:10px; align-items:center;">
+          <label style="display:flex;flex-direction:column;align-items:center;cursor:pointer;"><input type="radio" name="skill3" value="1"><span style="font-size:9px;font-weight:bold;">1</span></label>
+          <label style="display:flex;flex-direction:column;align-items:center;cursor:pointer;"><input type="radio" name="skill3" value="2"><span style="font-size:9px;font-weight:bold;">2</span></label>
+          <label style="display:flex;flex-direction:column;align-items:center;cursor:pointer;"><input type="radio" name="skill3" value="3"><span style="font-size:9px;font-weight:bold;">3</span></label>
+          <label style="display:flex;flex-direction:column;align-items:center;cursor:pointer;"><input type="radio" name="skill3" value="4"><span style="font-size:9px;font-weight:bold;">4</span></label>
+        </div>
+      </div>
+      <div style="padding:6px 12px; font-size:9.5px; color:#555; font-style:italic;">I attack the ball carrier's hip instead of chasing the flag, and I read the receiver's hips to avoid getting faked out.</div>
+    </div>
+
+    <div style="border:1px solid #eee; border-radius:3px; margin-bottom:8px; overflow:hidden;">
+      <div style="display:grid; grid-template-columns:1fr auto; align-items:center; background:var(--primary); color:white; padding:5px 12px;">
+        <div>
+          <div style="font-size:10px; font-weight:bold;">Sportsmanship &amp; Teamwork</div>
+          <div style="font-size:8px; opacity:0.75;">Encourage teammates · Play fair · Handle losing/winning well</div>
+        </div>
+        <div style="display:flex; gap:10px; align-items:center;">
+          <label style="display:flex;flex-direction:column;align-items:center;cursor:pointer;"><input type="radio" name="skill4" value="1"><span style="font-size:9px;font-weight:bold;">1</span></label>
+          <label style="display:flex;flex-direction:column;align-items:center;cursor:pointer;"><input type="radio" name="skill4" value="2"><span style="font-size:9px;font-weight:bold;">2</span></label>
+          <label style="display:flex;flex-direction:column;align-items:center;cursor:pointer;"><input type="radio" name="skill4" value="3"><span style="font-size:9px;font-weight:bold;">3</span></label>
+          <label style="display:flex;flex-direction:column;align-items:center;cursor:pointer;"><input type="radio" name="skill4" value="4"><span style="font-size:9px;font-weight:bold;">4</span></label>
+        </div>
+      </div>
+      <div style="padding:6px 12px; font-size:9.5px; color:#555; font-style:italic;">I encouraged my teammates, played by the rules, and treated the other team with respect — win or lose.</div>
+    </div>
+
+  </div>
+
+  <!-- Reflection questions -->
+  <div style="padding:0 14px 10px;">
+    <div class="sh-light" style="margin:0 -14px 8px; padding:5px 14px;">Reflection</div>
+    <div style="font-size:10px; color:#333; margin-bottom:6px;"><strong>1.</strong> What skill improved the most for you during this unit? Explain specifically what you can do now that you couldn't do on Day 1.</div>
+    <div style="border-bottom:1px solid #ccc; margin-bottom:12px; height:22px;"></div>
+    <div style="border-bottom:1px solid #ccc; margin-bottom:12px; height:22px;"></div>
+    <div style="font-size:10px; color:#333; margin-bottom:6px;"><strong>2.</strong> What was the hardest part of this unit for you — and why?</div>
+    <div style="border-bottom:1px solid #ccc; margin-bottom:12px; height:22px;"></div>
+    <div style="border-bottom:1px solid #ccc; margin-bottom:12px; height:22px;"></div>
+    <div style="font-size:10px; color:#333; margin-bottom:6px;"><strong>3.</strong> Name one cue from this unit you'll remember in 5 years. Why that one?</div>
+    <div style="border-bottom:1px solid #ccc; margin-bottom:12px; height:22px;"></div>
+  </div>
+  <div class="spacer"></div>
+</div>
+
+<script>
+  // Build rubric rows
+  (function() {
+    const tbody = document.getElementById('rubric-rows');
+    if (!tbody) return;
+    const td = (txt) => `<td style="padding:4px 6px;text-align:center;border-right:1px solid #eee;color:#ccc;font-size:9px;">${txt}</td>`;
+    for (let i = 0; i < 30; i++) {
+      const bg = i % 2 === 0 ? 'white' : '#fafafa';
+      tbody.innerHTML += `<tr style="border-bottom:1px solid #eee;background:${bg};">
+        <td style="padding:4px 10px;border-right:1px solid #eee;font-size:9.5px;">&nbsp;</td>
+        ${td('1 · 2 · 3 · 4')}${td('1 · 2 · 3 · 4')}${td('1 · 2 · 3 · 4')}${td('1 · 2 · 3 · 4')}${td('1 · 2 · 3 · 4')}
+        <td style="padding:4px 6px;text-align:center;"></td>
+      </tr>`;
+    }
+  })();
+
+  function updateColors() {
+    const primary = document.getElementById('primaryPicker').value;
+    const accent  = document.getElementById('accentPicker').value;
+
+    // Darken primary slightly for the day row
+    const primaryDark = darken(primary, 15);
+
+    // Lighten accent for the light section background
+    const accentLight = lighten(accent, 90);
+
+    document.documentElement.style.setProperty('--primary', primary);
+    document.documentElement.style.setProperty('--accent', accent);
+    document.documentElement.style.setProperty('--primary-dark', primaryDark);
+    document.documentElement.style.setProperty('--accent-light', accentLight);
+
+    // Update print button color to match accent
+    document.querySelector('.print-btn').style.background = accent;
+  }
+
+  function darken(hex, amount) {
+    let [r, g, b] = hexToRgb(hex);
+    r = Math.max(0, r - amount);
+    g = Math.max(0, g - amount);
+    b = Math.max(0, b - amount);
+    return rgbToHex(r, g, b);
+  }
+
+  function lighten(hex, percent) {
+    let [r, g, b] = hexToRgb(hex);
+    r = Math.round(r + (255 - r) * percent / 100);
+    g = Math.round(g + (255 - g) * percent / 100);
+    b = Math.round(b + (255 - b) * percent / 100);
+    return rgbToHex(r, g, b);
+  }
+
+  function hexToRgb(hex) {
+    const n = parseInt(hex.slice(1), 16);
+    return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+  }
+
+  function rgbToHex(r, g, b) {
+    return '#' + [r, g, b].map(v => v.toString(16).padStart(2, '0')).join('');
+  }
+</script>
+</body>
+</html>
