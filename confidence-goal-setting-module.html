@@ -901,6 +901,71 @@ body {
   .certificate { padding: 32px 20px; }
   .certificate h2 { font-size: 22px; }
 }
+
+/* ============================================
+   PRINT STYLES
+   ============================================ */
+@media print {
+  /* Hide nav and chrome — only show content */
+  .sidebar,
+  .progress-bar-container,
+  .lesson-nav,
+  .mobile-header,
+  .overlay,
+  .hamburger,
+  .nav-buttons,
+  .quiz-submit,
+  .tab-buttons,
+  .standards { display: none !important; }
+
+  /* Remove backgrounds, shadows, borders for print */
+  body { background: #fff !important; color: #000 !important; }
+  .main { margin-left: 0 !important; }
+  .content { padding: 20px !important; max-width: 100% !important; }
+  .card, .callout, .plan-builder, .reflection, .scenario, .key-concept {
+    box-shadow: none !important;
+    border: 1px solid #ccc !important;
+    background: #fff !important;
+  }
+
+  /* Show all lessons so plan content prints */
+  .lesson { display: block !important; }
+
+  /* Certificate: start on its own page, full width, restore its color */
+  .certificate {
+    page-break-before: always;
+    width: 100% !important;
+    background: linear-gradient(135deg, #1e3a5f, #1e40af) !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    color: #fff !important;
+    border: none !important;
+  }
+
+  /* Textareas: hide the interactive element, show the print-reflection div */
+  textarea { display: none !important; }
+  .print-reflection {
+    display: block !important;
+    min-height: 60px;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    color: #000;
+    background: #fafafa;
+  }
+
+  /* Plan field inputs: show their values */
+  .plan-field input {
+    border: 1px solid #ccc !important;
+    background: #fafafa !important;
+  }
+}
+
+/* Print reflection div: hidden by default, shown via @media print */
+.print-reflection { display: none; }
 </style>
 </head>
 <body>
@@ -1164,7 +1229,8 @@ body {
         <div class="reflection">
           <h4>Reflect</h4>
           <p style="margin-bottom:10px;font-size:14px;">Think about a time you felt really confident about something. What happened right before that feeling? What caused it?</p>
-          <textarea placeholder="Write your reflection here..." aria-label="Reflection on confidence"></textarea>
+          <textarea id="reflect1" placeholder="Write your reflection here..." aria-label="Reflection on confidence"></textarea>
+          <div class="print-reflection" id="reflect1Print"></div>
         </div>
 
         <hr class="divider">
@@ -1296,7 +1362,7 @@ body {
           <p style="font-weight:700;margin-bottom:6px;color:var(--error)">Wish: "I want to run faster."</p>
           <div class="plan-field">
             <label>Your Structured Goal:</label>
-            <input type="text" placeholder='Example: "I will improve my PACER score from 22 to 28 laps by the end of this month."' aria-label="Rewrite running goal">
+            <input type="text" id="goal2a" placeholder='Example: "I will improve my PACER score from 22 to 28 laps by the end of this month."' aria-label="Rewrite running goal">
           </div>
         </div>
 
@@ -1304,7 +1370,7 @@ body {
           <p style="font-weight:700;margin-bottom:6px;color:var(--error)">Wish: "I want to be better at volleyball."</p>
           <div class="plan-field">
             <label>Your Structured Goal:</label>
-            <input type="text" placeholder='Example: "I will successfully serve the ball over the net 6 out of 10 times by Friday."' aria-label="Rewrite volleyball goal">
+            <input type="text" id="goal2b" placeholder='Example: "I will successfully serve the ball over the net 6 out of 10 times by Friday."' aria-label="Rewrite volleyball goal">
           </div>
         </div>
 
@@ -1312,7 +1378,7 @@ body {
           <p style="font-weight:700;margin-bottom:6px;color:var(--error)">Wish: "I want to be more fit."</p>
           <div class="plan-field">
             <label>Your Structured Goal:</label>
-            <input type="text" placeholder='Example: "I will do 20 push-ups without stopping within 3 weeks."' aria-label="Rewrite fitness goal">
+            <input type="text" id="goal2c" placeholder='Example: "I will do 20 push-ups without stopping within 3 weeks."' aria-label="Rewrite fitness goal">
           </div>
         </div>
 
@@ -1420,30 +1486,31 @@ body {
           <h3>Goal Breakdown Builder</h3>
           <div class="plan-field">
             <label>My Big Goal:</label>
-            <input type="text" placeholder="Example: Complete 25 consecutive jump rope jumps" aria-label="Big goal">
+            <input type="text" id="breakdown1" placeholder="Example: Complete 25 consecutive jump rope jumps" aria-label="Big goal">
           </div>
           <div class="plan-field">
             <label>Step 1 (Easy win, I know I can do this):</label>
-            <input type="text" placeholder="Example: Complete 5 consecutive jumps" aria-label="Step 1">
+            <input type="text" id="breakdown2" placeholder="Example: Complete 5 consecutive jumps" aria-label="Step 1">
           </div>
           <div class="plan-field">
             <label>Step 2 (A little harder):</label>
-            <input type="text" placeholder="Example: Complete 10 consecutive jumps" aria-label="Step 2">
+            <input type="text" id="breakdown3" placeholder="Example: Complete 10 consecutive jumps" aria-label="Step 2">
           </div>
           <div class="plan-field">
             <label>Step 3 (Challenging but doable):</label>
-            <input type="text" placeholder="Example: Complete 18 consecutive jumps" aria-label="Step 3">
+            <input type="text" id="breakdown4" placeholder="Example: Complete 18 consecutive jumps" aria-label="Step 3">
           </div>
           <div class="plan-field">
             <label>Step 4 (The big goal):</label>
-            <input type="text" placeholder="Example: Complete 25 consecutive jumps" aria-label="Step 4">
+            <input type="text" id="breakdown5" placeholder="Example: Complete 25 consecutive jumps" aria-label="Step 4">
           </div>
         </div>
 
         <div class="reflection">
           <h4>Reflect</h4>
           <p style="margin-bottom:10px;font-size:14px">Why is it important to start with a step you KNOW you can succeed at? How does that first easy win change the way you approach the harder steps?</p>
-          <textarea placeholder="Write your reflection here..." aria-label="Reflection on small wins"></textarea>
+          <textarea id="reflect3" placeholder="Write your reflection here..." aria-label="Reflection on small wins"></textarea>
+          <div class="print-reflection" id="reflect3Print"></div>
         </div>
 
         <hr class="divider">
@@ -1591,7 +1658,8 @@ body {
         <div class="reflection">
           <h4>Your Turn</h4>
           <p style="margin-bottom:10px;font-size:14px">Think about a recent time something didn't go the way you planned (in PE, school, or life). Use the three steps above:</p>
-          <textarea placeholder="1. Acknowledge: What happened?&#10;2. Analyze: What specifically went wrong?&#10;3. Adjust: What will I do differently?" aria-label="Setback reflection" style="min-height:120px"></textarea>
+          <textarea id="reflect4" placeholder="1. Acknowledge: What happened?&#10;2. Analyze: What specifically went wrong?&#10;3. Adjust: What will I do differently?" aria-label="Setback reflection" style="min-height:120px"></textarea>
+          <div class="print-reflection" id="reflect4Print"></div>
         </div>
 
         <hr class="divider">
@@ -1743,7 +1811,8 @@ body {
         <div class="reflection">
           <h4>Final Reflection</h4>
           <p style="margin-bottom:10px;font-size:14px">What is one thing you learned in this module that you'll actually use in PE, in school, or in life?</p>
-          <textarea placeholder="Write your final reflection here..." aria-label="Final reflection"></textarea>
+          <textarea id="reflect5" placeholder="Write your final reflection here..." aria-label="Final reflection"></textarea>
+          <div class="print-reflection" id="reflect5Print"></div>
         </div>
 
         <hr class="divider">
@@ -1771,8 +1840,8 @@ body {
           <div class="quiz-feedback"></div>
         </div>
 
-        <!-- Certificate -->
-        <div class="certificate" id="certificate">
+        <!-- Certificate: hidden until quiz5 is answered correctly OR planGoal is filled -->
+        <div class="certificate" id="certificate" style="display:none">
           <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.15em;opacity:0.5;margin-bottom:8px">Certificate of Completion</div>
           <div class="cert-badge">&#127942;</div>
           <h2>Module Complete</h2>
@@ -1781,6 +1850,8 @@ body {
           <div style="font-size:14px;opacity:0.8;margin-bottom:20px">This certifies that</div>
           <div class="cert-name" contenteditable="true" aria-label="Type your name" onclick="if(this.textContent==='[ Type Your Name ]')this.textContent=''" onfocus="if(this.textContent==='[ Type Your Name ]')this.textContent=''">[ Type Your Name ]</div>
           <p style="max-width:500px;margin:0 auto;font-size:14px;line-height:1.7">has successfully completed all five lessons covering self-efficacy theory, structured goal setting, scaffolded skill development, productive self-talk strategies, and the Confidence Cycle framework.</p>
+          <!-- FIX 3: Plan summary injected here when the learner fills in their Confidence Plan -->
+          <div id="certPlanSummary" style="display:none;margin-top:20px;background:rgba(255,255,255,0.1);border-radius:8px;padding:16px 20px;max-width:500px;margin-left:auto;margin-right:auto;font-size:13px;line-height:1.7;text-align:left"></div>
           <div style="display:flex;justify-content:center;gap:40px;margin-top:24px;font-size:13px;opacity:0.7">
             <div style="border-top:1px solid rgba(255,255,255,0.3);padding-top:8px;min-width:160px">Kevin Terranova, M.S.<br>Module Designer</div>
             <div style="border-top:1px solid rgba(255,255,255,0.3);padding-top:8px;min-width:160px">Date Completed<br><span id="certDate"></span></div>
@@ -1814,7 +1885,17 @@ let currentLesson = -1;
 const totalLessons = 5;
 const completedLessons = new Set();
 
-// Try to restore state
+// IDs of all text fields we save to localStorage
+// Textareas: reflect1, reflect3, reflect4, reflect5, planSetback
+// Text inputs: goal2a, goal2b, goal2c, breakdown1-5, planGoal, planWhy, planStep1, planStep2, planStep3, planSelfTalk
+const FIELD_IDS = [
+  'reflect1', 'reflect3', 'reflect4', 'reflect5',
+  'goal2a', 'goal2b', 'goal2c',
+  'breakdown1', 'breakdown2', 'breakdown3', 'breakdown4', 'breakdown5',
+  'planGoal', 'planWhy', 'planStep1', 'planStep2', 'planStep3', 'planSetback', 'planSelfTalk'
+];
+
+// Try to restore state from localStorage
 try {
   const saved = JSON.parse(localStorage.getItem('confidenceModule') || '{}');
   if (saved.current !== undefined) currentLesson = saved.current;
@@ -1867,7 +1948,7 @@ function updateUI() {
     el.classList.toggle('completed', completedLessons.has(navIndex));
   });
 
-  // Progress
+  // Progress bar
   const progress = Math.round((completedLessons.size / totalLessons) * 100);
   document.getElementById('progressFill').style.width = progress + '%';
   if (currentLesson === -1) {
@@ -1878,12 +1959,44 @@ function updateUI() {
   document.getElementById('progressPct').textContent = progress + '% Complete';
 }
 
+/* ============================================
+   SAVE / RESTORE STATE
+   Saves navigation state + all text field values
+   ============================================ */
 function saveState() {
   try {
+    // Collect current values from all tracked fields
+    const fields = {};
+    FIELD_IDS.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) fields[id] = el.value;
+    });
+
     localStorage.setItem('confidenceModule', JSON.stringify({
       current: currentLesson,
-      completed: [...completedLessons]
+      completed: [...completedLessons],
+      certRevealed: document.getElementById('certificate').style.display !== 'none',
+      fields
     }));
+  } catch(e) {}
+}
+
+function restoreFields() {
+  // Read saved data and repopulate all text fields
+  try {
+    const saved = JSON.parse(localStorage.getItem('confidenceModule') || '{}');
+    if (saved.fields) {
+      FIELD_IDS.forEach(id => {
+        const el = document.getElementById(id);
+        if (el && saved.fields[id] !== undefined) {
+          el.value = saved.fields[id];
+        }
+      });
+    }
+    // Restore certificate visibility if it was revealed before
+    if (saved.certRevealed) {
+      revealCertificate();
+    }
   } catch(e) {}
 }
 
@@ -1942,8 +2055,9 @@ function checkQuiz(btn) {
 
   const selected = quiz.querySelector('.quiz-option.selected');
   const feedback = quiz.querySelector('.quiz-feedback');
+  const isCorrect = selected.dataset.correct === 'true';
 
-  if (selected.dataset.correct === 'true') {
+  if (isCorrect) {
     selected.classList.add('correct');
     feedback.className = 'quiz-feedback correct';
     feedback.textContent = 'Correct! Great understanding of the concept.';
@@ -1957,16 +2071,119 @@ function checkQuiz(btn) {
 
   btn.disabled = true;
   btn.textContent = 'Answered';
+
+  // FIX 4: Reveal the certificate when quiz5 is answered correctly
+  if (quiz.id === 'quiz5' && isCorrect) {
+    revealCertificate();
+  }
+
+  saveState();
 }
+
+/* ============================================
+   FIX 3: UPDATE CERTIFICATE PLAN SUMMARY
+   Reads plan fields and injects a summary into the certificate
+   ============================================ */
+function updateCertPlan() {
+  const goal = (document.getElementById('planGoal') || {}).value || '';
+  const step1 = (document.getElementById('planStep1') || {}).value || '';
+  const summary = document.getElementById('certPlanSummary');
+  if (!summary) return;
+
+  if (goal.trim()) {
+    // Build a readable summary from whatever plan fields are filled in
+    let html = '<strong style="display:block;margin-bottom:8px;opacity:0.9">My Confidence Plan</strong>';
+    html += `<div><strong>Goal:</strong> ${escapeHtml(goal)}</div>`;
+    if (step1.trim()) html += `<div style="margin-top:4px"><strong>First Step:</strong> ${escapeHtml(step1)}</div>`;
+    summary.innerHTML = html;
+    summary.style.display = 'block';
+    summary.style.marginTop = '20px'; // keep inline style from template
+  } else {
+    summary.style.display = 'none';
+  }
+
+  // Also reveal the certificate if the goal is filled in (FIX 4)
+  if (goal.trim()) {
+    revealCertificate();
+  }
+
+  saveState();
+}
+
+// Simple HTML escaping to prevent XSS when injecting user text into the DOM
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.appendChild(document.createTextNode(str));
+  return div.innerHTML;
+}
+
+/* ============================================
+   FIX 4: REVEAL CERTIFICATE
+   Shows the certificate and scrolls to it
+   ============================================ */
+function revealCertificate() {
+  const cert = document.getElementById('certificate');
+  if (cert && cert.style.display === 'none') {
+    cert.style.display = 'block';
+    // Subtle scroll into view so the learner sees it appear
+    setTimeout(() => cert.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+  }
+}
+
+/* ============================================
+   FIX 5: BEFORE PRINT — sync textarea values into print divs
+   So printed output shows what the learner wrote
+   ============================================ */
+window.addEventListener('beforeprint', function() {
+  // For each textarea with a matching print div, copy the value in
+  const pairs = [
+    ['reflect1', 'reflect1Print'],
+    ['reflect3', 'reflect3Print'],
+    ['reflect4', 'reflect4Print'],
+    ['reflect5', 'reflect5Print'],
+  ];
+  pairs.forEach(([taId, printId]) => {
+    const ta = document.getElementById(taId);
+    const pr = document.getElementById(printId);
+    if (ta && pr) pr.textContent = ta.value || '(no response entered)';
+  });
+});
 
 /* ============================================
    INIT
    ============================================ */
-updateUI();
 // Set certificate date
 const d = new Date();
 const dateEl = document.getElementById('certDate');
 if (dateEl) dateEl.textContent = d.toLocaleDateString('en-US', {month:'long',day:'numeric',year:'numeric'});
+
+// Restore nav/progress state
+updateUI();
+
+// Restore all text field values from localStorage
+restoreFields();
+
+// Update cert plan summary after restoring (in case fields were saved)
+updateCertPlan();
+
+// Wire plan fields to save state and update certificate summary on every keystroke
+['planGoal', 'planWhy', 'planStep1', 'planStep2', 'planStep3', 'planSetback', 'planSelfTalk'].forEach(id => {
+  const el = document.getElementById(id);
+  if (el) {
+    el.addEventListener('input', function() {
+      updateCertPlan();
+      saveState();
+    });
+  }
+});
+
+// Wire all other tracked fields to auto-save on input
+['reflect1', 'reflect3', 'reflect4', 'reflect5',
+ 'goal2a', 'goal2b', 'goal2c',
+ 'breakdown1', 'breakdown2', 'breakdown3', 'breakdown4', 'breakdown5'].forEach(id => {
+  const el = document.getElementById(id);
+  if (el) el.addEventListener('input', saveState);
+});
 </script>
 </body>
 </html>
