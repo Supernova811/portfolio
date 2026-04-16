@@ -3,754 +3,1396 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Middle School Volleyball Unit | Curriculum Design Artifact | Kevin Terranova</title>
+<title>MS Volleyball Unit — TitanPE</title>
 <style>
-@media print {
-  body { margin: 0; font-size: 10.5pt; }
-  .page { box-shadow: none; padding: 0.4in 0.5in; max-width: 100%; }
-  .no-print { display: none; }
-  .lesson-card { break-inside: avoid; }
-}
+  /* ─── CSS VARIABLES (color picker controls these) ─── */
+  :root {
+    --primary: #111111;
+    --accent:  #cc0000;
+    --primary-dark: #000000;
+    --accent-light: #f5e6e6;
+    --accent-text: var(--accent);
+  }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
+  /* ─── COLOR PICKER UI (hidden when printing) ─── */
+  .color-picker-ui {
+    background: #1a1a1a;
+    color: white;
+    padding: 18px 24px;
+    font-family: Arial, sans-serif;
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    flex-wrap: wrap;
+  }
+  .color-picker-ui h2 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    flex: 0 0 auto;
+  }
+  .color-picker-ui .picker-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .color-picker-ui label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #aaa;
+  }
+  .color-picker-ui input[type="color"] {
+    width: 44px;
+    height: 34px;
+    border: 2px solid #444;
+    border-radius: 4px;
+    cursor: pointer;
+    background: none;
+    padding: 2px;
+  }
+  .color-picker-ui .preview-text {
+    font-size: 11px;
+    color: #888;
+    flex: 1;
+  }
+  .print-btn {
+    margin-left: auto;
+    background: #cc0000;
+    color: white;
+    border: none;
+    padding: 9px 20px;
+    font-size: 13px;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+  }
+  .print-btn:hover { background: #aa0000; }
 
-:root {
-  --primary: #1e40af;
-  --primary-light: #3b82f6;
-  --primary-bg: #eff6ff;
-  --accent: #f59e0b;
-  --success: #10b981;
-  --success-bg: #ecfdf5;
-  --text: #1e293b;
-  --text-light: #64748b;
-  --bg: #ffffff;
-  --bg-alt: #f8fafc;
-  --border: #e2e8f0;
-  --shadow: 0 1px 3px rgba(0,0,0,0.1);
-  --radius: 8px;
-}
+  /* ─── BASE PAGE STYLES ─── */
+  * { box-sizing: border-box; margin: 0; padding: 0; }
 
-body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
-  color: var(--text);
-  background: #f0f0f0;
-  line-height: 1.6;
-  font-size: 15px;
-}
+  body {
+    font-family: Arial, sans-serif;
+    background: #666;
+    padding: 0;
+  }
 
-.page {
-  max-width: 900px;
-  margin: 20px auto;
-  background: var(--bg);
-  padding: 48px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.1);
-  border-radius: 8px;
-}
+  .page {
+    background: white;
+    width: 8.5in;
+    min-height: 11in;
+    margin: 24px auto;
+    overflow: hidden;
+    page-break-after: always;
+    display: flex;
+    flex-direction: column;
+  }
+  .page:last-of-type { page-break-after: avoid; }
 
-/* HEADER */
-.unit-header {
-  text-align: center;
-  padding-bottom: 32px;
-  border-bottom: 3px solid var(--primary);
-  margin-bottom: 32px;
-}
+  /* ─── HEADER ─── */
+  .page-header {
+    background: var(--primary);
+    color: white;
+    padding: 14px 22px 11px;
+  }
+  .unit-title {
+    font-size: 20px;
+    font-weight: bold;
+    letter-spacing: 2px;
+  }
 
-.unit-header .tag {
-  display: inline-block;
-  background: var(--primary);
-  color: #fff;
-  padding: 4px 14px;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin-bottom: 12px;
-}
+  .day-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--primary-dark);
+    padding: 6px 22px;
+    border-bottom: 3px solid var(--accent);
+  }
+  .day-num {
+    font-size: 13px;
+    font-weight: bold;
+    color: white;
+    letter-spacing: 1px;
+  }
+  .day-topic {
+    font-size: 12px;
+    font-weight: bold;
+    color: var(--accent);
+    letter-spacing: 0.5px;
+  }
 
-.unit-header h1 {
-  font-size: 28px;
-  font-weight: 800;
-  color: var(--primary);
-  margin-bottom: 6px;
-}
+  /* ─── INFO GRID (targets / equipment / standards) ─── */
+  .info-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    border-bottom: 2px solid var(--accent);
+    overflow: visible;
+  }
+  .info-cell {
+    padding: 8px 14px;
+    border-right: 1px solid #e0e0e0;
+    font-size: 10.5px;
+    color: #333;
+    line-height: 1.6;
+    overflow: visible;
+  }
+  .info-cell:last-child { border-right: none; }
+  .cell-label {
+    font-size: 8px;
+    font-weight: bold;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+  }
 
-.unit-header .subtitle {
-  font-size: 16px;
-  color: var(--text-light);
-  margin-bottom: 16px;
-}
+  /* ─── SECTION HEADERS ─── */
+  .sh-primary {
+    background: var(--primary);
+    color: white;
+    padding: 5px 14px;
+    font-size: 9px;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+  .sh-accent {
+    background: var(--accent);
+    color: white;
+    padding: 5px 14px;
+    font-size: 9px;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+  .sh-light {
+    background: var(--accent-light);
+    color: var(--primary);
+    padding: 5px 14px;
+    font-size: 9px;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    border-top: 1px solid #ddd;
+  }
 
-.unit-header .meta {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 20px;
-  font-size: 13px;
-  color: var(--text-light);
-}
+  /* ─── SECTION BODY ─── */
+  .sb {
+    padding: 8px 14px 9px;
+    color: #333;
+    font-size: 10.5px;
+    line-height: 1.6;
+    border-bottom: 1px solid #eee;
+  }
+  .sb p { margin-bottom: 5px; }
+  .sb p:last-child { margin-bottom: 0; }
+  .sb em { color: #555; }
 
-.unit-header .meta strong { color: var(--text); }
+  /* ─── SKILL CUE CALLOUT ─── */
+  .cue {
+    background: #f7f7f7;
+    border-left: 3px solid var(--accent);
+    padding: 4px 10px;
+    margin: 4px 0;
+    font-size: 10px;
+    line-height: 1.5;
+  }
+  .cue strong { color: var(--primary); }
 
-/* SECTIONS */
-.section { margin-bottom: 36px; }
+  /* ─── TWO-COLUMN LAYOUT ─── */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .col {
+    padding: 8px 14px 9px;
+    font-size: 10.5px;
+    color: #333;
+    line-height: 1.6;
+    border-right: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+  }
+  .col:last-child { border-right: none; }
+  .col-label {
+    font-size: 8px;
+    font-weight: bold;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+  }
 
-.section h2 {
-  font-size: 20px;
-  font-weight: 800;
-  color: var(--primary);
-  border-bottom: 2px solid var(--border);
-  padding-bottom: 8px;
-  margin-bottom: 16px;
-}
+  /* ─── ESSENTIAL QUESTION ─── */
+  .eq {
+    padding: 6px 14px;
+    font-size: 10.5px;
+    color: #444;
+    font-style: italic;
+    border-bottom: 1px solid #eee;
+    line-height: 1.6;
+  }
 
-.section h3 {
-  font-size: 16px;
-  font-weight: 700;
-  margin: 16px 0 8px;
-}
+  /* ─── FLEX SPACER ─── */
+  .spacer { flex: 1; }
 
-.section p { margin-bottom: 10px; }
-.section ul, .section ol { margin: 8px 0 12px 24px; }
-.section li { margin-bottom: 4px; }
+  /* ─── STANDARDS BADGES WITH TOOLTIPS ─── */
+  .std-badge {
+    display: inline-block;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 8px;
+    font-weight: bold;
+    cursor: help;
+    position: relative;
+    margin: 1px 2px 1px 0;
+    line-height: 1.4;
+  }
+  .std-il {
+    background: #e8e8e8;
+    color: #333;
+    border: 1px solid #bbb;
+  }
+  .std-shape {
+    background: var(--accent);
+    color: white;
+  }
+  .std-badge::after {
+    content: attr(data-tip);
+    position: absolute;
+    bottom: calc(100% + 4px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: #222;
+    color: #fff;
+    padding: 5px 8px;
+    border-radius: 4px;
+    font-size: 9px;
+    font-weight: normal;
+    width: 200px;
+    white-space: normal;
+    text-align: center;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.15s;
+    z-index: 999;
+    line-height: 1.4;
+  }
+  .std-badge:hover::after { opacity: 1; }
 
-/* CALLOUT */
-.callout {
-  background: var(--primary-bg);
-  border-left: 4px solid var(--primary);
-  border-radius: 0 var(--radius) var(--radius) 0;
-  padding: 16px 20px;
-  margin-bottom: 20px;
-  font-size: 14px;
-}
-
-.callout.design {
-  background: #fffbeb;
-  border-left-color: var(--accent);
-}
-
-.callout h4 { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
-
-/* OVERVIEW TABLE */
-.overview-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 24px;
-  font-size: 14px;
-}
-
-.overview-table th {
-  background: var(--primary);
-  color: #fff;
-  padding: 10px 14px;
-  text-align: left;
-  font-size: 13px;
-  font-weight: 700;
-}
-
-.overview-table td {
-  padding: 10px 14px;
-  border-bottom: 1px solid var(--border);
-  vertical-align: top;
-}
-
-.overview-table tr:nth-child(even) td { background: var(--bg-alt); }
-
-/* LESSON CARDS */
-.lesson-card {
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  margin-bottom: 24px;
-  overflow: hidden;
-}
-
-.lesson-card-header {
-  background: var(--primary);
-  color: #fff;
-  padding: 14px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  cursor: pointer;
-}
-
-.lesson-card-header h3 { color: #fff; margin: 0; font-size: 16px; }
-.lesson-card-header .week { font-size: 13px; opacity: 0.8; }
-.lesson-card-header .arrow { transition: transform 0.3s; }
-.lesson-card-header.open .arrow { transform: rotate(180deg); }
-
-.lesson-card-body {
-  padding: 0;
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.4s ease, padding 0.3s ease;
-}
-
-.lesson-card-body.open {
-  padding: 20px;
-  max-height: 3000px;
-}
-
-.lesson-detail {
-  display: grid;
-  grid-template-columns: 140px 1fr;
-  gap: 4px 16px;
-  margin-bottom: 16px;
-  font-size: 14px;
-}
-
-.lesson-detail dt {
-  font-weight: 700;
-  color: var(--primary);
-  font-size: 13px;
-}
-
-.lesson-detail dd { color: var(--text); }
-
-.phase {
-  padding: 12px 16px;
-  background: var(--bg-alt);
-  border-radius: var(--radius);
-  margin-bottom: 12px;
-}
-
-.phase-label {
-  font-size: 12px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--primary);
-  margin-bottom: 4px;
-}
-
-.cues {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 8px;
-}
-
-.cue {
-  background: var(--primary-bg);
-  border: 1px solid #dbeafe;
-  border-radius: 4px;
-  padding: 3px 10px;
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--primary);
-}
-
-/* FOOTER */
-.unit-footer {
-  text-align: center;
-  padding-top: 24px;
-  border-top: 2px solid var(--border);
-  font-size: 13px;
-  color: var(--text-light);
-}
-
-/* RESPONSIVE */
-@media (max-width: 768px) {
-  .page { padding: 24px 16px; margin: 10px; }
-  .unit-header h1 { font-size: 22px; }
-  .lesson-detail { grid-template-columns: 1fr; }
-  .unit-header .meta { flex-direction: column; gap: 6px; }
-}
+  /* ─── PRINT STYLES ─── */
+  @media print {
+    .color-picker-ui { display: none !important; }
+    body { background: white; padding: 0; }
+    .page {
+      margin: 0;
+      width: 100%;
+      min-height: auto;
+      box-shadow: none;
+    }
+    .std-badge::after { display: none !important; }
+  }
 </style>
 </head>
 <body>
 
+<!-- ─── COLOR PICKER UI ─── -->
+<div class="color-picker-ui">
+  <h2>CUSTOMIZE YOUR SCHOOL COLORS</h2>
+  <div class="picker-group">
+    <label>Header Color</label>
+    <input type="color" id="primaryPicker" value="#111111" oninput="updateColors()" onchange="updateColors()">
+  </div>
+  <div class="picker-group">
+    <label>Accent Color</label>
+    <input type="color" id="accentPicker" value="#cc0000" oninput="updateColors()" onchange="updateColors()">
+  </div>
+  <button style="background:#444;color:white;border:none;padding:9px 16px;font-size:13px;font-weight:bold;border-radius:4px;cursor:pointer;letter-spacing:0.5px;" onclick="updateColors()">&#10003; Apply Colors</button>
+  <div class="preview-text">Pick your school colors → click Apply → hit Print → done.</div>
+  <button class="print-btn" onclick="window.print()">&#128438; Print / Save PDF</button>
+</div>
+
+<!-- ════════════════════════════════════════════════ -->
+<!-- COVER PAGE -->
+<!-- ════════════════════════════════════════════════ -->
+<div class="page" style="justify-content:space-between;">
+
+  <!-- Top bar -->
+  <div style="background:var(--primary); padding:18px 28px; display:flex; justify-content:flex-end; align-items:center;">
+    <div style="color:var(--accent); font-size:11px; font-weight:bold; letter-spacing:1px;">Grades 6–8</div>
+  </div>
+
+  <!-- Hero section -->
+  <div style="background:var(--primary); flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:40px 28px; text-align:center;">
+    <div style="width:90px; height:90px; background:var(--accent); border-radius:50%; display:flex; align-items:center; justify-content:center; margin-bottom:28px; box-shadow: 0 4px 20px rgba(0,0,0,0.4);">
+      <div style="color:white; font-size:48px;">🏐</div>
+    </div>
+    <div style="color:white; font-size:13px; letter-spacing:4px; text-transform:uppercase; opacity:0.6; margin-bottom:10px;">Middle School Physical Education</div>
+    <div style="color:white; font-size:44px; font-weight:900; letter-spacing:3px; line-height:1.1; text-transform:uppercase; margin-bottom:8px;">VOLLEYBALL</div>
+    <div style="background:var(--accent); color:white; font-size:14px; font-weight:bold; letter-spacing:2px; padding:8px 24px; margin:16px 0; text-transform:uppercase;">Complete 9-Day Unit Plan</div>
+    <div style="color:white; opacity:0.6; font-size:11px; letter-spacing:1px; margin-top:8px;">Customize to your school colors before printing</div>
+  </div>
+
+  <!-- Feature strip -->
+  <div style="background:var(--accent); padding:14px 28px; display:grid; grid-template-columns:1fr 1fr 1fr 1fr; text-align:center; gap:0;">
+    <div style="color:white; border-right:1px solid rgba(255,255,255,0.3); padding:4px 0;">
+      <div style="font-size:20px; font-weight:900;">9</div>
+      <div style="font-size:9px; letter-spacing:1px; text-transform:uppercase; opacity:0.85;">Days</div>
+    </div>
+    <div style="color:white; border-right:1px solid rgba(255,255,255,0.3); padding:4px 0;">
+      <div style="font-size:20px; font-weight:900;">35+</div>
+      <div style="font-size:9px; letter-spacing:1px; text-transform:uppercase; opacity:0.85;">Skill Cues</div>
+    </div>
+    <div style="color:white; border-right:1px solid rgba(255,255,255,0.3); padding:4px 0;">
+      <div style="font-size:14px; font-weight:900; line-height:1.2;">IL + SHAPE</div>
+      <div style="font-size:9px; letter-spacing:1px; text-transform:uppercase; opacity:0.85;">Standards Aligned</div>
+    </div>
+    <div style="color:white; padding:4px 0;">
+      <div style="font-size:20px; font-weight:900;">PDF</div>
+      <div style="font-size:9px; letter-spacing:1px; text-transform:uppercase; opacity:0.85;">Print Ready</div>
+    </div>
+  </div>
+
+  <!-- What's included -->
+  <div style="padding:20px 28px; background:white; flex:0;">
+    <div style="font-size:9px; font-weight:bold; color:var(--accent); text-transform:uppercase; letter-spacing:1px; margin-bottom:10px;">What's Included — Every Day Has:</div>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:4px 20px; font-size:10.5px; color:#333; line-height:1.7;">
+      <div>✓ IL + SHAPE America Standards</div>
+      <div>✓ Warm-Up with coaching cues</div>
+      <div>✓ Learning Targets (SWBAT)</div>
+      <div>✓ Skill cue callout boxes</div>
+      <div>✓ Essential Questions</div>
+      <div>✓ Full game with rules</div>
+      <div>✓ Equipment list</div>
+      <div>✓ Closure + Assessment</div>
+      <div>✓ Differentiation (modify up/down)</div>
+      <div>✓ Teacher Notes</div>
+    </div>
+  </div>
+
+  <!-- Unit at a glance -->
+  <div style="background:#f7f7f7; padding:14px 28px; border-top:2px solid var(--accent);">
+    <div style="font-size:9px; font-weight:bold; color:var(--accent); text-transform:uppercase; letter-spacing:1px; margin-bottom:8px;">Unit at a Glance</div>
+    <div style="display:grid; grid-template-columns:repeat(9,1fr); gap:4px; text-align:center; font-size:8.5px;">
+      <div style="background:var(--primary);color:white;padding:4px 2px;border-radius:2px;"><strong>D1</strong><br>Serve Intro</div>
+      <div style="background:var(--accent);color:white;padding:4px 2px;border-radius:2px;"><strong>D2</strong><br>Forearm Pass</div>
+      <div style="background:var(--primary);color:white;padding:4px 2px;border-radius:2px;"><strong>D3</strong><br>Setting</div>
+      <div style="background:var(--accent);color:white;padding:4px 2px;border-radius:2px;"><strong>D4</strong><br>Serve Receive</div>
+      <div style="background:var(--primary);color:white;padding:4px 2px;border-radius:2px;"><strong>D5</strong><br>OH Serve</div>
+      <div style="background:var(--accent);color:white;padding:4px 2px;border-radius:2px;"><strong>D6</strong><br>3-Touch Rally</div>
+      <div style="background:var(--primary);color:white;padding:4px 2px;border-radius:2px;"><strong>D7</strong><br>Rotation</div>
+      <div style="background:var(--accent);color:white;padding:4px 2px;border-radius:2px;"><strong>D8</strong><br>Scrimmage</div>
+      <div style="background:var(--primary);color:white;padding:4px 2px;border-radius:2px;"><strong>D9</strong><br>Tournament</div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div style="background:var(--primary); color:#aaa; padding:8px 28px; font-size:8.5px; display:flex; justify-content:space-between;">
+    <span>TitanPE by Kevin Terranova</span>
+    <span>© 2026 · All Rights Reserved · Teachers Pay Teachers</span>
+  </div>
+
+</div>
+
+<!-- ════════════════════════════════════════════════ -->
+<!-- DAY 1 -->
+<!-- ════════════════════════════════════════════════ -->
 <div class="page">
-  <!-- HEADER -->
-  <div class="unit-header">
-    <span class="tag">Curriculum Design Artifact</span>
-    <h1>Middle School Volleyball Unit</h1>
-    <div class="subtitle">A Standards-Aligned Skill Progression for Grades 6-8</div>
-    <div class="meta">
-      <span><strong>Designer:</strong> Kevin Terranova, M.S.</span>
-      <span><strong>Grade Band:</strong> 6-8</span>
-      <span><strong>Duration:</strong> 7 Lessons (~3-4 Weeks)</span>
-      <span><strong>School:</strong> Barbour School, Rockford IL</span>
+  <div class="page-header">
+    <div class="unit-title">MIDDLE SCHOOL VOLLEYBALL</div>
+  </div>
+  <div class="day-row">
+    <div class="day-num">DAY 1 OF 9</div>
+    <div class="day-topic">Volleyball Exploration &amp; Underhand Serve Introduction</div>
+  </div>
+
+  <div class="info-grid">
+    <div class="info-cell">
+      <div class="cell-label">Learning Targets (SWBAT)</div>
+      • I can execute an underhand serve using a step, swing, and contact at the heel of my hand<br>
+      • I can explain the purpose of a serve in volleyball<br>
+      • I can identify at least 2 things I want to improve after watching my classmates
+    </div>
+    <div class="info-cell">
+      <div class="cell-label">Equipment</div>
+      • Volleyballs (1 per student)<br>
+      • Net or tape line across the gym<br>
+      • Cones to mark personal space / target zones
+    </div>
+    <div class="info-cell">
+      <div class="cell-label">Standards</div>
+      <span class="std-badge std-il" data-tip="IL 19.A — Demonstrate competency in locomotor, non-locomotor, and manipulative skills">19.A</span><span class="std-badge std-il" data-tip="IL 19.B — Analyze and apply movement concepts to learning new skills">19.B</span><span class="std-badge std-il" data-tip="IL 21.A — Personal responsibility and safe practices in group settings">21.A</span><br>
+      <span class="std-badge std-shape" data-tip="SHAPE S1 — Demonstrates competency in a variety of motor skills and movement patterns">S1</span><span class="std-badge std-shape" data-tip="SHAPE S4 — Exhibits responsible personal and social behavior that respects self and others">S4</span>
     </div>
   </div>
 
-  <!-- DESIGN CONTEXT -->
-  <div class="callout design">
-    <h4>Instructional Design Context</h4>
-    <p>This unit was designed for middle school students (grades 6-8) at Barbour School, a K-8 Two-Way Immersion school. Unlike the K-5 unit where skills are introduced one per week in isolation, the MS unit introduces bump and set together from Day 1, reflecting students' greater motor readiness and cognitive capacity for multi-skill integration. Game play is introduced by Lesson 3 and becomes the primary vehicle for skill application from that point forward.</p>
+  <div class="sh-light">Essential Question</div>
+  <div class="eq">What is the purpose of a serve — and where on your hand should the ball make contact for the most control? &nbsp;|&nbsp; What did you already know about volleyball before today?</div>
+
+  <div class="sh-accent">Warm-Up — Experimental Volleyball &nbsp;(5–8 min)</div>
+  <div class="sb">
+    <p>Every student grabs a volleyball. Music on. No instructions — just go. Students have full freedom to toss and bump, set to themselves, try to serve over the net, or play catch with a partner. Teacher does NOT coach during this time.</p>
+    <p><strong>Teacher's job:</strong> Walk and observe. Who already has a natural bump form? Who uses their fists vs. a platform? Who can get a ball over the net and who can't? Who immediately goes for overhand vs. staying underhand? This is your baseline read before any instruction begins.</p>
+    <p>When music stops: <em>"Nobody taught you anything yet — but I already learned a lot about what you can do. Today we start building on what you already have."</em></p>
+    <p><em>This is the only day where you observe without correcting. Let them show you who they are first. Every coaching decision for Days 2–9 starts right here.</em></p>
   </div>
 
-  <!-- STANDARDS -->
-  <div class="section">
-    <h2>Standards Alignment</h2>
-    <ul>
-      <li><strong>IL 19.A.2a:</strong> Demonstrate control when performing combinations and sequences in locomotor, nonlocomotor, and manipulative motor patterns</li>
-      <li><strong>IL 19.A.4a:</strong> Perform skills efficiently in a variety of leisure activities, sports, creative movement, and work-related activities</li>
-      <li><strong>IL 21.B.2a:</strong> Work cooperatively with a partner or small group to reach a shared goal during physical activity</li>
-      <li><strong>SHAPE America Standard 1:</strong> Demonstrates competency in a variety of motor skills and movement patterns</li>
-      <li><strong>SHAPE America Standard 4:</strong> Exhibits responsible personal and social behavior that respects self and others</li>
-    </ul>
+  <div class="sh-primary">Lesson Focus — Underhand Serve &nbsp;(20–25 min)</div>
+  <div class="sb">
+    <p><strong>Teach each cue one at a time — demo, then students practice before the next:</strong></p>
+    <div class="cue"><strong>Step &amp; Swing</strong> — Opposite foot steps forward as your hitting arm swings back, then forward. If you're right-handed: left foot steps, right arm swings. Timing = everything. Have students dry-swing without the ball first.</div>
+    <div class="cue"><strong>Heel of the Hand</strong> — Contact happens with the heel (fleshy bottom) of your open hand — NOT your fist, NOT your palm. Make a flat hand, feel the heel pad. "That's your contact point. Hit with that every time."</div>
+    <div class="cue"><strong>Hold the Ball Still</strong> — Your non-hitting hand holds the ball in front of you at waist level. Don't toss it — hold it steady and swing through it. "One hand holds, one hand hits."</div>
+    <div class="cue"><strong>Follow Through High</strong> — After contact, your hitting arm continues up toward the target. Low follow-through = ball goes into the net. Follow through toward where you want it to go.</div>
+    <p style="margin-top:6px;"><strong>Serving Practice Progression:</strong></p>
+    <p>① Students practice the swing motion without a ball — 10 reps, teacher coaches arm path. ② Add the ball: contact at the heel from 5 feet from the net. ③ Back up to the 10-foot line. ④ Back up to the end line — serve over the net. Count made serves out of 5 attempts.</p>
+    <p style="margin-top:4px;"><em>Coaching focus: most students will hit with their fist or slap with their palm. Constantly redirect to the heel pad. Have students tap the heel of their hand and say "this is my contact point" before each serve.</em></p>
   </div>
 
-  <!-- UNIT OVERVIEW -->
-  <div class="section">
-    <h2>Unit Overview</h2>
+  <div class="sh-accent">Game — Serve &amp; Score &nbsp;(10–12 min)</div>
+  <div class="sb">
+    <p>Set up 4–5 target zones on the opposite side of the net using cones (back corners = 3 pts, mid-court = 2 pts, front zone = 1 pt). Students line up to serve from the end line. Each student gets 3 serves and tracks their score.</p>
+    <p>Run 2–3 rounds. Students challenge themselves to match or beat their previous round score. <em>Teacher calls out good form publicly — "Did you see that follow-through? That's exactly it."</em> No score-shaming. Focus is on form + getting it over, not just point total.</p>
+  </div>
 
-    <div class="callout">
-      <h4>Design Philosophy</h4>
-      <p><em>"Multi-skill integration from Day 1. Game play as the primary teacher by Lesson 3. Students move from learners to leaders by Lesson 7."</em></p>
+  <div class="sh-primary">Closure &amp; Assessment &nbsp;(3–5 min)</div>
+  <div class="two-col">
+    <div class="col">
+      <div class="col-label">Closure</div>
+      Students sit at the end line. "Give me the 4 cues for an underhand serve — say them to your neighbor." "Why do we step with the opposite foot?" "What's the most common mistake you saw today?" Preview Day 2: the ball doesn't always come at you at shoulder height — tomorrow we learn how to handle a low ball without letting it hit the ground.
     </div>
+    <div class="col">
+      <div class="col-label">Assessment</div>
+      Observation during practice: are students contacting with the heel of the hand? Does the follow-through go high or stay low? Serve &amp; Score results: how many students can clear the net consistently from the end line? Note students who will need extra support on Day 4 (serve receive).
+    </div>
+  </div>
 
-    <table class="overview-table">
+  <div class="sh-light">Differentiation &amp; Teacher Notes</div>
+  <div class="sb" style="border-bottom:none;">
+    <strong>Modify down:</strong> Move students closer to the net (10–15 ft). Use a beach ball or softer volleyball for students with poor hand-eye coordination. Allow a toss (hold ball lower, contact higher) to reduce timing demands. &nbsp;<strong>Modify up:</strong> Challenge advanced students to hit specific target zones — left corner only, then right corner only. Start working on consistent placement, not just clearing the net.<br>
+    <strong>Note:</strong> Day 1 is your diagnostic. Notice who has experience, who is afraid of the ball, and who has the athleticism but not the mechanics. Use these observations to set up deliberate partnerships for Day 2's partner drills. Experimental Volleyball also tells you which students can self-manage and which ones need structure.
+  </div>
+  <div class="spacer"></div>
+</div>
+
+<!-- ════════════════════════════════════════════════ -->
+<!-- DAY 2 -->
+<!-- ════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <div class="unit-title">MIDDLE SCHOOL VOLLEYBALL</div>
+  </div>
+  <div class="day-row">
+    <div class="day-num">DAY 2 OF 9</div>
+    <div class="day-topic">Forearm Pass (Bump)</div>
+  </div>
+
+  <div class="info-grid">
+    <div class="info-cell">
+      <div class="cell-label">Learning Targets (SWBAT)</div>
+      • I can demonstrate a forearm pass using a flat platform below my wrists<br>
+      • I can direct a forearm pass to a partner consistently<br>
+      • I can explain why arm angle determines where the ball goes
+    </div>
+    <div class="info-cell">
+      <div class="cell-label">Equipment</div>
+      • Volleyballs (1 per pair)<br>
+      • Net<br>
+      • Cones for spacing
+    </div>
+    <div class="info-cell">
+      <div class="cell-label">Standards</div>
+      <span class="std-badge std-il" data-tip="IL 19.A — Demonstrate competency in locomotor, non-locomotor, and manipulative skills">19.A</span><span class="std-badge std-il" data-tip="IL 19.B — Analyze and apply movement concepts to learning new skills">19.B</span><span class="std-badge std-il" data-tip="IL 21.B — Cooperative skills — work with others to accomplish tasks and achieve group goals">21.B</span><br>
+      <span class="std-badge std-shape" data-tip="SHAPE S1 — Demonstrates competency in a variety of motor skills and movement patterns">S1</span><span class="std-badge std-shape" data-tip="SHAPE S2 — Applies knowledge of concepts, principles, strategies and tactics related to movement and performance">S2</span>
+    </div>
+  </div>
+
+  <div class="sh-light">Essential Question</div>
+  <div class="eq">Why does the angle of your arms change where the ball goes? &nbsp;|&nbsp; What does it mean to "give" with the ball — and why does that make the pass more accurate?</div>
+
+  <div class="sh-accent">Warm-Up — Volleyball Touch Circuit &nbsp;(5–8 min)</div>
+  <div class="sb">
+    <p>This is the permanent warm-up for Days 2–9. Students run through it without being told by Day 4. Build the habit now.</p>
+    <p>① Arm circles forward 10 sec, backward 10 sec &nbsp;② Wrist circles + shoulder rolls (10 sec) &nbsp;③ Self-toss + catch with forearm platform position — no actual bump yet, just the shape (10 reps) &nbsp;④ Self-toss + controlled forearm bump to self (10 reps) &nbsp;⑤ Self-toss + set to self (10 reps) &nbsp;⑥ Three controlled underhand serves at the wall or net</p>
+    <p><em>Coaching today: "Check your platform — are your arms flat? Wrists together? That's what we're practicing all of today."</em></p>
+  </div>
+
+  <div class="sh-light">Warm-Up Game — Sharks &amp; Minnows &nbsp;(4–5 min)</div>
+  <div class="sb">
+    <p>Minnows each have a volleyball and must travel across the gym while controlling their ball (self-bumping or setting to themselves). Sharks try to knock the ball away with an open hand (a legal volleyball strike — no grabbing). If your ball touches the ground, you become a shark.</p>
+    <p>Start with 3–4 sharks. Last minnow standing wins the round. Run 2 rounds. <em>This builds ball control under pressure — students are self-bumping while avoiding defenders, which is exactly what serve receive demands.</em></p>
+    <p>Coaching: "Keep the platform up — if you close your fists or hug the ball, you lose control and you'll lose it to a shark faster."</p>
+  </div>
+
+  <div class="sh-primary">Lesson Focus — Forearm Pass (Bump) &nbsp;(20–25 min)</div>
+  <div class="sb">
+    <p><strong>Teach the platform first — before the ball ever arrives:</strong></p>
+    <div class="cue"><strong>Flat Platform</strong> — Clasp your hands together (one fist, one wraps around). Press your thumbs flat and side-by-side — NO thumbs pointing up. Your forearms should form a flat, unified surface from wrist to elbow. "Make a shelf. The ball rolls off a shelf, not a hill."</div>
+    <div class="cue"><strong>Contact Below the Wrist</strong> — The ball contacts your forearms between your wrists and elbows — NOT your wrists, NOT your hands. If it hits your wrists, it bounces sideways. Have students point to the contact zone on their arm before every pass.</div>
+    <div class="cue"><strong>Square Your Shoulders</strong> — Before the ball arrives, turn your body so your shoulders face where you want the ball to go. You can't aim the platform if your shoulders are sideways. "Shoulders to your target, every time."</div>
+    <div class="cue"><strong>Push, Don't Swing</strong> — Arms absorb the ball, then push up and forward. No big arm swing — that sends the ball flying everywhere. Legs drive the power. "Legs up, arms steady."</div>
+    <p style="margin-top:5px;"><strong>Partner Passing Drill:</strong></p>
+    <p>① Coach tosses to student — student bumps back to coach (teacher or aide), 10 reps each. ② Partner pairs: one tosses underhand, other bumps back. Count consecutive passes without the ball hitting the ground. ③ Increase distance slightly: 12–15 feet apart. Focus on platform angle — if ball goes left, your arms angled left. Track the highest consecutive count each pair reaches.</p>
+  </div>
+
+  <div class="sh-accent">Game — Bump &amp; Keep It Up &nbsp;(10–12 min)</div>
+  <div class="sb">
+    <p>Groups of 3–4. Students stand in a small circle and try to keep the volleyball in the air using only forearm passes. No catches, no sets — bumps only. Count consecutive touches without the ball hitting the floor. Each group tracks their best streak.</p>
+    <p><strong>Round 1:</strong> Catches allowed to reset (build confidence). &nbsp;<strong>Round 2:</strong> No catches — bump only. &nbsp;<strong>Round 3:</strong> Must call "mine!" before every touch.</p>
+    <p><em>Best group streak gets recognized publicly at closure — but emphasize communication and hustle over raw numbers.</em></p>
+  </div>
+
+  <div class="sh-primary">Closure &amp; Assessment &nbsp;(3–5 min)</div>
+  <div class="two-col">
+    <div class="col">
+      <div class="col-label">Closure</div>
+      Students hold their platform position in front of them. "Show me — thumbs flat? Arms flat? Wrists together?" Check and correct from a distance. "Why do your shoulders need to face the target before the ball gets there?" Preview Day 3: once you can get the ball up, someone needs to put it in position for a hit — that's the setter's job. Tomorrow we learn to set.
+    </div>
+    <div class="col">
+      <div class="col-label">Assessment</div>
+      Platform check: are thumbs flat? Are students swinging their arms or using their legs? Partner drill counts: which pairs are above 5 consecutive? Above 10? Keep it Up: note communication — are students calling the ball or just running into each other? This tells you who's ready for 3-contact sequences (Day 6).
+    </div>
+  </div>
+
+  <div class="sh-light">Differentiation &amp; Teacher Notes</div>
+  <div class="sb" style="border-bottom:none;">
+    <strong>Modify down:</strong> Start with balloon or beach ball to slow ball speed. Allow the student to catch the toss, reset platform, then bump. Focus on platform shape over movement. &nbsp;<strong>Modify up:</strong> Partner passes off a real serve (not a toss). Move farther apart. Count consecutive passes from a live underhand serve.<br>
+    <strong>Note:</strong> The most common error is students clasping hands with thumbs up or wrapping fingers together unevenly — the platform goes uneven and the ball sprays sideways. Stand where you can see arms from the side. Flat arms are invisible from behind. Sharks &amp; Minnows doubles as a buy-in activity — students who struggled to connect today will approach the ball with much less hesitation by the next time you play it.
+  </div>
+  <div class="spacer"></div>
+</div>
+
+<!-- ════════════════════════════════════════════════ -->
+<!-- DAY 3 -->
+<!-- ════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <div class="unit-title">MIDDLE SCHOOL VOLLEYBALL</div>
+  </div>
+  <div class="day-row">
+    <div class="day-num">DAY 3 OF 9</div>
+    <div class="day-topic">Setting</div>
+  </div>
+
+  <div class="info-grid">
+    <div class="info-cell">
+      <div class="cell-label">Learning Targets (SWBAT)</div>
+      • I can set a volleyball using my finger pads with hands above my forehead<br>
+      • I can direct a set to a specific target location<br>
+      • I can explain the setter's role in a volleyball rally
+    </div>
+    <div class="info-cell">
+      <div class="cell-label">Equipment</div>
+      • Volleyballs (1 per 2–3 students)<br>
+      • Net<br>
+      • Cones for target zones
+    </div>
+    <div class="info-cell">
+      <div class="cell-label">Standards</div>
+      <span class="std-badge std-il" data-tip="IL 19.A — Demonstrate competency in locomotor, non-locomotor, and manipulative skills">19.A</span><span class="std-badge std-il" data-tip="IL 19.B — Analyze and apply movement concepts to learning new skills">19.B</span><span class="std-badge std-il" data-tip="IL 21.B — Cooperative skills — work with others to accomplish tasks and achieve group goals">21.B</span><br>
+      <span class="std-badge std-shape" data-tip="SHAPE S1 — Demonstrates competency in a variety of motor skills and movement patterns">S1</span><span class="std-badge std-shape" data-tip="SHAPE S2 — Applies knowledge of concepts, principles, strategies and tactics related to movement and performance">S2</span>
+    </div>
+  </div>
+
+  <div class="sh-light">Essential Question</div>
+  <div class="eq">What makes a good set "catchable" for a hitter? &nbsp;|&nbsp; Why does the ball need to briefly rest against your hands instead of being slapped or caught?</div>
+
+  <div class="sh-accent">Warm-Up — Volleyball Touch Circuit &nbsp;(5–8 min)</div>
+  <div class="sb">
+    <p>Students run the permanent circuit on entry. Hold students accountable — if they're standing around waiting, they're doing it wrong. Coach today: <em>"On station 5 — set to yourself. Push through your fingertips all the way to the top. That's exactly what today is about."</em></p>
+  </div>
+
+  <div class="sh-light">Transition Game — Tick Tick Boom &nbsp;(4–5 min)</div>
+  <div class="sb">
+    <p>Students form a large circle. One volleyball is passed around using <strong>forearm passes only</strong> — no setting yet (that's today's lesson). One student stands in the middle and spins a cone on the floor. While the cone is spinning, everyone chants <strong>"Tick… Tick… Tick…"</strong> — the moment the cone falls, the whole class yells <strong>"BOOM!"</strong></p>
+    <p>Whoever is holding the ball when BOOM happens does a quick consequence (10 squats, a short lap, 5 push-ups) and immediately rejoins the circle. Middle player steps back after spinning — no controlling when the cone falls. Rotate the middle player after every 2–3 booms.</p>
+    <p><em>This is a perfect forearm pass review from Day 2 — passing fast under pressure, platform up, eyes on the ball, nobody wants to be caught holding it when the cone drops.</em></p>
+    <p>Coaching: "Platform — not fists! Call the pass out loud before you send it."</p>
+  </div>
+
+  <div class="sh-primary">Lesson Focus — Setting &nbsp;(18–22 min)</div>
+  <div class="sb">
+    <p><strong>Demo the hand position before any ball contact:</strong></p>
+    <div class="cue"><strong>Make the Windows</strong> — Bring both hands above your forehead, fingertips touching, thumbs and index fingers forming a triangle. Look through that triangle — that's where the ball will sit. "If you can see a tiny window through your hands, you've got it."</div>
+    <div class="cue"><strong>Ball Rests, Doesn't Slap</strong> — The ball briefly rests on all 10 fingertips — NOT the palms, NOT the wrists. It should feel like the ball is resting in a nest for a split second before you push it out. If it sounds like a slap, you're catching it wrong.</div>
+    <div class="cue"><strong>Extend and Follow</strong> — Push through the ball by fully extending your arms in the direction of your target. Your fingers should finish pointing at where you want the ball to go. "Arms go where the ball goes."</div>
+    <div class="cue"><strong>Eyes on the Target</strong> — Look at where you're sending the ball, not at the ball itself. If you're watching your hands, you're missing your target. Find the spot. Set there.</div>
+    <p style="margin-top:5px;"><strong>Practice Progression:</strong></p>
+    <p>① Students hold a ball and press it overhead — no toss yet. Check: is it fingertips or palms? ② Self-toss low (2 feet), set to self — count 5 in a row without the ball touching the floor or palms. ③ Partners: one tosses, one sets back. ④ Partner sets — receiver catches, resets, sets back. Count consecutive clean sets. ⑤ Advanced: move to set over net to partner.</p>
+  </div>
+
+  <div class="sh-accent">Game — Set &amp; Score &nbsp;(10–12 min)</div>
+  <div class="sb">
+    <p>Groups of 3. Tosser → Setter → Target Zone. Tosser (same player each round) tosses the ball to the setter. Setter attempts to set the ball into a target zone (cones) on the other side of the net or across the floor. Points scored for landing in the zone.</p>
+    <p>Rotate roles after every 3 sets. <em>Focus: setter must call the target out loud before setting — "LEFT ZONE!" — builds the habit of communicating direction before contact.</em> Team with the most points after 3 full rotations wins the round. Play 2 rounds.</p>
+  </div>
+
+  <div class="sh-primary">Closure &amp; Assessment &nbsp;(3–5 min)</div>
+  <div class="two-col">
+    <div class="col">
+      <div class="col-label">Closure</div>
+      Students hold "the windows" hand position in front of their face. Check from a distance — are fingertips touching? Thumbs and index fingers forming the triangle? "What's the setter's job in a rally?" (Answer: give the hitter a good ball in a good spot.) Preview Day 4: now that you can get the ball up (bump) and put it in position (set), we put those two together — starting with serve receive.
+    </div>
+    <div class="col">
+      <div class="col-label">Assessment</div>
+      Watch for palms vs. fingertips — the most common error. Listen for slapping sounds during practice (palm contact). Partner sets: who can maintain consecutive sets above 5? Note students who push out vs. extend through — extension is the marker of a quality set. Tick Tick Boom: was bumping from Day 2 improving?
+    </div>
+  </div>
+
+  <div class="sh-light">Differentiation &amp; Teacher Notes</div>
+  <div class="sb" style="border-bottom:none;">
+    <strong>Modify down:</strong> Allow two-handed catch and release (focus on hand position and extension only — take ball control out of the equation). Use a beach ball — slower speed means more time to form the hand position. &nbsp;<strong>Modify up:</strong> Back sets — set without looking at the target (behind the body). Quick sets — short, low, fast. Push them toward game-level speed.<br>
+    <strong>Note:</strong> Setting is the hardest skill in this unit to learn from scratch. Expect 30–40% of students to struggle with fingertip-only contact all week. The "windows" cue is the one that clicks fastest because it gives them something physical to check before the ball arrives. Do not rush past setting — Day 6 (3-touch rally) depends on a functional setter.
+  </div>
+  <div class="spacer"></div>
+</div>
+
+<!-- ════════════════════════════════════════════════ -->
+<!-- DAY 4 -->
+<!-- ════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <div class="unit-title">MIDDLE SCHOOL VOLLEYBALL</div>
+  </div>
+  <div class="day-row">
+    <div class="day-num">DAY 4 OF 9</div>
+    <div class="day-topic">Serve Receive — Bumping the Serve</div>
+  </div>
+
+  <div class="info-grid">
+    <div class="info-cell">
+      <div class="cell-label">Learning Targets (SWBAT)</div>
+      • I can position my body to receive an underhand serve before it arrives<br>
+      • I can direct a serve receive bump toward a designated setter target<br>
+      • I can communicate "mine!" before contacting the ball
+    </div>
+    <div class="info-cell">
+      <div class="cell-label">Equipment</div>
+      • Volleyballs (1 per group of 3)<br>
+      • Net<br>
+      • Cones for setter target zone
+    </div>
+    <div class="info-cell">
+      <div class="cell-label">Standards</div>
+      <span class="std-badge std-il" data-tip="IL 19.A — Demonstrate competency in locomotor, non-locomotor, and manipulative skills">19.A</span><span class="std-badge std-il" data-tip="IL 19.B — Analyze and apply movement concepts to learning new skills">19.B</span><span class="std-badge std-il" data-tip="IL 21.B — Cooperative skills — work with others to accomplish tasks and achieve group goals">21.B</span><br>
+      <span class="std-badge std-shape" data-tip="SHAPE S1 — Demonstrates competency in a variety of motor skills and movement patterns">S1</span><span class="std-badge std-shape" data-tip="SHAPE S2 — Applies knowledge of concepts, principles, strategies and tactics related to movement and performance">S2</span>
+    </div>
+  </div>
+
+  <div class="sh-light">Essential Question</div>
+  <div class="eq">How do you decide WHERE on the court to be before the serve is even hit? &nbsp;|&nbsp; Why does calling "mine!" before you touch the ball make your whole team better?</div>
+
+  <div class="sh-accent">Warm-Up — Volleyball Touch Circuit &nbsp;(5–8 min)</div>
+  <div class="sb">
+    <p>Students run the permanent circuit on entry. Students should be starting this independently by now — if they're not, use this as a teachable moment about routine. Coach the circuit with an eye toward serve receive: <em>"On station 4 — I want your platform to aim toward the center of the gym. That's your target when you receive today."</em></p>
+  </div>
+
+  <div class="sh-light">Warm-Up Game — Sharks &amp; Minnows &nbsp;(4–5 min)</div>
+  <div class="sb">
+    <p>Same as Day 2. Minnows self-bump or set their ball while crossing the gym. Sharks knock balls away. New rule today: <strong>Minnows must call "mine!" before every self-contact.</strong> If a shark hears you call it — you're safe for 2 seconds. This builds the verbal habit that carries into serve receive.</p>
+    <p>Start with 4 sharks. Last 3 minnows win. Run 2 rounds.</p>
+  </div>
+
+  <div class="sh-primary">Lesson Focus — Serve Receive &nbsp;(20–25 min)</div>
+  <div class="sb">
+    <p><strong>The serve receive is the most important skill in volleyball — if you can't get the serve up, the rally never starts.</strong></p>
+    <div class="cue"><strong>Read Early</strong> — Watch the server's hitting arm before the ball is even released. The arm tells you: where is it going? Direction, speed, and height all start at the server's shoulder. Move your feet BEFORE the ball crosses the net — not after.</div>
+    <div class="cue"><strong>Move First, Platform Second</strong> — Get behind the ball, then form the platform. If you're reaching for the ball sideways with an already-formed platform, you've already lost. Feet move, then arms lock in.</div>
+    <div class="cue"><strong>Cushion the Ball</strong> — Absorb the ball by slightly lowering your platform as it arrives (like catching a drop). Your legs give slightly — don't tense up and smash it. "Cushion, then push."</div>
+    <div class="cue"><strong>Call It!</strong> — Before you contact, say "mine!" loud enough for every teammate to hear. Nobody else moves. You own it.</div>
+    <p style="margin-top:5px;"><strong>Serve-Bump-Catch Drill:</strong></p>
+    <p>Groups of 3. Server (end line) → Receiver (mid-court) → Catcher at setter target (cone zone). Server sends an underhand serve. Receiver reads, moves, calls "mine!" and bumps to the catcher. Catcher gives verbal feedback: "good platform," "too far left," "excellent!" Rotate every 5 serves. Count successful passes to the target zone per rotation.</p>
+  </div>
+
+  <div class="sh-accent">Game — Serve-Bump-Set-Catch &nbsp;(10–12 min)</div>
+  <div class="sb">
+    <p>Extend the Serve-Bump-Catch drill by adding a setter. Groups of 4. Server → Receiver bumps → Setter sets → Catcher. Count successful completions of the full sequence without the ball hitting the floor. Each team tries to beat their own record.</p>
+    <p><strong>Constraint:</strong> Setter must call "set!" after the receiver bumps. Receiver must call "mine!" on the serve. Two verbal calls required for a successful point. <em>This is the foundation of real volleyball — serve receive → set → attack. The chains start here.</em></p>
+    <p>Run for 8–10 minutes. Rotate roles every 4 successful completions.</p>
+  </div>
+
+  <div class="sh-primary">Closure &amp; Assessment &nbsp;(3–5 min)</div>
+  <div class="two-col">
+    <div class="col">
+      <div class="col-label">Closure</div>
+      "What does 'read early' mean?" (Watch the server's arm before the ball is released.) "What's the first thing you do when you see where the serve is going?" (Move your feet.) "Why does calling 'mine!' make your team better?" (Prevents collisions, builds trust, everyone knows who's taking it.) Preview Day 5: most of you are serving underhand. Tomorrow we add power — overhand serve.
+    </div>
+    <div class="col">
+      <div class="col-label">Assessment</div>
+      Observation: are students moving their feet early or waiting for the ball to arrive before reacting? Are "mine!" calls happening consistently? Drill count: what percentage of serve receive attempts were directed to the target zone? Note students who freeze at the net — they're not reading the serve and need extra coaching before Day 7 (positions).
+    </div>
+  </div>
+
+  <div class="sh-light">Differentiation &amp; Teacher Notes</div>
+  <div class="sb" style="border-bottom:none;">
+    <strong>Modify down:</strong> Have the "server" toss instead of serve — reduces speed and unpredictability so students can focus on platform mechanics only. Bring the target zone closer. &nbsp;<strong>Modify up:</strong> Server uses a real game serve. Add a second receiver — they must communicate who takes the ball before calling "mine!"<br>
+    <strong>Note:</strong> Students who did well in Day 2 (bumping) often struggle here because serve receive is moving + reacting + directing — three things at once. The "Read Early" cue is the key unlock: the moment students start watching the arm instead of the ball, everything else gets easier. Give it a full 3 minutes of focused drill before moving on.
+  </div>
+  <div class="spacer"></div>
+</div>
+
+<!-- ════════════════════════════════════════════════ -->
+<!-- DAY 5 -->
+<!-- ════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <div class="unit-title">MIDDLE SCHOOL VOLLEYBALL</div>
+  </div>
+  <div class="day-row">
+    <div class="day-num">DAY 5 OF 9</div>
+    <div class="day-topic">Overhand Serve</div>
+  </div>
+
+  <div class="info-grid">
+    <div class="info-cell">
+      <div class="cell-label">Learning Targets (SWBAT)</div>
+      • I can execute an overhand serve with a controlled ball toss and heel-of-hand contact above my shoulder<br>
+      • I can consistently serve over the net from at least mid-court<br>
+      • I can explain the tactical advantage of an overhand serve over an underhand serve
+    </div>
+    <div class="info-cell">
+      <div class="cell-label">Equipment</div>
+      • Volleyballs (1 per student)<br>
+      • Net<br>
+      • Cones for target zones and distance markers
+    </div>
+    <div class="info-cell">
+      <div class="cell-label">Standards</div>
+      <span class="std-badge std-il" data-tip="IL 19.A — Demonstrate competency in locomotor, non-locomotor, and manipulative skills">19.A</span><span class="std-badge std-il" data-tip="IL 19.B — Analyze and apply movement concepts to learning new skills">19.B</span><span class="std-badge std-il" data-tip="IL 21.A — Personal responsibility and safe practices in group settings">21.A</span><br>
+      <span class="std-badge std-shape" data-tip="SHAPE S1 — Demonstrates competency in a variety of motor skills and movement patterns">S1</span><span class="std-badge std-shape" data-tip="SHAPE S4 — Exhibits responsible personal and social behavior that respects self and others">S4</span>
+    </div>
+  </div>
+
+  <div class="sh-light">Essential Question</div>
+  <div class="eq">How does an overhand serve give you more power and control than underhand? &nbsp;|&nbsp; Why is a consistent ball toss the most important part of the overhand serve?</div>
+
+  <div class="sh-accent">Warm-Up — Volleyball Touch Circuit &nbsp;(5–8 min)</div>
+  <div class="sb">
+    <p>Permanent circuit. Add: during the underhand serve station, students practice the toss only — no swing, just toss and catch. Right-handed toss = left hand releases straight up about 12–18 inches above the head. "Same spot every time. That's the whole game." Coach the toss before the lesson begins.</p>
+  </div>
+
+  <div class="sh-light">Transition Game — Tick Tick Boom &nbsp;(4–5 min)</div>
+  <div class="sb">
+    <p>Circle. Ball passes using <strong>sets or bumps — student chooses.</strong> Cone in the middle. "Tick… Tick… BOOM!" — whoever holds the ball does a consequence. New rule: if you use a set, you must call "set!" first. If you use a bump, call "bump!" Verbal call before every contact or the pass doesn't count and you redo it.</p>
+    <p>Rotate the cone-spinner every 3 booms. Keep energy high — pace is everything in this game.</p>
+  </div>
+
+  <div class="sh-primary">Lesson Focus — Overhand Serve &nbsp;(20–25 min)</div>
+  <div class="sb">
+    <p><strong>The overhand serve is built on one thing: the toss. Get the toss right and everything else follows.</strong></p>
+    <div class="cue"><strong>Toss to Your Number 1</strong> — Imagine a clock above your head. Toss the ball to 12 o'clock — directly above your hitting shoulder, about 12–18 inches up. Not too far forward, not behind your head. Toss it to the same spot every single time. "No toss — no serve."</div>
+    <div class="cue"><strong>High Five the Ball</strong> — At the peak of the toss, reach up and slightly forward and strike the ball with an open hand — heel of the hand first, like a high five above your head. Arm is fully extended at contact. "Reach high, then snap through."</div>
+    <div class="cue"><strong>Snap Your Wrist</strong> — At contact, snap your wrist forward (fingers follow through over the ball). This creates topspin, which brings the ball down into the court instead of sailing out the back. No wrist snap = floater or out of bounds.</div>
+    <div class="cue"><strong>Step and Reach</strong> — Opposite foot steps forward as the toss goes up. Weight transfers forward through the serve. If your feet stay still, you lose all your power.</div>
+    <p style="margin-top:5px;"><strong>Practice Progression:</strong></p>
+    <p>① Toss only: students release 10 tosses each, ball must go straight up and land on the hitting shoulder side — no catches, just watch where it drops. ② Add contact: short distance (10 ft) serving against the wall. ③ Move to net: overhand serve from 15 feet. ④ Move to full service line. Students who cannot clear the net may remain at mid-court.</p>
+  </div>
+
+  <div class="sh-accent">Game — Serve Wars &nbsp;(10–12 min)</div>
+  <div class="sb">
+    <p>Divide the class into two teams — one side serves underhand, the other serves overhand. Three servers from each team serve simultaneously at the opposing team's target cones. First team to knock all 5 cones to the ground wins the round. Reset and go again — switch serving styles.</p>
+    <p>After 3 rounds: "Which serve put more balls in the target zone?" Debrief: overhand generates more power and direction options — but underhand is more consistent when you're still learning. Both are legal. Use what you can control. <em>"A serve in the court beats a bomb out of bounds every time."</em></p>
+  </div>
+
+  <div class="sh-primary">Closure &amp; Assessment &nbsp;(3–5 min)</div>
+  <div class="two-col">
+    <div class="col">
+      <div class="col-label">Closure</div>
+      "What's the most important part of the overhand serve?" (The toss.) "If your serve keeps going into the net — what's the fix?" (Higher toss, higher contact point.) "Which serve are you choosing to use on Day 9 — and why?" Preview Day 6: you can serve, receive, and set. Now it's time to put all three together in one sequence — that's real volleyball.
+    </div>
+    <div class="col">
+      <div class="col-label">Assessment</div>
+      Toss consistency — watch for students who have wildly inconsistent tosses (ball moves forward or backward). These students will struggle to build the overhand serve without extra toss-only work. Track who successfully crosses the net overhand from the full service line. Note these students — they're your early leaders for Day 9 tournament.
+    </div>
+  </div>
+
+  <div class="sh-light">Differentiation &amp; Teacher Notes</div>
+  <div class="sb" style="border-bottom:none;">
+    <strong>Modify down:</strong> Allow the student to stand at mid-court. Focus on the toss only — do not force overhand if the student cannot yet control underhand. Underhand from end line is still a passing grade. &nbsp;<strong>Modify up:</strong> Float serve — barely snap the wrist, let the ball float with no spin. Harder to receive. Jump serve — toss forward and approach. Only for students who have full overhand control.<br>
+    <strong>Note:</strong> The overhand serve is where student confidence diverges sharply. Students who come in with baseball experience pick it up in 5 minutes. Students without throwing backgrounds may take all 9 days. The toss is the single biggest intervention point — a consistent toss fixes 70% of overhand serve problems.
+  </div>
+  <div class="spacer"></div>
+</div>
+
+<!-- ════════════════════════════════════════════════ -->
+<!-- DAY 6 -->
+<!-- ════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <div class="unit-title">MIDDLE SCHOOL VOLLEYBALL</div>
+  </div>
+  <div class="day-row">
+    <div class="day-num">DAY 6 OF 9</div>
+    <div class="day-topic">3-Contact Rally — Bump, Set, Attack</div>
+  </div>
+
+  <div class="info-grid">
+    <div class="info-cell">
+      <div class="cell-label">Learning Targets (SWBAT)</div>
+      • I can execute a 3-contact sequence (bump → set → attack) as part of a team<br>
+      • I can communicate with teammates before each contact<br>
+      • I can explain why 3 contacts is more effective than 1 or 2
+    </div>
+    <div class="info-cell">
+      <div class="cell-label">Equipment</div>
+      • Volleyballs (1 per group of 3)<br>
+      • Net (lowered if needed)<br>
+      • Cones for target zones
+    </div>
+    <div class="info-cell">
+      <div class="cell-label">Standards</div>
+      <span class="std-badge std-il" data-tip="IL 19.A — Demonstrate competency in locomotor, non-locomotor, and manipulative skills">19.A</span><span class="std-badge std-il" data-tip="IL 19.C — Demonstrate knowledge of rules, etiquette, and safety in physical activities">19.C</span><span class="std-badge std-il" data-tip="IL 21.B — Cooperative skills — work with others to accomplish tasks and achieve group goals">21.B</span><br>
+      <span class="std-badge std-shape" data-tip="SHAPE S1 — Demonstrates competency in a variety of motor skills and movement patterns">S1</span><span class="std-badge std-shape" data-tip="SHAPE S2 — Applies knowledge of concepts, principles, strategies and tactics related to movement and performance">S2</span>
+    </div>
+  </div>
+
+  <div class="sh-light">Essential Question</div>
+  <div class="eq">Why is a 3-contact rally more powerful than sending it over on the first touch? &nbsp;|&nbsp; What does the setter need from the first contact to do their job well?</div>
+
+  <div class="sh-accent">Warm-Up — Volleyball Touch Circuit &nbsp;(5–8 min)</div>
+  <div class="sb">
+    <p>Permanent circuit. Coaching cue today: during partner bump station, students must alternate contacts — one bump each, back and forth. No catching between. This is the pattern that drives today's 3-touch drill. <em>"Control your first touch. That's what makes the second touch possible."</em></p>
+  </div>
+
+  <div class="sh-light">Warm-Up Game — Sharks &amp; Minnows &nbsp;(4–5 min)</div>
+  <div class="sb">
+    <p>Same as Days 2 and 4. Minnows self-bump or set across the gym. Sharks knock balls down. New rule: <strong>Minnows must alternate bump, set, bump, set — cannot use the same contact twice in a row.</strong> This forces students to set at unpredictable heights, exactly what Day 6's drill requires.</p>
+  </div>
+
+  <div class="sh-primary">Lesson Focus — 3-Contact Sequence &nbsp;(20–25 min)</div>
+  <div class="sb">
+    <p><strong>Teach the sequence before touching a ball. Use three students as visual demonstrations:</strong></p>
+    <p>Three colored cones: <strong>Green</strong> = first contact (bump the serve) &nbsp;→&nbsp; <strong>Yellow</strong> = second contact (set it up) &nbsp;→&nbsp; <strong>Red</strong> = third contact (attack/push it over). These three roles are always in sequence — no skipping.</p>
+    <div class="cue"><strong>Bump It Up (Green)</strong> — First contact gets the ball up and toward the center. Aim high — better to send it too high than too flat. The setter needs time. "Bump it up and call 'SET!'"</div>
+    <div class="cue"><strong>Set It High (Yellow)</strong> — Second contact is the setup. Setter calls "set!" moves to the ball, and puts it 2–3 feet off the net, high enough for the attacker to approach. "Give the hitter a good ball — they need height and location."</div>
+    <div class="cue"><strong>Attack at the Peak (Red)</strong> — Third contact goes over. Aim deep into the court (back third). Hit at the highest point of the ball's arc — not on the way down. Even a controlled push or tip counts as an attack. "Deep ball is hard to dig. Short ball is easy. Go deep."</div>
+    <div class="cue"><strong>Talk Through the Whole Thing</strong> — All three players call their role out loud: "BUMP!" → "SET!" → "HIT!" If you're not talking, your team is guessing. Guessing causes collisions.</div>
+    <p style="margin-top:5px;"><strong>3-Touch Drill:</strong> Groups of 3. One ball. Serve is thrown in. Green bumps to Yellow. Yellow sets to Red. Red attacks over net (or at a target). Count successful 3-touch sequences per 10 attempts. Teacher calls out each role: "Who's Green? Where's Yellow standing?"</p>
+  </div>
+
+  <div class="sh-accent">Game — 3-Touch Challenge &nbsp;(10–12 min)</div>
+  <div class="sb">
+    <p>3v3 over the net. Same rule as in competitive volleyball: each team must use all 3 contacts before sending the ball over. If a team sends it over on 1 or 2 touches — no point. Ball must go bump → set → attack (or any controlled 3rd touch) to earn a point.</p>
+    <p>First team to 7 points wins the set. Play 2 sets. Teacher pauses play after notable sequences to highlight good communication or decision-making. <em>This is the first full volleyball game of the unit — students who struggled with individual skills often surprise you when there's a real game with a score.</em></p>
+  </div>
+
+  <div class="sh-primary">Closure &amp; Assessment &nbsp;(3–5 min)</div>
+  <div class="two-col">
+    <div class="col">
+      <div class="col-label">Closure</div>
+      "What's the setter's job — and what does the setter need from the first contact to do it?" (High ball, toward center.) "What happens to your team if the second contact is too low or too far from the net?" (Hitter can't swing, no good attack.) "What verbal call goes with each contact?" Preview Day 7: now that you can run the 3-touch sequence — where does each person start? Tomorrow is positions and rotation.
+    </div>
+    <div class="col">
+      <div class="col-label">Assessment</div>
+      3-Touch Challenge: what percentage of rallies used all 3 contacts? Are players communicating verbally or just running to the ball? Note: students who are strong at one role (only bumpers, only setters) — by Day 8 they need to rotate through all three. Teacher observation key today: who tracks ball path vs. who freezes waiting for the ball to come to them.
+    </div>
+  </div>
+
+  <div class="sh-light">Differentiation &amp; Teacher Notes</div>
+  <div class="sb" style="border-bottom:none;">
+    <strong>Modify down:</strong> Allow a catch after the bump so the setter has time to get in position. Count 2-contact sequences as success if 3 is too hard. &nbsp;<strong>Modify up:</strong> No catches ever. Require the attacker to call their target zone before swinging. Play with a real overhand serve to start each rally.<br>
+    <strong>Note:</strong> The biggest teaching moment on Day 6 is showing students WHY 3 contacts beats 1. Ask: "If you send the ball over on the first touch from mid-court — where's it going? Can your team aim it?" The answer is almost always no. Three contacts lets you aim. That's the sell. Once they understand the WHY, they buy into the process even if it's harder.
+  </div>
+  <div class="spacer"></div>
+</div>
+
+<!-- ════════════════════════════════════════════════ -->
+<!-- DAY 7 -->
+<!-- ════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <div class="unit-title">MIDDLE SCHOOL VOLLEYBALL</div>
+  </div>
+  <div class="day-row">
+    <div class="day-num">DAY 7 OF 9</div>
+    <div class="day-topic">Court Positions &amp; Rotation</div>
+  </div>
+
+  <div class="info-grid">
+    <div class="info-cell">
+      <div class="cell-label">Learning Targets (SWBAT)</div>
+      • I can identify and name the 6 court positions in volleyball<br>
+      • I can demonstrate correct rotation order after my team wins a sideout<br>
+      • I can explain WHY teams rotate — and what strategic advantage it creates
+    </div>
+    <div class="info-cell">
+      <div class="cell-label">Equipment</div>
+      • Volleyballs<br>
+      • Net<br>
+      • Numbered position cards or cones (1–6)
+    </div>
+    <div class="info-cell">
+      <div class="cell-label">Standards</div>
+      <span class="std-badge std-il" data-tip="IL 19.C — Demonstrate knowledge of rules, etiquette, and safety in physical activities">19.C</span><span class="std-badge std-il" data-tip="IL 20.A — Develop and apply fitness concepts and practices to achieve personal fitness goals">20.A</span><span class="std-badge std-il" data-tip="IL 21.B — Cooperative skills — work with others to accomplish tasks and achieve group goals">21.B</span><br>
+      <span class="std-badge std-shape" data-tip="SHAPE S2 — Applies knowledge of concepts, principles, strategies and tactics related to movement and performance">S2</span><span class="std-badge std-shape" data-tip="SHAPE S5 — Recognizes the value of physical activity for health, enjoyment, challenge, self-expression, and social interaction">S5</span>
+    </div>
+  </div>
+
+  <div class="sh-light">Essential Question</div>
+  <div class="eq">Why do teams rotate in volleyball — and what's the strategic advantage of spreading your best players through every position? &nbsp;|&nbsp; What does "know your zone" mean, and how does it prevent collisions?</div>
+
+  <div class="sh-accent">Warm-Up — Volleyball Touch Circuit &nbsp;(5–8 min)</div>
+  <div class="sb">
+    <p>Permanent circuit. Coaching cue today: label each student a position number (1–6) before the circuit begins. After the circuit ends, tell them that their position number tells them exactly where to stand and what to do when the ball comes over the net. "Everything today connects to where you are on the court."</p>
+  </div>
+
+  <div class="sh-light">Transition Game — Tick Tick Boom &nbsp;(4–5 min)</div>
+  <div class="sb">
+    <p>Circle game. Ball passed using bumps or sets. Cone in the middle. "Tick… Tick… BOOM!" — consequence for whoever holds it. New challenge: when the teacher calls a position number (1–6) mid-game, players who know they're in that position must take two extra turns passing before sending the ball on. Builds position awareness in a low-stakes context.</p>
+  </div>
+
+  <div class="sh-primary">Lesson Focus — Positions &amp; Rotation &nbsp;(18–22 min)</div>
+  <div class="sb">
+    <p><strong>Draw the 6-position map on the board or floor:</strong></p>
+    <p style="font-size:10px; color:#555; margin-bottom:4px;">Front row (net side): <strong>4 (Left Front)</strong> · <strong>3 (Middle Front)</strong> · <strong>2 (Right Front)</strong> &nbsp;|&nbsp; Back row: <strong>5 (Left Back)</strong> · <strong>6 (Middle Back)</strong> · <strong>1 (Right Back / Server)</strong></p>
+    <div class="cue"><strong>Know Your Zone</strong> — Each player is responsible for a section of the court. If the ball is in your zone, it's yours. If it's between two zones, you call it. You do NOT run to balls in someone else's zone — that's how collisions happen and balls hit the floor uncovered.</div>
+    <div class="cue"><strong>Call "Mine!" Before You Touch It</strong> — Every contact must be claimed verbally. No exceptions. If two players both go without calling it — it's nobody's fault and everybody's problem.</div>
+    <div class="cue"><strong>Rotation Is Clockwise</strong> — When your team wins a sideout (wins the point while receiving), everyone rotates one position clockwise. Position 1 becomes Position 6, Position 6 becomes Position 5, and so on. The new Position 1 serves.</div>
+    <div class="cue"><strong>No Ball Hog</strong> — Trust your teammates. If a ball comes to Position 6, the Position 6 player takes it — even if Position 5 is faster. Zones are assigned, not earned by speed.</div>
+    <p style="margin-top:5px;"><strong>Walk-Through Drill:</strong> Put 6 students on one side of the court. Teacher calls a position number — those students raise their hand and point to their zone. Then teacher calls "rotate!" and students move clockwise to the next position. Run 3 full rotations. Then: teacher throws a ball to a zone — which number player calls "mine!" and takes it?</p>
+    <p style="margin-top:4px;"><strong>Rotation Game:</strong> 3v3 or 4v4, short side of the net. Teams rotate every 3 points — whether they win or lose. Focus: every rotation, players point to their position before the serve happens. Teacher stops play after every rotation to confirm everyone is in the right spot.</p>
+  </div>
+
+  <div class="sh-accent">Game — Rotation Rally &nbsp;(10–12 min)</div>
+  <div class="sb">
+    <p>3v3 (or 4v4 adapted). Full rotation rules apply — rotate clockwise after sideout, new server takes Position 1. Each server gets one rotation to serve as many points as possible, then the team rotates. Teams track how many total points they scored in each rotation. <em>Which rotation generated the most points for your team? That's your strongest player combination — and that's real volleyball strategy.</em></p>
+    <p>Teacher announces: "Rotate!" after every 3 points regardless of who scored — this keeps the game moving and gives everyone a chance to serve.</p>
+  </div>
+
+  <div class="sh-primary">Closure &amp; Assessment &nbsp;(3–5 min)</div>
+  <div class="two-col">
+    <div class="col">
+      <div class="col-label">Closure</div>
+      Students stand in a row of 6 on the end line. "Point to Position 4." "Point to Position 1." "If Position 1 scores the point while receiving — what happens?" (Rotate clockwise.) "Who rotates to serve?" (New Position 1.) Preview Day 8: tomorrow you're putting everything together in a scrimmage — serve, receive, set, attack, and rotate.
+    </div>
+    <div class="col">
+      <div class="col-label">Assessment</div>
+      Walk-through drill: did students know their zone immediately, or did they need to look around? Rotation Game: are rotations happening smoothly, or is every rotation a 2-minute argument? Note students who default to chasing all balls — they're not trusting the zone system. These are the students to coach hardest on Day 8 for game play.
+    </div>
+  </div>
+
+  <div class="sh-light">Differentiation &amp; Teacher Notes</div>
+  <div class="sb" style="border-bottom:none;">
+    <strong>Modify down:</strong> Limit to 3 positions instead of 6 (Left, Middle, Right). Run a simpler back-and-forth rotation — when your team scores, rotate. Keep it to one rule at a time. &nbsp;<strong>Modify up:</strong> Add a serving strategy challenge: serve to specific zones (deep left, short middle). Setter always moves to Position 2 after the serve — build the positional pattern.<br>
+    <strong>Note:</strong> Rotation is the rule students complain about most and understand least at first. The key is making it feel purposeful: "Rotation means everyone serves. Everyone serves means you can't hide." That framing turns rotation from a confusing rule into a fairness principle — which MS students actually care about. Pre-assign teams for the Day 9 tournament tonight so you're not losing 10 minutes of class to team drama tomorrow.
+  </div>
+  <div class="spacer"></div>
+</div>
+
+<!-- ════════════════════════════════════════════════ -->
+<!-- DAY 8 -->
+<!-- ════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <div class="unit-title">MIDDLE SCHOOL VOLLEYBALL</div>
+  </div>
+  <div class="day-row">
+    <div class="day-num">DAY 8 OF 9</div>
+    <div class="day-topic">Scrimmage — Skills in Live Play</div>
+  </div>
+
+  <div class="info-grid">
+    <div class="info-cell">
+      <div class="cell-label">Learning Targets (SWBAT)</div>
+      • I can apply forearm pass, set, serve, and rotation in a live game<br>
+      • I can communicate with teammates during active play using verbal calls<br>
+      • I can identify one skill I improved and one skill to work on before Day 9
+    </div>
+    <div class="info-cell">
+      <div class="cell-label">Equipment</div>
+      • Volleyballs (1 per court)<br>
+      • Net<br>
+      • Score tracking (whiteboard or clipboards)
+    </div>
+    <div class="info-cell">
+      <div class="cell-label">Standards</div>
+      <span class="std-badge std-il" data-tip="IL 19.C — Demonstrate knowledge of rules, etiquette, and safety in physical activities">19.C</span><span class="std-badge std-il" data-tip="IL 20.A — Develop and apply fitness concepts and practices to achieve personal fitness goals">20.A</span><span class="std-badge std-il" data-tip="IL 21.B — Cooperative skills — work with others to accomplish tasks and achieve group goals">21.B</span><br>
+      <span class="std-badge std-shape" data-tip="SHAPE S2 — Applies knowledge of concepts, principles, strategies and tactics related to movement and performance">S2</span><span class="std-badge std-shape" data-tip="SHAPE S4 — Exhibits responsible personal and social behavior that respects self and others">S4</span><span class="std-badge std-shape" data-tip="SHAPE S5 — Recognizes the value of physical activity for health, enjoyment, challenge, self-expression, and social interaction">S5</span>
+    </div>
+  </div>
+
+  <div class="sh-light">Essential Question</div>
+  <div class="eq">What does your team do well right now? &nbsp;|&nbsp; If you could go home and practice one volleyball skill tonight, what would it be — and why?</div>
+
+  <div class="sh-accent">Warm-Up — Volleyball Touch Circuit &nbsp;(5–8 min)</div>
+  <div class="sb">
+    <p>Permanent circuit. Students run it on entry without instruction. Today: after the circuit, teacher announces the day's scrimmage teams and game format. Students know their team before the first whistle.</p>
+  </div>
+
+  <div class="sh-light">Warm-Up Game — Sharks &amp; Minnows &nbsp;(4–5 min)</div>
+  <div class="sb">
+    <p>Final run of Sharks &amp; Minnows. Minnows self-bump and set while crossing. Today's rule: minnows can protect themselves by quickly setting the ball above their head — while the ball is in the air above them, sharks cannot knock it. Forces a controlled set under pressure. Run 2 quick rounds.</p>
+  </div>
+
+  <div class="sh-primary">Lesson Focus — Scrimmage with Coaching Stops &nbsp;(25–28 min)</div>
+  <div class="sb">
+    <p><strong>Pre-scrimmage skill review (3 min max):</strong> Teacher calls 5 cues — one per skill. Students repeat back. "Platform flat?" "Windows above the forehead?" "Toss to 12 o'clock?" "3 contacts before it goes over?" "Call mine before every touch?" This is the mental checklist they carry into the game.</p>
+    <p><strong>3v3 Scrimmage — full volleyball rules:</strong></p>
+    <p>Teams of 3. Standard scoring — rally scoring (point on every serve). Rotate after sideout. 3 contacts required before sending the ball over (bump → set → attack). Serves from the end line — player's choice of serve type.</p>
+    <p>Games to 7, win by 2. Switch opponents after each game. Teacher circulates — stop play for individual teaching moments only (not constantly). Call your coaching stops around decisions, not missed hits:</p>
+    <div class="cue"><strong>Talk Early</strong> — "I stopped the game because nobody called the serve. Call it the moment you see where it's going — not after it drops."</div>
+    <div class="cue"><strong>Cover the Court</strong> — "When your teammate bumps, move to support. If they shanked it, someone needs to be there."</div>
+    <div class="cue"><strong>Play the Ball, Not the Player</strong> — "Your eyes go to the ball, not to the opponent. Read the ball. The court opens when you stop watching people."</div>
+    <p style="margin-top:4px;"><em>Use coaching stops sparingly — 2 to 3 per game maximum. Let the game breathe. Students learn more from playing than from being stopped.</em></p>
+  </div>
+
+  <div class="sh-accent">Closure &amp; Assessment &nbsp;(5 min)</div>
+  <div class="sb">
+    <p>After last whistle: teams line up for a mandatory handshake line — positive word to each opponent, not just a tap. Then brief team debrief (2 min): <em>"One thing your team communicated well today. One thing you'd fix before tomorrow."</em></p>
+    <p>Teacher observation for rubric: this is the primary day for scoring the rubric. Watch for bump form, set form, serve quality, and sportsmanship under game pressure. Note names of students who surprised you — both positively and negatively. These inform tomorrow's tournament bracket and rubric scores.</p>
+    <p>Preview Day 9: <em>"Tomorrow is the tournament. Everything we've built over 8 days comes out tomorrow. Come ready to compete and come ready to carry yourself like an athlete."</em></p>
+  </div>
+
+  <div class="sh-light">Differentiation &amp; Teacher Notes</div>
+  <div class="sb" style="border-bottom:none;">
+    <strong>Modify down:</strong> Allow a catch between contacts — bump, catch, set, catch, attack. This keeps the sequence alive for teams struggling with pace. Remove the 3-contact requirement for teams that can't rally — point is playing, not perfection. &nbsp;<strong>Modify up:</strong> Require an overhand serve from the full line. Add a "no bump over" rule — you must set before attacking. Run rally scoring to 11.<br>
+    <strong>Note:</strong> Day 8 is your most important teacher observation day. Rubric scores should be filled in before Day 9 when possible. Students who stand out today should be recognized tomorrow — call it in the handshake line, not in front of everyone during the game. Scrimmage teams today should inform your tournament seeding for Day 9 if you care about competitive balance.
+  </div>
+  <div class="spacer"></div>
+</div>
+
+<!-- ════════════════════════════════════════════════ -->
+<!-- DAY 9 -->
+<!-- ════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <div class="unit-title">MIDDLE SCHOOL VOLLEYBALL</div>
+  </div>
+  <div class="day-row">
+    <div class="day-num">DAY 9 OF 9</div>
+    <div class="day-topic">Tournament &amp; Unit Assessment</div>
+  </div>
+
+  <div class="info-grid">
+    <div class="info-cell">
+      <div class="cell-label">Learning Targets (SWBAT)</div>
+      • I can demonstrate volleyball skills in competitive tournament play<br>
+      • I can show sportsmanship — positive communication, fair play, and respect<br>
+      • I can reflect on my skill growth over 9 days with specific examples
+    </div>
+    <div class="info-cell">
+      <div class="cell-label">Equipment</div>
+      • Volleyballs (1 per court)<br>
+      • Net<br>
+      • Bracket / score sheets<br>
+      • Self-assessment forms (printed)
+    </div>
+    <div class="info-cell">
+      <div class="cell-label">Standards</div>
+      <span class="std-badge std-il" data-tip="IL 19.A — Demonstrate competency in locomotor, non-locomotor, and manipulative skills">19.A</span><span class="std-badge std-il" data-tip="IL 19.C — Demonstrate knowledge of rules, etiquette, and safety in physical activities">19.C</span><span class="std-badge std-il" data-tip="IL 20.A — Develop and apply fitness concepts and practices to achieve personal fitness goals">20.A</span><span class="std-badge std-il" data-tip="IL 21.B — Cooperative skills — work with others to accomplish tasks and achieve group goals">21.B</span><br>
+      <span class="std-badge std-shape" data-tip="SHAPE S1 — Demonstrates competency in a variety of motor skills and movement patterns">S1</span><span class="std-badge std-shape" data-tip="SHAPE S2 — Applies knowledge of concepts, principles, strategies and tactics related to movement and performance">S2</span><span class="std-badge std-shape" data-tip="SHAPE S5 — Recognizes the value of physical activity for health, enjoyment, challenge, self-expression, and social interaction">S5</span>
+    </div>
+  </div>
+
+  <div class="sh-light">Essential Question</div>
+  <div class="eq">What does a great volleyball player look like — in skills AND character? &nbsp;|&nbsp; What's one thing you learned about yourself as a competitor during this unit?</div>
+
+  <div class="sh-accent">Warm-Up — Student Choice &nbsp;(5–8 min)</div>
+  <div class="sb">
+    <p>Students vote: <strong>Sharks &amp; Minnows</strong> or <strong>Tick Tick Boom</strong> for today's warm-up game. Run whichever wins the vote. Volleyball Touch Circuit runs first for 3–4 minutes regardless. Let them own the final day.</p>
+    <p>After warm-up, post the tournament bracket where students can see it. Teams know their first opponent before any instruction happens.</p>
+  </div>
+
+  <div class="sh-primary">Tournament Format &nbsp;(28–32 min)</div>
+  <div class="sb">
+    <p><strong>Mental Checklist (2 min — say this with students before first serve):</strong></p>
+    <p>Teacher calls each cue — students answer back:</p>
+    <p>"Forearm pass — what's the key?" → <em>Flat platform, push don't swing.</em> &nbsp; "Setting — where are your hands?" → <em>Windows above the forehead.</em> &nbsp; "Serve — what's the most important part?" → <em>The toss.</em> &nbsp; "Before every contact?" → <em>Call mine!</em> &nbsp; "What does a good teammate sound like?" → <em>Loud, positive, specific.</em></p>
+    <p><strong>Tournament Rules:</strong></p>
+    <p>3v3 round-robin. 4–5 teams. Games to 7, rally scoring. 3 contacts required (bump → set → attack). Rotation after sideout. Serve from end line — player's choice of type. Self-officiate. Call it on yourself first. No teacher-officiated disputes — teams resolve or the point replays.</p>
+    <p>Brief 30-second rotation between games — teams move to the next opponent. Post results on bracket after each round. <em>"Today you're not drilling. Today you're playing volleyball."</em></p>
+    <p><strong>Teacher observation focus:</strong> sportsmanship and communication over raw skill. Note students who call their own infractions, encourage teammates by name, and respond to losing points without drama. Recognize those students publicly at the close.</p>
+  </div>
+
+  <div class="sh-accent">Unit Reflection &nbsp;(5 min)</div>
+  <div class="sb">
+    <p>Required reflection before students leave. Students complete the self-assessment form during this time (or prior night if time is tight). At minimum, address one question verbally:</p>
+    <div class="cue"><strong>Skill Growth:</strong> "What is one skill you improved most during this unit? What did you do differently by Day 9 than you did on Day 1?"</div>
+    <div class="cue"><strong>Hardest Part:</strong> "What was the hardest volleyball skill for you — and why?"</div>
+    <div class="cue"><strong>Transfer:</strong> "What skills from this unit can you use in other physical activities — or in your life?"</div>
+    <p style="margin-top:5px;"><em>If time is tight, do it verbally: partner share, then 3–4 share with the class. Don't skip the reflection. Even one answer per student closes the unit with intentionality.</em></p>
+  </div>
+
+  <div class="sh-primary">Closure &amp; Assessment &nbsp;(3–5 min)</div>
+  <div class="two-col">
+    <div class="col">
+      <div class="col-label">Closure + Teacher Close</div>
+      Handshake line between all teams — positive word to each opponent, not just a tap. Teacher recognizes specific sportsmanship moments observed today.<br><br>
+      <em>"Volleyball is 90% communication. The teams that won today weren't always the most skilled — they were the loudest, most organized, most connected. That skill — talking to your team, trusting your teammates, covering for each other — that goes way beyond volleyball. Nice work."</em>
+    </div>
+    <div class="col">
+      <div class="col-label">Assessment + Teacher Notes</div>
+      Tournament — are skills from Days 1–8 showing up in live play? Are students serving successfully, receiving and directing bumps, and completing 3-contact sequences? Sportsmanship — are students completing the handshake genuinely, not performatively?<br><br>
+      Finalize rubric scores tonight. Note students who showed the most growth over 9 days — not just the most skilled. Growth is the story worth telling at the next parent conference.
+    </div>
+  </div>
+
+  <div class="sh-light">Differentiation &amp; Teacher Notes</div>
+  <div class="sb" style="border-bottom:none;">
+    <strong>Skill balancing:</strong> If one team dominates early, add a rule (e.g., all 3 players must touch the ball each rally). &nbsp;<strong>Limited mobility:</strong> Allow a permanent setter or "court director" role for students who cannot fully participate in movement. &nbsp;<strong>High-competition students:</strong> Address sportsmanship expectations privately before the tournament, not publicly during it.<br>
+    <strong>Note:</strong> Pre-assign tournament teams the night before — Day 9 team drama slows everything down. Post the bracket where students see it on entry. The self-assessment closes the unit with intentionality — don't skip it even if short on time. One answer per student beats zero. What students say about their own growth is often the most powerful data point of the whole unit.
+  </div>
+  <div class="spacer"></div>
+</div>
+
+<!-- ════════════════════════════════════════════════ -->
+<!-- TEACHER SKILL RUBRIC -->
+<!-- ════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <div class="unit-title">MIDDLE SCHOOL VOLLEYBALL</div>
+  </div>
+  <div class="day-row">
+    <div class="day-num">TEACHER SKILL RUBRIC</div>
+    <div class="day-topic">Unit Assessment · Grades 6–8</div>
+  </div>
+
+  <div style="padding:12px 14px 6px; font-size:10.5px; color:#333; border-bottom:1px solid #eee;">
+    <strong>Directions:</strong> Rate each student on the five skill areas using the 1–4 scale below. Observe students across multiple days — do not base scores on a single class. Record final scores on Day 8–9 during scrimmage and tournament.
+  </div>
+
+  <!-- Scale legend -->
+  <div style="display:grid; grid-template-columns:1fr 1fr 1fr 1fr; border-bottom:2px solid var(--accent);">
+    <div style="padding:5px 12px; border-right:1px solid #eee;">
+      <div style="font-size:8.5px; font-weight:bold; color:var(--accent); text-transform:uppercase; letter-spacing:1px;">1 — Beginning</div>
+      <div style="font-size:8.5px; color:#555; margin-top:2px;">Rarely demonstrates the skill. Requires constant redirection.</div>
+    </div>
+    <div style="padding:5px 12px; border-right:1px solid #eee;">
+      <div style="font-size:8.5px; font-weight:bold; color:var(--accent); text-transform:uppercase; letter-spacing:1px;">2 — Developing</div>
+      <div style="font-size:8.5px; color:#555; margin-top:2px;">Sometimes demonstrates. Inconsistent under pressure or in games.</div>
+    </div>
+    <div style="padding:5px 12px; border-right:1px solid #eee;">
+      <div style="font-size:8.5px; font-weight:bold; color:var(--accent); text-transform:uppercase; letter-spacing:1px;">3 — Proficient</div>
+      <div style="font-size:8.5px; color:#555; margin-top:2px;">Consistent in drills. Applying in games with some success.</div>
+    </div>
+    <div style="padding:5px 12px;">
+      <div style="font-size:8.5px; font-weight:bold; color:var(--accent); text-transform:uppercase; letter-spacing:1px;">4 — Exemplary</div>
+      <div style="font-size:8.5px; color:#555; margin-top:2px;">Consistent independently in both drills and live game play.</div>
+    </div>
+  </div>
+
+  <!-- Rubric table -->
+  <div style="padding:10px 14px 0;">
+    <table style="width:100%; border-collapse:collapse; font-size:10px;">
       <thead>
-        <tr>
-          <th>Lesson</th>
-          <th>Focus</th>
-          <th>Progression</th>
-          <th>Assessment</th>
+        <tr style="background:var(--primary); color:white;">
+          <th style="padding:7px 10px; text-align:left; width:20%; font-size:9px; letter-spacing:1px; text-transform:uppercase;">Student Name</th>
+          <th style="padding:7px 6px; text-align:center; width:13%; font-size:8.5px; letter-spacing:0.5px; text-transform:uppercase; border-left:1px solid rgba(255,255,255,0.2);">Forearm Pass<br><span style="opacity:0.7; font-weight:normal; font-size:7.5px;">Flat Platform · Push Not Swing</span></th>
+          <th style="padding:7px 6px; text-align:center; width:13%; font-size:8.5px; letter-spacing:0.5px; text-transform:uppercase; border-left:1px solid rgba(255,255,255,0.2);">Setting<br><span style="opacity:0.7; font-weight:normal; font-size:7.5px;">Windows · Fingertips · Extend</span></th>
+          <th style="padding:7px 6px; text-align:center; width:13%; font-size:8.5px; letter-spacing:0.5px; text-transform:uppercase; border-left:1px solid rgba(255,255,255,0.2);">UH Serve<br><span style="opacity:0.7; font-weight:normal; font-size:7.5px;">Step · Heel Contact · Follow Through</span></th>
+          <th style="padding:7px 6px; text-align:center; width:13%; font-size:8.5px; letter-spacing:0.5px; text-transform:uppercase; border-left:1px solid rgba(255,255,255,0.2);">OH Serve<br><span style="opacity:0.7; font-weight:normal; font-size:7.5px;">Toss · Reach · Wrist Snap</span></th>
+          <th style="padding:7px 6px; text-align:center; width:13%; font-size:8.5px; letter-spacing:0.5px; text-transform:uppercase; border-left:1px solid rgba(255,255,255,0.2);">Sportsmanship<br><span style="opacity:0.7; font-weight:normal; font-size:7.5px;">Fair Play · Communicate · Teamwork</span></th>
+          <th style="padding:7px 6px; text-align:center; width:15%; font-size:8.5px; letter-spacing:0.5px; text-transform:uppercase; border-left:1px solid rgba(255,255,255,0.2);">Total<br><span style="opacity:0.7; font-weight:normal;">/20</span></th>
         </tr>
       </thead>
-      <tbody>
-        <tr>
-          <td><strong>1</strong></td>
-          <td>Bump &amp; Set Introduction</td>
-          <td>Demo &rarr; Partner toss/pass &rarr; Bump Challenge &rarr; Group Keep It Up</td>
-          <td>Teacher cue observation</td>
-        </tr>
-        <tr>
-          <td><strong>2</strong></td>
-          <td>Skill Reinforcement</td>
-          <td>Yoshi Run &rarr; Review cues &rarr; Competitive Bump Challenge &rarr; Group rally</td>
-          <td>Teacher observation + peer counting</td>
-        </tr>
-        <tr>
-          <td><strong>3</strong></td>
-          <td>Fitness Integration &amp; First Game</td>
-          <td>Fitness testing &rarr; Skill review &rarr; Bump Challenge &rarr; Modified game</td>
-          <td>Fitness scores + game observation</td>
-        </tr>
-        <tr>
-          <td><strong>4</strong></td>
-          <td>Tactical Combinations</td>
-          <td>Freeze Tag &rarr; Bump-Set-Spike in groups of 6 &rarr; Full game</td>
-          <td>Tactical sequencing observation</td>
-        </tr>
-        <tr>
-          <td><strong>5</strong></td>
-          <td>Serving &amp; Receiving</td>
-          <td>Knowledge Q&amp;A &rarr; Group practice &rarr; Serve/receive rotations &rarr; Game</td>
-          <td>Serve accuracy + receive quality</td>
-        </tr>
-        <tr>
-          <td><strong>6</strong></td>
-          <td>Game Play Focus</td>
-          <td>Fitness warm-up &rarr; Group rally &rarr; Extended game play</td>
-          <td>Game performance observation</td>
-        </tr>
-        <tr>
-          <td><strong>7</strong></td>
-          <td>Student-Led Game Day</td>
-          <td>Poly Spot Knockout &rarr; Student refs &amp; scorekeepers &rarr; Full game</td>
-          <td>Student officiating + game play</td>
-        </tr>
-      </tbody>
+      <tbody id="rubric-rows"></tbody>
     </table>
   </div>
 
-  <!-- LESSON PLANS -->
-  <div class="section">
-    <h2>Lesson Plans</h2>
+  <div style="padding:10px 14px; font-size:9.5px; color:#666; border-top:1px solid #eee; margin-top:auto;">
+    <strong>Grading Guide:</strong> &nbsp;18–20 = Exemplary &nbsp;·&nbsp; 14–17 = Proficient &nbsp;·&nbsp; 10–13 = Developing &nbsp;·&nbsp; Below 10 = Beginning &nbsp;·&nbsp; Sportsmanship counts — a student who excels physically but disrespects teammates cannot score a 4 in sportsmanship.
+  </div>
+  <div class="spacer"></div>
+</div>
 
-    <!-- LESSON 1 -->
-    <div class="lesson-card">
-      <div class="lesson-card-header" onclick="toggleLesson(this)">
-        <h3>Lesson 1: Introduction &mdash; Bump &amp; Set Fundamentals</h3>
-        <span><span class="week">Grades 6-8</span> <span class="arrow">&#9660;</span></span>
-      </div>
-      <div class="lesson-card-body">
-        <dl class="lesson-detail">
-          <dt>Affective</dt>
-          <dd>I can demonstrate fair play and positive communication with classmates</dd>
-          <dt>Cognitive</dt>
-          <dd>I can identify the cues for the bump and set in volleyball</dd>
-          <dt>Psychomotor</dt>
-          <dd>I can demonstrate the forearm bump pass using proper form</dd>
-          <dt>Equipment</dt>
-          <dd>Volleyballs (regulation + volley-lite), cones, net</dd>
-        </dl>
+<!-- ════════════════════════════════════════════════ -->
+<!-- STUDENT SELF-ASSESSMENT -->
+<!-- ════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <div class="unit-title">MIDDLE SCHOOL VOLLEYBALL</div>
+  </div>
+  <div class="day-row">
+    <div class="day-num">STUDENT SELF-ASSESSMENT</div>
+    <div class="day-topic">How did you grow? · Complete on Day 9</div>
+  </div>
 
-        <div class="phase">
-          <div class="phase-label">Warm-Up</div>
-          <p><strong>Sport-Specific Volleyball Conditioning:</strong> High Knees, Butt Kickers, Walking Squats, Quad Stretch, Skip for Height, Skip for Distance, Lunge and Twist, Karaoke, Feinstein, Back Pedal, Jog/Sprint. Each movement mirrors actions that appear in actual volleyball play, building sport-specific fitness vocabulary from the first day.</p>
+  <div style="padding:10px 14px 8px; border-bottom:1px solid #eee;">
+    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; font-size:10.5px; color:#333;">
+      <div>Name: <span style="display:inline-block; border-bottom:1px solid #999; width:160px;">&nbsp;</span></div>
+      <div>Class Period: <span style="display:inline-block; border-bottom:1px solid #999; width:80px;">&nbsp;</span></div>
+      <div>Date: <span style="display:inline-block; border-bottom:1px solid #999; width:100px;">&nbsp;</span></div>
+    </div>
+  </div>
+
+  <!-- Scale -->
+  <div style="background:var(--accent-light); border-bottom:2px solid var(--accent); padding:8px 14px;">
+    <div style="font-size:9px; font-weight:bold; color:var(--accent); text-transform:uppercase; letter-spacing:1px; margin-bottom:5px;">Rating Scale</div>
+    <div style="display:grid; grid-template-columns:1fr 1fr 1fr 1fr; font-size:9.5px; color:#444; gap:6px;">
+      <div><strong>1</strong> — I don't have this yet. I'm still figuring it out.</div>
+      <div><strong>2</strong> — I get it in practice but lose it in games.</div>
+      <div><strong>3</strong> — I do this consistently in drills and sometimes in games.</div>
+      <div><strong>4</strong> — I do this well in both drills AND live game situations.</div>
+    </div>
+  </div>
+
+  <!-- Skill ratings -->
+  <div style="padding:10px 14px;">
+
+    <div style="border:1px solid #eee; border-radius:3px; margin-bottom:8px; overflow:hidden;">
+      <div style="display:grid; grid-template-columns:1fr auto; align-items:center; background:var(--primary); color:white; padding:5px 12px;">
+        <div>
+          <div style="font-size:10px; font-weight:bold;">Forearm Pass (Bump)</div>
+          <div style="font-size:8px; opacity:0.75;">Flat Platform · Contact Below the Wrist · Push, Don't Swing</div>
         </div>
-
-        <div class="phase">
-          <div class="phase-label">Lesson Focus</div>
-          <p><strong>Intro Discussion:</strong> Has anyone seen a volleyball game? What is the first hit called? What are the different ways to hit a volleyball?</p>
-          <p><strong>Demonstration:</strong> Teacher demonstrates bump and set with explicit cues. Both skills are introduced together so students understand how they connect in gameplay.</p>
-          <p><strong>Bumping Cues:</strong></p>
-          <div class="cues">
-            <span class="cue">Ready position</span>
-            <span class="cue">Straight arms</span>
-            <span class="cue">Body to target</span>
-          </div>
-          <p style="margin-top:12px"><strong>Setting Cues:</strong></p>
-          <div class="cues">
-            <span class="cue">Ready position</span>
-            <span class="cue">Move under ball</span>
-            <span class="cue">Diamond hands + Extend</span>
-          </div>
-          <p style="margin-top:12px"><strong>Partner Practice:</strong> One partner tosses, the other bumps or sets it back. Take turns. Progress to a continuous back-and-forth rally without the toss.</p>
-          <p><strong>Mini-Game — Bump Challenge:</strong> Half students start with a volleyball. Others find a partner with a ball. Each student tosses to self, uses bumping cues, and counts consecutive passes. Partner counts. Switch. Winner keeps ball; other finds a new partner with a ball and challenges again.</p>
-          <p><strong>Mini-Game — Keep It Up:</strong> Groups see how many times they can keep the ball in the air using any legal hit. Focus on communication and positioning.</p>
-        </div>
-
-        <div class="phase">
-          <div class="phase-label">Closure</div>
-          <p>What can you tell me about volleyball? What is the first hit called? What did you excel at today? What was a challenge?</p>
-        </div>
-
-        <div class="callout" style="margin-top:12px">
-          <h4>Differentiation</h4>
-          <p>Volley-lite balls for students needing more reaction time. Tossing instead of self-toss to start for beginners. Partner toss instead of self-toss during Bump Challenge for those still developing the skill.</p>
-        </div>
-
-        <div class="callout" style="background:var(--success-bg);border-left-color:var(--success)">
-          <h4>Assessment</h4>
-          <p>Teacher observation of cue performance during partner practice and Bump Challenge. Visual model of passing form displayed on the wall or whiteboard for student reference throughout the lesson.</p>
+        <div style="display:flex; gap:10px; align-items:center;">
+          <label style="display:flex;flex-direction:column;align-items:center;cursor:pointer;"><input type="radio" name="skill0" value="1"><span style="font-size:9px;font-weight:bold;">1</span></label>
+          <label style="display:flex;flex-direction:column;align-items:center;cursor:pointer;"><input type="radio" name="skill0" value="2"><span style="font-size:9px;font-weight:bold;">2</span></label>
+          <label style="display:flex;flex-direction:column;align-items:center;cursor:pointer;"><input type="radio" name="skill0" value="3"><span style="font-size:9px;font-weight:bold;">3</span></label>
+          <label style="display:flex;flex-direction:column;align-items:center;cursor:pointer;"><input type="radio" name="skill0" value="4"><span style="font-size:9px;font-weight:bold;">4</span></label>
         </div>
       </div>
+      <div style="padding:6px 12px; font-size:9.5px; color:#555; font-style:italic;">I clasp my hands to form a flat platform, make contact between my wrists and elbows, and push the ball up using my legs — not a big arm swing.</div>
     </div>
 
-    <!-- LESSON 2 -->
-    <div class="lesson-card">
-      <div class="lesson-card-header" onclick="toggleLesson(this)">
-        <h3>Lesson 2: Skill Reinforcement &mdash; Competitive Practice</h3>
-        <span><span class="week">Grades 6-8</span> <span class="arrow">&#9660;</span></span>
-      </div>
-      <div class="lesson-card-body">
-        <dl class="lesson-detail">
-          <dt>Affective</dt>
-          <dd>I can demonstrate fair play and positive communication with classmates</dd>
-          <dt>Cognitive</dt>
-          <dd>I can identify the cues for the bump and set in volleyball</dd>
-          <dt>Psychomotor</dt>
-          <dd>I can demonstrate the forearm bump pass using proper form</dd>
-          <dt>Equipment</dt>
-          <dd>Volleyballs (regulation + volley-lite), cones, net</dd>
-        </dl>
-
-        <div class="phase">
-          <div class="phase-label">Warm-Up</div>
-          <p><strong>Yoshi Run:</strong> Fast-paced tag game between two teams. Objective: get your entire team safely across to the opposite sideline without being tagged. Tagged players sit where they were tagged. Teammates rescue them by walking from the sideline — the rescuer must walk the entire way back with the tagged player before either can try again. First team to get all players across wins. Builds agility, teamwork, spatial awareness, and strategy.</p>
+    <div style="border:1px solid #eee; border-radius:3px; margin-bottom:8px; overflow:hidden;">
+      <div style="display:grid; grid-template-columns:1fr auto; align-items:center; background:var(--accent); color:white; padding:5px 12px;">
+        <div>
+          <div style="font-size:10px; font-weight:bold;">Setting</div>
+          <div style="font-size:8px; opacity:0.75;">Make the Windows · Fingertips Only · Extend and Follow</div>
         </div>
-
-        <div class="phase">
-          <div class="phase-label">Lesson Focus</div>
-          <p><strong>Cue Review:</strong> Bellringer questions with the class — What is the first hit in volleyball called? What are the cues for the bump? What are the cues for the set? Students respond aloud; teacher reinforces correct answers.</p>
-          <p><strong>Partner Practice:</strong> Teacher circulates, watches form, and provides individual feedback. Prompt students to call the cue aloud before each hit to reinforce the connection between language and movement.</p>
-          <p><strong>Bump Challenge (Competitive):</strong> Same competitive partner format as Lesson 1. Students find partners, count consecutive bumps, winner keeps the ball and finds a new challenge. Competition increases intensity and keeps engagement high.</p>
-          <p><strong>Group Keep It Up:</strong> Groups compete to achieve the highest number of consecutive hits using any legal volleyball contact. Students track and report their group total.</p>
-        </div>
-
-        <div class="phase">
-          <div class="phase-label">Closure</div>
-          <p>What can you tell me about volleyball? What is the first hit called? What did you excel at today? What was a challenge?</p>
-        </div>
-
-        <div class="callout" style="margin-top:12px">
-          <h4>Differentiation</h4>
-          <p>Volley-lite balls for students needing more reaction time. Tossing to start for beginners before live hitting. Partner toss instead of self-toss during Bump Challenge.</p>
-        </div>
-
-        <div class="callout" style="background:var(--success-bg);border-left-color:var(--success)">
-          <h4>Assessment</h4>
-          <p>Teacher observation of form and cue application during partner practice. Peer counting during Bump Challenge provides built-in accountability — students are responsible for honest counting and positive feedback.</p>
+        <div style="display:flex; gap:10px; align-items:center;">
+          <label style="display:flex;flex-direction:column;align-items:center;cursor:pointer;"><input type="radio" name="skill1" value="1"><span style="font-size:9px;font-weight:bold;">1</span></label>
+          <label style="display:flex;flex-direction:column;align-items:center;cursor:pointer;"><input type="radio" name="skill1" value="2"><span style="font-size:9px;font-weight:bold;">2</span></label>
+          <label style="display:flex;flex-direction:column;align-items:center;cursor:pointer;"><input type="radio" name="skill1" value="3"><span style="font-size:9px;font-weight:bold;">3</span></label>
+          <label style="display:flex;flex-direction:column;align-items:center;cursor:pointer;"><input type="radio" name="skill1" value="4"><span style="font-size:9px;font-weight:bold;">4</span></label>
         </div>
       </div>
+      <div style="padding:6px 12px; font-size:9.5px; color:#555; font-style:italic;">I form the "windows" triangle with my fingers above my forehead, contact the ball with all 10 fingertips, and follow through fully toward my target.</div>
     </div>
 
-    <!-- LESSON 3 -->
-    <div class="lesson-card">
-      <div class="lesson-card-header" onclick="toggleLesson(this)">
-        <h3>Lesson 3: Fitness Integration &amp; First Game</h3>
-        <span><span class="week">Grades 6-8</span> <span class="arrow">&#9660;</span></span>
-      </div>
-      <div class="lesson-card-body">
-        <dl class="lesson-detail">
-          <dt>Affective</dt>
-          <dd>I can demonstrate fair play and positive communication with classmates</dd>
-          <dt>Cognitive</dt>
-          <dd>I can identify the cues for the bump and set in volleyball</dd>
-          <dt>Psychomotor</dt>
-          <dd>I can demonstrate the forearm bump pass using proper form</dd>
-          <dt>Equipment</dt>
-          <dd>Volleyballs (regulation + volley-lite), fitness testing materials (push-up test paper), net</dd>
-        </dl>
-
-        <div class="phase">
-          <div class="phase-label">Warm-Up</div>
-          <p><strong>Short Dynamic Warm-Up:</strong> Jog, sprint, single-leg pogo (10 reps each leg, hop halfway down court, switch legs), double-leg pogo (20 reps, hop to midcourt, then sprint the remainder). Brief and high-energy to prepare for fitness testing.</p>
+    <div style="border:1px solid #eee; border-radius:3px; margin-bottom:8px; overflow:hidden;">
+      <div style="display:grid; grid-template-columns:1fr auto; align-items:center; background:var(--primary); color:white; padding:5px 12px;">
+        <div>
+          <div style="font-size:10px; font-weight:bold;">Underhand Serve</div>
+          <div style="font-size:8px; opacity:0.75;">Step &amp; Swing · Heel of Hand · Follow Through High</div>
         </div>
-
-        <div class="phase">
-          <div class="phase-label">Lesson Focus</div>
-          <p><strong>FitnessGram Testing — Push-Up Test:</strong> FitnessGram video played on YouTube. Students complete as many push-ups as possible in 3 minutes using the FitnessGram cadence. Students call "time" when they stop; teacher records stopping time. Students record their score on a testing sheet.</p>
-          <p><strong>FitnessGram Testing — Sit-and-Reach:</strong> One leg bent, reach forward with both hands, hold, record best score for each leg. Students write scores on the same testing sheet.</p>
-          <p><strong>Volleyball Review:</strong> Bump and set cues review with the class. Partner practice focusing on consistency — count how many consecutive contacts you and your partner can achieve.</p>
-          <p><strong>Bump Challenge:</strong> Same competitive format as Lessons 1 and 2. Brief but high-energy to reconnect with the competitive element before the game.</p>
-          <p><strong>First Modified Game:</strong> Two captains select teams using an alternating pick format. Modified volleyball game using bump and set skills practiced. Teacher monitors from the perimeter and provides feedback on skill application in the game context.</p>
-        </div>
-
-        <div class="phase">
-          <div class="phase-label">Closure</div>
-          <p>What can you tell me about volleyball? What is the first hit called? What did you excel at today? What was a challenge?</p>
-        </div>
-
-        <div class="callout" style="margin-top:12px">
-          <h4>Differentiation</h4>
-          <p>Volley-lite balls available for the game. Fitness testing is self-paced — students complete at their own level. Tossing to start during skill practice for students still building confidence with the ball.</p>
-        </div>
-
-        <div class="callout" style="background:var(--success-bg);border-left-color:var(--success)">
-          <h4>Assessment</h4>
-          <p>Fitness testing scores recorded on paper — students keep their own record. Game observation by teacher: are students applying bump and set cues in the game context? Are they communicating with teammates before contact?</p>
+        <div style="display:flex; gap:10px; align-items:center;">
+          <label style="display:flex;flex-direction:column;align-items:center;cursor:pointer;"><input type="radio" name="skill2" value="1"><span style="font-size:9px;font-weight:bold;">1</span></label>
+          <label style="display:flex;flex-direction:column;align-items:center;cursor:pointer;"><input type="radio" name="skill2" value="2"><span style="font-size:9px;font-weight:bold;">2</span></label>
+          <label style="display:flex;flex-direction:column;align-items:center;cursor:pointer;"><input type="radio" name="skill2" value="3"><span style="font-size:9px;font-weight:bold;">3</span></label>
+          <label style="display:flex;flex-direction:column;align-items:center;cursor:pointer;"><input type="radio" name="skill2" value="4"><span style="font-size:9px;font-weight:bold;">4</span></label>
         </div>
       </div>
+      <div style="padding:6px 12px; font-size:9.5px; color:#555; font-style:italic;">I step with my opposite foot, swing through the ball with the heel of my open hand, and follow through toward the target — getting it over the net consistently from the end line.</div>
     </div>
 
-    <!-- LESSON 4 -->
-    <div class="lesson-card">
-      <div class="lesson-card-header" onclick="toggleLesson(this)">
-        <h3>Lesson 4: Tactical Combinations &mdash; Bump-Set-Spike</h3>
-        <span><span class="week">Grades 6-8</span> <span class="arrow">&#9660;</span></span>
-      </div>
-      <div class="lesson-card-body">
-        <dl class="lesson-detail">
-          <dt>Affective</dt>
-          <dd>I can demonstrate fair play and positive communication with teammates</dd>
-          <dt>Cognitive</dt>
-          <dd>I can identify when to use a bump vs. a set in a game situation</dd>
-          <dt>Psychomotor</dt>
-          <dd>I can demonstrate the bump-set-spike sequence in order with my teammates</dd>
-          <dt>Equipment</dt>
-          <dd>Volleyballs, net, pool noodles (Freeze Tag), red balls (Freeze Tag)</dd>
-        </dl>
-
-        <div class="phase">
-          <div class="phase-label">Warm-Up</div>
-          <p><strong>Freeze Tag:</strong> Designated taggers carry pool noodles. Tagged students freeze in place where they were tagged. Students carrying red balls can unfreeze frozen teammates by tagging them. Multiple taggers and multiple rescuers running simultaneously. Builds agility, spatial awareness, and cardiovascular fitness at high intensity.</p>
+    <div style="border:1px solid #eee; border-radius:3px; margin-bottom:8px; overflow:hidden;">
+      <div style="display:grid; grid-template-columns:1fr auto; align-items:center; background:var(--accent); color:white; padding:5px 12px;">
+        <div>
+          <div style="font-size:10px; font-weight:bold;">Overhand Serve</div>
+          <div style="font-size:8px; opacity:0.75;">Toss to 12 O'Clock · High Five the Ball · Snap Your Wrist</div>
         </div>
-
-        <div class="phase">
-          <div class="phase-label">Lesson Focus</div>
-          <p><strong>Groups of 6 (3 per side of net):</strong> Students practice the bump-set-spike sequence. First student bumps, second student sets, third student spikes. Rotate positions after each sequence so every student practices every role.</p>
-          <p><strong>Unstructured Practice Period:</strong> Brief open time for students to warm up their volleys freely before the structured game. Students choose their own drills or continue partner passing from previous lessons.</p>
-          <p><strong>Full Volleyball Game:</strong> Teacher monitors from the perimeter. Provides targeted feedback on tactical decisions: When should you bump vs. set? Are you calling the ball before contact? Are you positioning before the ball arrives? Student teams self-manage with teacher stepping in as needed.</p>
-        </div>
-
-        <div class="phase">
-          <div class="phase-label">Closure</div>
-          <p>What can you tell me about volleyball? What did you notice about working as a team? What was a challenge?</p>
-        </div>
-
-        <div class="callout" style="margin-top:12px">
-          <h4>Differentiation</h4>
-          <p>Volley-lite balls available. Groups of 4 instead of 6 if needed to reduce wait time and increase contacts per student. Allow catch-and-throw between contacts to slow the game for students still building ball control.</p>
-        </div>
-
-        <div class="callout" style="background:var(--success-bg);border-left-color:var(--success)">
-          <h4>Assessment</h4>
-          <p>Teacher observation of tactical sequencing — do students understand when to bump vs. set based on ball height and position? Are they calling for the ball and communicating before contact? Are they rotating positions within the bump-set-spike sequence?</p>
+        <div style="display:flex; gap:10px; align-items:center;">
+          <label style="display:flex;flex-direction:column;align-items:center;cursor:pointer;"><input type="radio" name="skill3" value="1"><span style="font-size:9px;font-weight:bold;">1</span></label>
+          <label style="display:flex;flex-direction:column;align-items:center;cursor:pointer;"><input type="radio" name="skill3" value="2"><span style="font-size:9px;font-weight:bold;">2</span></label>
+          <label style="display:flex;flex-direction:column;align-items:center;cursor:pointer;"><input type="radio" name="skill3" value="3"><span style="font-size:9px;font-weight:bold;">3</span></label>
+          <label style="display:flex;flex-direction:column;align-items:center;cursor:pointer;"><input type="radio" name="skill3" value="4"><span style="font-size:9px;font-weight:bold;">4</span></label>
         </div>
       </div>
+      <div style="padding:6px 12px; font-size:9.5px; color:#555; font-style:italic;">I toss the ball consistently above my hitting shoulder, reach up to contact it with an open hand above my head, and snap my wrist to drive the ball over the net with control.</div>
     </div>
 
-    <!-- LESSON 5 -->
-    <div class="lesson-card">
-      <div class="lesson-card-header" onclick="toggleLesson(this)">
-        <h3>Lesson 5: Serving &amp; Receiving</h3>
-        <span><span class="week">Grades 6-8</span> <span class="arrow">&#9660;</span></span>
-      </div>
-      <div class="lesson-card-body">
-        <dl class="lesson-detail">
-          <dt>Affective</dt>
-          <dd>I can demonstrate fair play and positive verbal and nonverbal communication with teammates</dd>
-          <dt>Cognitive</dt>
-          <dd>I can explain how to work with my team to get the ball over the net using serve and receive</dd>
-          <dt>Psychomotor</dt>
-          <dd>I can demonstrate serving and receiving the ball using proper form</dd>
-          <dt>Equipment</dt>
-          <dd>Volleyballs (regulation + volley-lite), net, dice (4 dice)</dd>
-        </dl>
-
-        <div class="phase">
-          <div class="phase-label">Warm-Up</div>
-          <p><strong>Dice Warm-Up:</strong> 4 students each toss a die. Add up all four numbers. That total equals the number of laps the entire class completes together. Fast, communal, and unpredictable — students never know how far they will run until the dice are rolled.</p>
+    <div style="border:1px solid #eee; border-radius:3px; margin-bottom:8px; overflow:hidden;">
+      <div style="display:grid; grid-template-columns:1fr auto; align-items:center; background:var(--primary); color:white; padding:5px 12px;">
+        <div>
+          <div style="font-size:10px; font-weight:bold;">Sportsmanship &amp; Teamwork</div>
+          <div style="font-size:8px; opacity:0.75;">Call "Mine!" · Encourage Teammates · Play Fair · Handle Winning/Losing Well</div>
         </div>
-
-        <div class="phase">
-          <div class="phase-label">Lesson Focus</div>
-          <p><strong>Knowledge Check:</strong> Class lines up on the volleyball court. Has anyone seen a volleyball game? What is the first hit called? What are the different ways to hit a volleyball? Teacher uses student responses to gauge retention from previous lessons.</p>
-          <p><strong>Group Bump/Set Warm-Up:</strong> 3-4 minutes of free practice — partners or small groups bumping and setting to review skills before adding serving.</p>
-          <p><strong>Serving and Receiving Rotations:</strong> Split class in two groups. Group 1 practices serving over the net. Group 2 practices receiving and returning the ball. Switch after 3-4 minutes. Both groups then switch roles again for one more round, so every student serves and receives multiple times.</p>
-          <p><strong>Cue Review During Transitions:</strong> Teacher reviews bump and set cues verbally while students transition between rotations to reinforce consistent vocabulary.</p>
-          <p><strong>Keep It Up Mini-Game:</strong> Groups compete for the most consecutive hits. This reconnects serving and receiving practice back to the cooperative skill of keeping the ball alive.</p>
-          <p><strong>Game Play:</strong> Modified volleyball with emphasis on serve and receive. Students apply the serving and receiving rotations in the context of an actual game.</p>
-        </div>
-
-        <div class="phase">
-          <div class="phase-label">Closure</div>
-          <p>What can you tell me about volleyball? What is the first hit called? What did you excel at today? What was a challenge?</p>
-        </div>
-
-        <div class="callout" style="margin-top:12px">
-          <h4>Differentiation</h4>
-          <p>Underhand serve for students not yet ready for overhand. Volley-lite balls for students needing more reaction time on the receive. Tossing instead of serving for beginners during serve/receive rotations.</p>
-        </div>
-
-        <div class="callout" style="background:var(--success-bg);border-left-color:var(--success)">
-          <h4>Assessment</h4>
-          <p>Teacher observation of serve form (is the contact point consistent? is the follow-through toward the target?) and receive quality (is the student moving to the ball early? are their arms in the correct platform position before contact?). Are teammates communicating before the ball arrives?</p>
+        <div style="display:flex; gap:10px; align-items:center;">
+          <label style="display:flex;flex-direction:column;align-items:center;cursor:pointer;"><input type="radio" name="skill4" value="1"><span style="font-size:9px;font-weight:bold;">1</span></label>
+          <label style="display:flex;flex-direction:column;align-items:center;cursor:pointer;"><input type="radio" name="skill4" value="2"><span style="font-size:9px;font-weight:bold;">2</span></label>
+          <label style="display:flex;flex-direction:column;align-items:center;cursor:pointer;"><input type="radio" name="skill4" value="3"><span style="font-size:9px;font-weight:bold;">3</span></label>
+          <label style="display:flex;flex-direction:column;align-items:center;cursor:pointer;"><input type="radio" name="skill4" value="4"><span style="font-size:9px;font-weight:bold;">4</span></label>
         </div>
       </div>
-    </div>
-
-    <!-- LESSON 6 -->
-    <div class="lesson-card">
-      <div class="lesson-card-header" onclick="toggleLesson(this)">
-        <h3>Lesson 6: Game Play Focus</h3>
-        <span><span class="week">Grades 6-8</span> <span class="arrow">&#9660;</span></span>
-      </div>
-      <div class="lesson-card-body">
-        <dl class="lesson-detail">
-          <dt>Affective</dt>
-          <dd>I can demonstrate fair play and positive communication with classmates</dd>
-          <dt>Cognitive</dt>
-          <dd>I can identify the cues for the bump and set in volleyball</dd>
-          <dt>Psychomotor</dt>
-          <dd>I can demonstrate the forearm bump pass using proper form</dd>
-          <dt>Equipment</dt>
-          <dd>Volleyballs (regulation + volley-lite), net</dd>
-        </dl>
-
-        <div class="phase">
-          <div class="phase-label">Warm-Up</div>
-          <p><strong>3-Minute Jog:</strong> Students record their own distance or teacher notes general pace for fitness tracking. Followed by a partner push-up test using the FitnessGram cadence protocol. Partners count each other's reps and provide feedback on form. This embeds fitness assessment into the warm-up rather than treating it as a separate event.</p>
-        </div>
-
-        <div class="phase">
-          <div class="phase-label">Lesson Focus</div>
-          <p><strong>Group Warm-Up:</strong> Bump and set rallies in small groups to review skills before extended game play. Teacher circulates and provides individual cue reminders before the game begins.</p>
-          <p><strong>Keep It Up Mini-Game:</strong> Brief group competition to reconnect with cooperative skill application.</p>
-          <p><strong>Extended Game Play:</strong> Full volleyball games for the majority of class time. Teacher circulates between courts and provides targeted feedback on skill application, communication, and positioning. Student referees keep score. Teacher adjusts team balance as needed to maintain competitive, engaging games.</p>
-        </div>
-
-        <div class="phase">
-          <div class="phase-label">Closure</div>
-          <p>What can you tell me about volleyball? What is the first hit called? What did you excel at today? What was a challenge?</p>
-        </div>
-
-        <div class="callout" style="margin-top:12px">
-          <h4>Differentiation</h4>
-          <p>Volley-lite balls available. Underhand serve option for any student who needs it. Teacher adjusts team balance as needed to keep games competitive and all students engaged.</p>
-        </div>
-
-        <div class="callout" style="background:var(--success-bg);border-left-color:var(--success)">
-          <h4>Assessment</h4>
-          <p>Game performance observation — are students applying bump and set cues in the game? Are they communicating before the ball arrives? Are they making tactical decisions (when to bump vs. set) based on ball height and position? Are they problem-solving together as a team?</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- LESSON 7 -->
-    <div class="lesson-card">
-      <div class="lesson-card-header" onclick="toggleLesson(this)">
-        <h3>Lesson 7: Student-Led Game Day</h3>
-        <span><span class="week">Grades 6-8</span> <span class="arrow">&#9660;</span></span>
-      </div>
-      <div class="lesson-card-body">
-        <dl class="lesson-detail">
-          <dt>Affective</dt>
-          <dd>I can demonstrate fair play, lead by example, and provide positive feedback to peers</dd>
-          <dt>Cognitive</dt>
-          <dd>I can apply volleyball rules and cues to officiate a game</dd>
-          <dt>Psychomotor</dt>
-          <dd>I can perform volleyball skills during game play demonstrating correct cue usage</dd>
-          <dt>Equipment</dt>
-          <dd>Volleyballs (regulation + volley-lite), net, poly spots, pool noodles (Poly Spot Knockout)</dd>
-        </dl>
-
-        <div class="phase">
-          <div class="phase-label">Warm-Up</div>
-          <p><strong>Poly Spot Knockout:</strong> Each student gets a poly spot. Round 1: balance the poly spot on the dominant hand. If it falls, complete 5 jumping jacks and continue. Round 2: non-dominant hand. Round 3: balance the spot on the head (teacher emphasizes care and safety). Pizza Hunters — designated students carrying pool noodles — try to knock spots off hands and heads. Builds balance, coordination, and agility in a playful, high-energy format.</p>
-        </div>
-
-        <div class="phase">
-          <div class="phase-label">Lesson Focus</div>
-          <p><strong>Group Keep It Up Warm-Up:</strong> All students on the court. Groups compete for most consecutive hits to warm up skills before game play begins.</p>
-          <p><strong>Full Game Play:</strong> Students select teams or teacher assigns balanced teams. Multiple games running simultaneously on available court space.</p>
-          <p><strong>Student Referees and Scorekeepers:</strong> Students serve as referees and scorekeepers in rotating roles so multiple students officiate throughout the period. Student referees receive a quick rules review before stepping onto the court. They call faults, track score, and manage serve rotation.</p>
-          <p><strong>Teacher Role Shift:</strong> Teacher moves from director to sideline coach. Observes, gives targeted individual feedback, and lets students self-manage. Students help set up and take down net equipment at the close of the lesson.</p>
-        </div>
-
-        <div class="phase">
-          <div class="phase-label">Closure — Unit Reflection</div>
-          <p>What can you tell me about volleyball? What skill improved the most over the unit? What would you practice more if you had extra time? How did your team communicate differently in Lesson 7 compared to Lesson 1?</p>
-        </div>
-
-        <div class="callout" style="margin-top:12px">
-          <h4>Differentiation</h4>
-          <p>Volley-lite balls available for any students who need them. Student referees receive a brief rules review before officiating to set them up for success. Teacher monitors and supports student referees without undermining their authority on the court.</p>
-        </div>
-
-        <div class="callout" style="background:var(--success-bg);border-left-color:var(--success)">
-          <h4>Assessment</h4>
-          <p>Quality of student officiating — do students know the rules well enough to call them correctly and confidently? Game performance in the final lesson — are all three bump cues and all three set cues being applied in the live game context? This final lesson serves as a holistic performance assessment for the entire unit.</p>
-        </div>
-      </div>
+      <div style="padding:6px 12px; font-size:9.5px; color:#555; font-style:italic;">I called "mine!" before every contact, encouraged teammates by name, played by the rules, and treated opponents with respect — even when the score didn't go my way.</div>
     </div>
 
   </div>
 
-  <!-- DESIGN RATIONALE -->
-  <div class="section">
-    <h2>Instructional Design Rationale</h2>
-
-    <h3>Accelerated Skill Integration</h3>
-    <p>Unlike the K-5 unit where skills are introduced one per week in isolation, the MS unit introduces bump and set simultaneously from Day 1. Middle school students have the motor development and cognitive capacity to process multiple related skills at the same time. The faster pace also matches their engagement style — they want to play, not drill in isolation for weeks before touching a game.</p>
-
-    <h3>Sport-Specific Conditioning</h3>
-    <p>Warm-ups shift from general fitness games to volleyball-specific dynamic exercises that mirror actual game movements. High knees, karaoke, back pedal, and jog-sprint transitions all appear in real volleyball play. This builds sport-specific fitness alongside movement vocabulary, connecting conditioning directly to performance on the court.</p>
-
-    <h3>Tactical Games Approach</h3>
-    <p>Game play is introduced by Lesson 3 and dominates the second half of the unit. This reflects a tactical games approach (Teaching Games for Understanding): instead of mastering all skills before playing, students play early and discover what they need to improve. The game provides authentic motivation for skill refinement in a way that isolated drills cannot replicate.</p>
-
-    <h3>Progressive Student Autonomy</h3>
-    <p>Students begin as learners and end as game leaders. By Lesson 7, they referee, scorekeep, select teams, and manage their own game. This builds rule comprehension, leadership, and personal responsibility — outcomes that extend far beyond PE class. The teacher's role intentionally shrinks across the unit as student independence grows.</p>
-
-    <h3>FitnessGram Integration</h3>
-    <p>Rather than teaching fitness testing as a separate unit, FitnessGram protocols are embedded within volleyball lessons. Students see that cardiovascular fitness and muscular endurance are directly connected to sport performance, not isolated PE requirements. Fitness testing becomes a meaningful data point, not a disconnected event.</p>
-
-    <h3>Consistent Cue Language</h3>
-    <p>The same three bump cues (Ready position | Straight arms | Body to target) and three set cues (Ready position | Move under ball | Diamond hands + Extend) repeat every single lesson. By Lesson 7, these cues are automatic vocabulary for students. Consistent language across all 7 lessons eliminates confusion and accelerates skill retention.</p>
+  <!-- Reflection questions -->
+  <div style="padding:0 14px 10px;">
+    <div class="sh-light" style="margin:0 -14px 8px; padding:5px 14px;">Reflection</div>
+    <div style="font-size:10px; color:#333; margin-bottom:6px;"><strong>1.</strong> What is one skill you improved most during this unit? What did you do differently by Day 9 than you did on Day 1?</div>
+    <div style="border-bottom:1px solid #ccc; margin-bottom:12px; height:22px;"></div>
+    <div style="border-bottom:1px solid #ccc; margin-bottom:12px; height:22px;"></div>
+    <div style="font-size:10px; color:#333; margin-bottom:6px;"><strong>2.</strong> What was the hardest volleyball skill for you in this unit — and why was it hard?</div>
+    <div style="border-bottom:1px solid #ccc; margin-bottom:12px; height:22px;"></div>
+    <div style="border-bottom:1px solid #ccc; margin-bottom:12px; height:22px;"></div>
+    <div style="font-size:10px; color:#333; margin-bottom:6px;"><strong>3.</strong> What skills from this unit can you use in other sports or physical activities?</div>
+    <div style="border-bottom:1px solid #ccc; margin-bottom:12px; height:22px;"></div>
   </div>
-
-  <!-- FOOTER -->
-  <div class="unit-footer">
-    <p><strong>Designed by Kevin Terranova, M.S.</strong></p>
-    <p>Curriculum &amp; Instruction | Sport Psychology | Barbour School, Rockford IL</p>
-    <p style="margin-top:8px">Aligned to Illinois State Goals 19, 21 | SHAPE America Standards 1 &amp; 4</p>
-  </div>
+  <div class="spacer"></div>
 </div>
 
 <script>
-function toggleLesson(header) {
-  const body = header.nextElementSibling;
-  const isOpen = body.classList.contains('open');
-  header.classList.toggle('open', !isOpen);
-  body.classList.toggle('open', !isOpen);
-}
+  // Build 30 empty rubric rows on page load
+  (function() {
+    const tbody = document.getElementById('rubric-rows');
+    if (!tbody) return;
+    const td = (txt) => `<td style="padding:4px 6px;text-align:center;border-right:1px solid #eee;color:#ccc;font-size:9px;">${txt}</td>`;
+    for (let i = 0; i < 30; i++) {
+      const bg = i % 2 === 0 ? 'white' : '#fafafa';
+      tbody.innerHTML += `<tr style="border-bottom:1px solid #eee;background:${bg};">
+        <td style="padding:4px 10px;border-right:1px solid #eee;font-size:9.5px;">&nbsp;</td>
+        ${td('1 · 2 · 3 · 4')}${td('1 · 2 · 3 · 4')}${td('1 · 2 · 3 · 4')}${td('1 · 2 · 3 · 4')}${td('1 · 2 · 3 · 4')}
+        <td style="padding:4px 6px;text-align:center;"></td>
+      </tr>`;
+    }
+  })();
+
+  // Update CSS variables when the color pickers change
+  function updateColors() {
+    const primary = document.getElementById('primaryPicker').value;
+    const accent  = document.getElementById('accentPicker').value;
+
+    // Darken the primary color slightly for the day row bar
+    const primaryDark = darken(primary, 15);
+
+    // Lighten the accent color for the light section background
+    const accentLight = lighten(accent, 90);
+
+    document.documentElement.style.setProperty('--primary', primary);
+    document.documentElement.style.setProperty('--accent', accent);
+    document.documentElement.style.setProperty('--primary-dark', primaryDark);
+    document.documentElement.style.setProperty('--accent-light', accentLight);
+
+    // Update print button color to match the accent color
+    document.querySelector('.print-btn').style.background = accent;
+  }
+
+  // Subtract a fixed amount from each RGB channel to darken a hex color
+  function darken(hex, amount) {
+    let [r, g, b] = hexToRgb(hex);
+    r = Math.max(0, r - amount);
+    g = Math.max(0, g - amount);
+    b = Math.max(0, b - amount);
+    return rgbToHex(r, g, b);
+  }
+
+  // Blend each RGB channel toward 255 by a percentage to lighten a hex color
+  function lighten(hex, percent) {
+    let [r, g, b] = hexToRgb(hex);
+    r = Math.round(r + (255 - r) * percent / 100);
+    g = Math.round(g + (255 - g) * percent / 100);
+    b = Math.round(b + (255 - b) * percent / 100);
+    return rgbToHex(r, g, b);
+  }
+
+  // Convert a hex color string to an [r, g, b] array
+  function hexToRgb(hex) {
+    const n = parseInt(hex.slice(1), 16);
+    return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+  }
+
+  // Convert r, g, b integers back to a hex color string
+  function rgbToHex(r, g, b) {
+    return '#' + [r, g, b].map(v => v.toString(16).padStart(2, '0')).join('');
+  }
 </script>
 </body>
 </html>
