@@ -3,130 +3,194 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Volleyball Across Grade Bands | Developmental Progression | Kevin Terranova</title>
+<meta name="description" content="Developmental progression analysis comparing K–5 and MS volleyball curriculum design by Kevin Terranova, Instructional Designer.">
+<title>Volleyball Across Grade Bands | Kevin Terranova</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 <style>
 @media print {
-  body { margin: 0; font-size: 10.5pt; }
-  .page { box-shadow: none; padding: 0.4in 0.5in; max-width: 100%; }
-  .no-print { display: none; }
+  .site-nav, .back-bar, .no-print { display: none !important; }
+  body { background: #fff; font-size: 10.5pt; }
+  .page { box-shadow: none; padding: 0.4in 0.5in; max-width: 100%; border-radius: 0; }
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
   --primary: #1e40af;
+  --primary-dark: #0f2a5f;
   --primary-light: #3b82f6;
   --primary-bg: #eff6ff;
   --accent: #f59e0b;
+  --accent-hover: #d97706;
   --success: #10b981;
-  --success-bg: #ecfdf5;
   --text: #1e293b;
   --text-light: #64748b;
   --bg: #ffffff;
   --bg-alt: #f8fafc;
   --border: #e2e8f0;
-  --shadow: 0 1px 3px rgba(0,0,0,0.1);
+  --shadow: 0 1px 3px rgba(0,0,0,0.08);
+  --shadow-lg: 0 10px 25px rgba(0,0,0,0.1);
   --radius: 8px;
+  /* K-5 elem colors */
   --elem: #1e40af;
   --elem-bg: #eff6ff;
   --elem-border: #dbeafe;
+  /* MS colors */
   --ms: #065f46;
   --ms-bg: #ecfdf5;
   --ms-border: #a7f3d0;
 }
 
+html { scroll-behavior: smooth; }
+
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   color: var(--text);
-  background: #f0f0f0;
+  background: var(--bg-alt);
   line-height: 1.6;
   font-size: 15px;
 }
 
-.page {
-  max-width: 900px;
-  margin: 20px auto;
-  background: var(--bg);
-  padding: 48px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.1);
-  border-radius: 8px;
+a { color: var(--primary); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ============================================
+   SITE NAV — matches portfolio index.html
+   ============================================ */
+.site-nav {
+  position: sticky;
+  top: 0;
+  background: rgba(255,255,255,0.96);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+  z-index: 100;
+  padding: 0 24px;
 }
 
-/* HEADER */
-.unit-header {
-  text-align: center;
-  padding-bottom: 32px;
-  border-bottom: 3px solid var(--primary);
-  margin-bottom: 32px;
+.site-nav-inner {
+  max-width: 960px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
 }
 
-.unit-header .tag {
-  display: inline-block;
-  background: var(--primary);
+.site-nav-brand {
+  font-weight: 800;
+  font-size: 16px;
+  color: var(--primary);
+  text-decoration: none;
+}
+
+.site-nav-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-light);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.site-nav-back:hover { color: var(--primary); text-decoration: none; }
+.site-nav-back .lucide { width: 14px; height: 14px; stroke-width: 2.5; }
+
+/* ============================================
+   HERO BANNER
+   ============================================ */
+.hero-banner {
+  background: linear-gradient(135deg, var(--primary-dark), var(--primary));
   color: #fff;
-  padding: 4px 14px;
+  padding: 56px 24px 48px;
+  text-align: center;
+}
+
+.hero-tag {
+  display: inline-block;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.3);
+  color: rgba(255,255,255,0.9);
+  padding: 4px 16px;
   border-radius: 20px;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin-bottom: 12px;
-}
-
-.unit-header h1 {
-  font-size: 28px;
-  font-weight: 800;
-  color: var(--primary);
-  margin-bottom: 6px;
-}
-
-.unit-header .subtitle {
-  font-size: 16px;
-  color: var(--text-light);
+  letter-spacing: 0.12em;
   margin-bottom: 16px;
 }
 
-.unit-header .meta {
+.hero-banner h1 {
+  font-size: 36px;
+  font-weight: 800;
+  line-height: 1.15;
+  margin-bottom: 8px;
+  color: #fff;
+}
+
+.hero-banner .subtitle {
+  font-size: 16px;
+  color: rgba(255,255,255,0.8);
+  font-weight: 500;
+  margin-bottom: 24px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hero-meta {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
   gap: 20px;
   font-size: 13px;
-  color: var(--text-light);
+  color: rgba(255,255,255,0.75);
 }
 
-.unit-header .meta strong { color: var(--text); }
+.hero-meta strong { color: rgba(255,255,255,0.95); }
 
-/* SECTIONS */
-.section { margin-bottom: 40px; }
+/* ============================================
+   PAGE WRAPPER
+   ============================================ */
+.page {
+  max-width: 960px;
+  margin: 32px auto;
+  background: var(--bg);
+  padding: 48px;
+  box-shadow: var(--shadow-lg);
+  border-radius: 12px;
+}
+
+/* ============================================
+   SECTIONS
+   ============================================ */
+.section { margin-bottom: 48px; }
 
 .section h2 {
   font-size: 20px;
   font-weight: 800;
   color: var(--primary);
   border-bottom: 2px solid var(--border);
-  padding-bottom: 8px;
-  margin-bottom: 16px;
-}
-
-.section h3 {
-  font-size: 16px;
-  font-weight: 700;
-  margin: 20px 0 8px;
-  color: var(--text);
+  padding-bottom: 10px;
+  margin-bottom: 20px;
 }
 
 .section p { margin-bottom: 10px; }
 .section ul { margin: 8px 0 12px 24px; }
 .section li { margin-bottom: 4px; }
 
-/* CALLOUTS */
+/* ============================================
+   DESIGN CONTEXT CALLOUT
+   ============================================ */
 .callout {
   background: var(--primary-bg);
   border-left: 4px solid var(--primary);
   border-radius: 0 var(--radius) var(--radius) 0;
-  padding: 16px 20px;
-  margin-bottom: 20px;
+  padding: 18px 22px;
+  margin-bottom: 32px;
   font-size: 14px;
 }
 
@@ -135,39 +199,53 @@ body {
   border-left-color: var(--accent);
 }
 
-.callout h4 { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+.callout h4 {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--text);
+}
 
-/* COMPARISON TABLE */
+.callout p { margin: 0; color: var(--text); }
+
+/* ============================================
+   COMPARISON TABLE
+   ============================================ */
 .comp-table {
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 24px;
   font-size: 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
 }
 
 .comp-table th {
-  padding: 12px 16px;
+  padding: 13px 16px;
   text-align: left;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
 }
 
 .comp-table th:first-child {
   background: var(--bg-alt);
   color: var(--text-light);
-  width: 28%;
+  width: 22%;
 }
 
 .comp-table th.elem-head {
   background: var(--elem);
   color: #fff;
-  width: 36%;
+  width: 39%;
 }
 
 .comp-table th.ms-head {
   background: var(--ms);
   color: #fff;
-  width: 36%;
+  width: 39%;
 }
 
 .comp-table td {
@@ -175,41 +253,41 @@ body {
   border-bottom: 1px solid var(--border);
   vertical-align: top;
   font-size: 14px;
+  line-height: 1.5;
 }
 
 .comp-table td:first-child {
   font-weight: 700;
-  font-size: 13px;
+  font-size: 12px;
   color: var(--text-light);
   background: var(--bg-alt);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
-.comp-table td.elem-cell {
-  background: #f0f5ff;
-}
-
-.comp-table td.ms-cell {
-  background: #f0fdf8;
-}
-
+.comp-table td.elem-cell { background: #f8fbff; }
+.comp-table td.ms-cell { background: #f6fdfb; }
 .comp-table tr:last-child td { border-bottom: none; }
 
-/* DIMENSION CARDS */
+/* ============================================
+   DIMENSION CARDS
+   ============================================ */
 .dimension-card {
   border: 1px solid var(--border);
   border-radius: var(--radius);
   margin-bottom: 24px;
   overflow: hidden;
+  box-shadow: var(--shadow);
 }
 
 .dimension-header {
   background: var(--bg-alt);
-  padding: 14px 20px;
+  padding: 14px 22px;
   border-bottom: 1px solid var(--border);
 }
 
 .dimension-header h3 {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 800;
   color: var(--primary);
   margin: 0;
@@ -221,16 +299,16 @@ body {
 }
 
 .dimension-col {
-  padding: 20px;
+  padding: 22px;
 }
 
 .dimension-col.elem {
-  background: #f8faff;
+  background: #f8fbff;
   border-right: 1px solid var(--elem-border);
 }
 
 .dimension-col.ms {
-  background: #f8fff9;
+  background: #f6fdfb;
 }
 
 .dimension-col-label {
@@ -239,29 +317,30 @@ body {
   text-transform: uppercase;
   letter-spacing: 0.08em;
   margin-bottom: 10px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
 }
 
 .dimension-col.elem .dimension-col-label { color: var(--elem); }
 .dimension-col.ms .dimension-col-label { color: var(--ms); }
 
-.dimension-col p { font-size: 14px; color: var(--text); margin-bottom: 6px; }
+.dimension-col p { font-size: 14px; color: var(--text); margin-bottom: 8px; }
 .dimension-col ul { margin: 6px 0 0 18px; font-size: 14px; }
-.dimension-col li { margin-bottom: 3px; }
+.dimension-col li { margin-bottom: 4px; }
+.dimension-col .mt { margin-top: 8px; }
 
 .why-box {
-  padding: 14px 20px;
+  padding: 14px 22px;
   background: #fffbeb;
   border-top: 1px solid #fde68a;
   font-size: 13px;
-  color: #92400e;
+  color: #78350f;
+  line-height: 1.6;
 }
 
-.why-box strong { color: #78350f; }
+.why-box strong { color: #6b2d0f; }
 
-/* THEORY CARDS */
+/* ============================================
+   THEORY CARDS
+   ============================================ */
 .theory-grid {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -270,10 +349,11 @@ body {
 }
 
 .theory-card {
-  padding: 20px;
+  padding: 22px;
   border: 1px solid var(--border);
   border-radius: var(--radius);
   background: var(--bg);
+  box-shadow: var(--shadow);
 }
 
 .theory-card h4 {
@@ -281,7 +361,7 @@ body {
   font-weight: 800;
   color: var(--primary);
   margin-bottom: 8px;
-  line-height: 1.3;
+  line-height: 1.35;
 }
 
 .theory-card p { font-size: 13px; color: var(--text-light); line-height: 1.6; }
@@ -292,16 +372,18 @@ body {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  padding: 2px 8px;
-  border-radius: 10px;
-  margin-bottom: 8px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  margin-bottom: 10px;
 }
 
-.theory-label.elem { background: var(--elem-bg); color: var(--elem); }
-.theory-label.ms { background: var(--ms-bg); color: var(--ms); }
-.theory-label.both { background: #f3f4f6; color: #374151; }
+.theory-label.elem { background: var(--elem-bg); color: var(--elem); border: 1px solid var(--elem-border); }
+.theory-label.ms { background: var(--ms-bg); color: var(--ms); border: 1px solid var(--ms-border); }
+.theory-label.both { background: #f3f4f6; color: #374151; border: 1px solid #e5e7eb; }
 
-/* CTA CARDS */
+/* ============================================
+   CTA CARDS
+   ============================================ */
 .cta-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -311,106 +393,120 @@ body {
 
 .cta-card {
   display: block;
-  padding: 24px;
-  border-radius: var(--radius);
+  padding: 28px;
+  border-radius: 10px;
   text-decoration: none;
   text-align: center;
   transition: transform 0.2s, box-shadow 0.2s;
   box-shadow: var(--shadow);
 }
 
-.cta-card:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.12); text-decoration: none; }
+.cta-card:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(0,0,0,0.14); text-decoration: none; }
 
-.cta-card.elem-cta {
-  background: linear-gradient(135deg, #1e3a5f, var(--elem));
-  color: #fff;
-}
-
-.cta-card.ms-cta {
-  background: linear-gradient(135deg, #022c22, var(--ms));
-  color: #fff;
-}
+.cta-card.elem-cta { background: linear-gradient(135deg, #1e3a5f, var(--elem)); color: #fff; }
+.cta-card.ms-cta   { background: linear-gradient(135deg, #022c22, var(--ms));  color: #fff; }
 
 .cta-card .cta-label {
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  opacity: 0.75;
+  letter-spacing: 0.1em;
+  opacity: 0.7;
   margin-bottom: 8px;
 }
 
 .cta-card h3 {
-  font-size: 17px;
+  font-size: 18px;
   font-weight: 800;
   color: #fff;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
 
 .cta-card p {
   font-size: 13px;
-  opacity: 0.85;
-  margin-bottom: 16px;
+  opacity: 0.82;
+  margin-bottom: 18px;
+  line-height: 1.55;
 }
 
 .cta-btn {
   display: inline-block;
-  background: rgba(255,255,255,0.2);
-  border: 1px solid rgba(255,255,255,0.4);
+  background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.38);
   color: #fff;
-  padding: 8px 20px;
+  padding: 9px 22px;
   border-radius: 6px;
   font-size: 13px;
   font-weight: 700;
+  font-family: inherit;
+  transition: background 0.2s;
 }
 
-/* FOOTER */
-.unit-footer {
+.cta-btn:hover { background: rgba(255,255,255,0.28); }
+
+/* ============================================
+   FOOTER
+   ============================================ */
+.page-footer {
   text-align: center;
-  padding-top: 24px;
+  padding-top: 28px;
   border-top: 2px solid var(--border);
   font-size: 13px;
   color: var(--text-light);
 }
 
-.unit-footer .quote {
+.page-footer .quote {
   font-style: italic;
-  font-size: 15px;
+  font-size: 16px;
   color: var(--primary);
-  margin-top: 10px;
+  margin-top: 12px;
   font-weight: 600;
 }
 
-/* RESPONSIVE */
+/* ============================================
+   RESPONSIVE
+   ============================================ */
 @media (max-width: 768px) {
-  .page { padding: 24px 16px; margin: 10px; }
-  .unit-header h1 { font-size: 22px; }
-  .unit-header .meta { flex-direction: column; gap: 6px; }
+  .page { padding: 24px 16px; margin: 16px; border-radius: 8px; }
+  .hero-banner { padding: 40px 20px 32px; }
+  .hero-banner h1 { font-size: 26px; }
+  .hero-meta { flex-direction: column; gap: 6px; }
   .dimension-cols { grid-template-columns: 1fr; }
   .dimension-col.elem { border-right: none; border-bottom: 1px solid var(--elem-border); }
   .theory-grid { grid-template-columns: 1fr; }
   .cta-grid { grid-template-columns: 1fr; }
   .comp-table { font-size: 12px; }
-  .comp-table th, .comp-table td { padding: 8px 10px; }
+  .comp-table th, .comp-table td { padding: 9px 10px; }
 }
 </style>
 </head>
 <body>
 
-<div class="page">
-
-  <!-- HEADER -->
-  <div class="unit-header">
-    <span class="tag">Developmental Progression Analysis</span>
-    <h1>Volleyball Across Grade Bands</h1>
-    <div class="subtitle">How Instructional Design Adapts to Learner Development: K&ndash;5 vs. Grades 6&ndash;8</div>
-    <div class="meta">
-      <span><strong>Designer:</strong> Kevin Terranova, M.S.</span>
-      <span><strong>Grades:</strong> K&ndash;5 &amp; 6&ndash;8</span>
-      <span><strong>Context:</strong> 3 Elementary Schools + Barbour Middle School</span>
-      <span><strong>District:</strong> Rockford Public Schools, IL</span>
-    </div>
+<!-- NAV -->
+<nav class="site-nav" aria-label="Site navigation">
+  <div class="site-nav-inner">
+    <a href="index.html" class="site-nav-brand">Kevin Terranova</a>
+    <a href="index.html#portfolio" class="site-nav-back">
+      <i data-lucide="arrow-left"></i> Back to Portfolio
+    </a>
   </div>
+</nav>
+
+<!-- HERO BANNER -->
+<div class="hero-banner">
+  <div class="hero-tag">Developmental Progression Analysis</div>
+  <h1>Volleyball Across Grade Bands</h1>
+  <div class="subtitle">How Instructional Design Adapts to Learner Development: K&ndash;5 vs. Grades 6&ndash;8</div>
+  <div class="hero-meta">
+    <span><strong>Designer:</strong> Kevin Terranova, M.S.</span>
+    <span><strong>Grades:</strong> K&ndash;5 &amp; 6&ndash;8</span>
+    <span><strong>Context:</strong> 3 Elementary Schools + Barbour Middle School</span>
+    <span><strong>District:</strong> Rockford Public Schools, IL</span>
+  </div>
+</div>
+
+<!-- PAGE CONTENT -->
+<div class="page">
 
   <!-- DESIGN CONTEXT -->
   <div class="callout design">
@@ -421,13 +517,12 @@ body {
   <!-- SECTION 1: AT A GLANCE -->
   <div class="section">
     <h2>Unit Structure at a Glance</h2>
-
     <table class="comp-table">
       <thead>
         <tr>
           <th>Dimension</th>
-          <th class="elem-head">&#127891; Elementary (K&ndash;5)</th>
-          <th class="ms-head">&#9971; Middle School (6&ndash;8)</th>
+          <th class="elem-head">Elementary (K&ndash;5)</th>
+          <th class="ms-head">Middle School (6&ndash;8)</th>
         </tr>
       </thead>
       <tbody>
@@ -449,7 +544,7 @@ body {
         <tr>
           <td>Equipment</td>
           <td class="elem-cell">Balloons &rarr; beach balls &rarr; trainers &rarr; regulation</td>
-          <td class="ms-cell">Regulation default; volley-lite as accommodation</td>
+          <td class="ms-cell">Regulation default; volley-lite as accommodation only</td>
         </tr>
         <tr>
           <td>Warm-Ups</td>
@@ -464,7 +559,7 @@ body {
         <tr>
           <td>Assessment Focus</td>
           <td class="elem-cell">Cue demonstration (2 of 4 cues minimum)</td>
-          <td class="ms-cell">Game performance + tactical decision-making</td>
+          <td class="ms-cell">Game performance + tactical decision-making in scrimmage &amp; tournament</td>
         </tr>
         <tr>
           <td>Primary Theory</td>
@@ -481,12 +576,10 @@ body {
 
     <!-- 2a: Pacing -->
     <div class="dimension-card">
-      <div class="dimension-header">
-        <h3>1. Pacing &amp; Skill Introduction</h3>
-      </div>
+      <div class="dimension-header"><h3>1. Pacing &amp; Skill Introduction</h3></div>
       <div class="dimension-cols">
         <div class="dimension-col elem">
-          <div class="dimension-col-label">&#127891; K&ndash;5 Elementary</div>
+          <div class="dimension-col-label">K&ndash;5 Elementary</div>
           <p><strong>One skill per week, isolated.</strong></p>
           <ul>
             <li>Week 1: Underhand Serve</li>
@@ -495,11 +588,11 @@ body {
             <li>Week 4: Overhand Serve</li>
             <li>Weeks 5&ndash;6: Modified Game Play</li>
           </ul>
-          <p style="margin-top:8px">Each skill gets a full week. Individual &rarr; partner &rarr; game within each lesson. Next skill only introduced after the previous one has had a full week of practice.</p>
+          <p class="mt">Each skill gets a full week. Individual &rarr; partner &rarr; game within each lesson. Next skill only introduced after the previous one has had a full week of practice.</p>
         </div>
         <div class="dimension-col ms">
-          <div class="dimension-col-label">&#9971; MS Grades 6&ndash;8</div>
-          <p><strong>One skill per day — 7-day build, then game play.</strong></p>
+          <div class="dimension-col-label">MS Grades 6&ndash;8</div>
+          <p><strong>One skill per day &mdash; 7-day build, then game play.</strong></p>
           <ul>
             <li>Day 1: Exploration &amp; Serve</li>
             <li>Day 2: Bump (Forearm Pass)</li>
@@ -510,22 +603,20 @@ body {
             <li>Day 7: Positions &amp; Rotation</li>
             <li>Days 8&ndash;9: Scrimmage &amp; Tournament</li>
           </ul>
-          <p style="margin-top:8px">Skills build systematically over 7 days. Game play arrives as a culminating experience once students have the full toolkit to actually play.</p>
+          <p class="mt">Skills build systematically over 7 days. Game play arrives as the culminating experience once students have the full toolkit to actually compete.</p>
         </div>
       </div>
       <div class="why-box">
-        <strong>Why it changes:</strong> Elementary students need a full week per skill to build motor memory before layering complexity. Middle schoolers can absorb a new skill per day and retain it because they have stronger working memory and prior physical literacy. The 9-day structure still sequences skills deliberately before game play &mdash; but at 5x the pace.
+        <strong>Why it changes:</strong> Elementary students need a full week per skill to build motor memory before layering complexity. Middle schoolers can absorb a new skill per day because they have stronger working memory and prior physical literacy. The 9-day MS structure still sequences skills deliberately before game play &mdash; but at 5x the pace.
       </div>
     </div>
 
     <!-- 2b: Equipment -->
     <div class="dimension-card">
-      <div class="dimension-header">
-        <h3>2. Equipment Progression</h3>
-      </div>
+      <div class="dimension-header"><h3>2. Equipment Progression</h3></div>
       <div class="dimension-cols">
         <div class="dimension-col elem">
-          <div class="dimension-col-label">&#127891; K&ndash;5 Elementary</div>
+          <div class="dimension-col-label">K&ndash;5 Elementary</div>
           <p><strong>Full equipment ladder.</strong> K&ndash;2 students often spend entire lessons with balloons.</p>
           <ul>
             <li>Balloon &rarr; beach ball &rarr; trainer volleyball &rarr; regulation</li>
@@ -534,7 +625,7 @@ body {
           </ul>
         </div>
         <div class="dimension-col ms">
-          <div class="dimension-col-label">&#9971; MS Grades 6&ndash;8</div>
+          <div class="dimension-col-label">MS Grades 6&ndash;8</div>
           <p><strong>Regulation is the default.</strong> Volley-lite balls are accommodation, not starting point.</p>
           <ul>
             <li>Regulation ball from Day 1</li>
@@ -544,18 +635,16 @@ body {
         </div>
       </div>
       <div class="why-box">
-        <strong>Why it changes:</strong> Elementary hand-eye coordination and physical fear of a hard ball requires a graduated equipment approach. By middle school, students have the physical readiness for regulation equipment. Continuing to use modified equipment can actually limit their development. Differentiation instead focuses on tactical complexity and role difficulty.
+        <strong>Why it changes:</strong> Elementary hand-eye coordination and physical fear of a hard ball requires a graduated equipment approach. By middle school, students have the physical readiness for regulation equipment. Continuing to use modified equipment can limit development. Differentiation instead focuses on tactical complexity and role difficulty.
       </div>
     </div>
 
     <!-- 2c: Warm-Ups -->
     <div class="dimension-card">
-      <div class="dimension-header">
-        <h3>3. Warm-Up Design</h3>
-      </div>
+      <div class="dimension-header"><h3>3. Warm-Up Design</h3></div>
       <div class="dimension-cols">
         <div class="dimension-col elem">
-          <div class="dimension-col-label">&#127891; K&ndash;5 Elementary</div>
+          <div class="dimension-col-label">K&ndash;5 Elementary</div>
           <p><strong>General fitness games.</strong> Fun, high-energy, not volleyball-specific.</p>
           <ul>
             <li>Tic Tac Toe relay races</li>
@@ -563,32 +652,30 @@ body {
             <li>Sharks &amp; Minnows</li>
             <li>Walk/Jog intervals</li>
           </ul>
-          <p style="margin-top:8px">Priority: get students moving, build cardiovascular fitness, create positive energy for the lesson ahead.</p>
+          <p class="mt">Priority: get students moving, build cardiovascular fitness, create positive energy for the lesson ahead.</p>
         </div>
         <div class="dimension-col ms">
-          <div class="dimension-col-label">&#9971; MS Grades 6&ndash;8</div>
+          <div class="dimension-col-label">MS Grades 6&ndash;8</div>
           <p><strong>Sport-specific dynamic conditioning.</strong> Mirrors actual volleyball movement.</p>
           <ul>
             <li>High knees, butt kickers, karaoke, back pedal, jog/sprint</li>
             <li>Creative tag games: Yoshi Run, Freeze Tag, Poly Spot Knockout</li>
-            <li>Dice-based fitness challenges</li>
+            <li>Permanent circuit &mdash; students run it on entry without instruction</li>
           </ul>
-          <p style="margin-top:8px">Priority: prepare the body for volleyball-specific demands, build athletic movement vocabulary, maintain engagement through variety.</p>
+          <p class="mt">Priority: prepare the body for volleyball-specific demands, build athletic movement vocabulary, maintain engagement through variety.</p>
         </div>
       </div>
       <div class="why-box">
-        <strong>Why it changes:</strong> Elementary warm-ups prioritize general fitness and buy-in&mdash;students need to be excited before focused instruction. Middle school warm-ups are designed with sport transfer in mind. Karaoke footwork, back pedaling, and reactive sprints all appear in real volleyball situations. The warm-up is part of the curriculum, not just a pre-lesson ritual.
+        <strong>Why it changes:</strong> Elementary warm-ups prioritize general fitness and buy-in &mdash; students need to be excited before focused instruction. Middle school warm-ups are designed with sport transfer in mind. Karaoke footwork, back pedaling, and reactive sprints all appear in real volleyball situations. The warm-up is part of the curriculum, not just a pre-lesson ritual.
       </div>
     </div>
 
     <!-- 2d: Game Play Integration -->
     <div class="dimension-card">
-      <div class="dimension-header">
-        <h3>4. Game Play Integration</h3>
-      </div>
+      <div class="dimension-header"><h3>4. Game Play Integration</h3></div>
       <div class="dimension-cols">
         <div class="dimension-col elem">
-          <div class="dimension-col-label">&#127891; K&ndash;5 Elementary</div>
+          <div class="dimension-col-label">K&ndash;5 Elementary</div>
           <p><strong>Skills first, game play last.</strong> Modified game only after all individual skills are taught.</p>
           <ul>
             <li>Game play reserved for final 1&ndash;2 weeks</li>
@@ -598,11 +685,11 @@ body {
           </ul>
         </div>
         <div class="dimension-col ms">
-          <div class="dimension-col-label">&#9971; MS Grades 6&ndash;8</div>
+          <div class="dimension-col-label">MS Grades 6&ndash;8</div>
           <p><strong>Skills built systematically, game play as culmination.</strong></p>
           <ul>
             <li>Days 1&ndash;7: Structured skill development, no live game</li>
-            <li>Day 8: Full 3v3 Scrimmage with coaching stops</li>
+            <li>Day 8: Full 3v3 Scrimmage with teacher coaching stops</li>
             <li>Day 9: Round-robin Tournament, self-officiated</li>
             <li>All 7 skills apply simultaneously in live competition</li>
           </ul>
@@ -615,12 +702,10 @@ body {
 
     <!-- 2e: Student Autonomy -->
     <div class="dimension-card">
-      <div class="dimension-header">
-        <h3>5. Student Autonomy &amp; Role</h3>
-      </div>
+      <div class="dimension-header"><h3>5. Student Autonomy &amp; Role</h3></div>
       <div class="dimension-cols">
         <div class="dimension-col elem">
-          <div class="dimension-col-label">&#127891; K&ndash;5 Elementary</div>
+          <div class="dimension-col-label">K&ndash;5 Elementary</div>
           <p><strong>Teacher-directed throughout.</strong></p>
           <ul>
             <li>Teacher demonstrates, sets up drills, manages games</li>
@@ -630,29 +715,27 @@ body {
           </ul>
         </div>
         <div class="dimension-col ms">
-          <div class="dimension-col-label">&#9971; MS Grades 6&ndash;8</div>
+          <div class="dimension-col-label">MS Grades 6&ndash;8</div>
           <p><strong>Structured independence throughout, full autonomy at tournament.</strong></p>
           <ul>
             <li>Days 1&ndash;7: Permanent warm-up circuit run independently on entry</li>
-            <li>Day 7: Students learn rotation rules and manage their own positioning</li>
-            <li>Day 8: Team debrief led by students after scrimmage</li>
+            <li>Day 7: Students manage their own positioning and rotation</li>
+            <li>Day 8: Student-led team debrief after scrimmage</li>
             <li>Day 9: Self-officiated tournament &mdash; &ldquo;Call it on yourself first&rdquo;</li>
           </ul>
         </div>
       </div>
       <div class="why-box">
-        <strong>Why it changes:</strong> Elementary students need structure and teacher presence to feel safe and learn effectively. Ambiguity leads to off-task behavior. Middle schoolers need ownership to stay engaged&mdash;too much teacher direction feels infantilizing. Giving them real roles (referee, scorekeeper, captain) deepens rule comprehension, builds leadership, and increases buy-in. The teacher shifts from director to facilitator.
+        <strong>Why it changes:</strong> Elementary students need structure and teacher presence to feel safe and learn effectively. Middle schoolers need ownership to stay engaged &mdash; too much teacher direction feels infantilizing. Giving them real responsibility (self-officiating, rotation management, team debrief) deepens rule comprehension, builds leadership, and increases buy-in. The teacher shifts from director to facilitator.
       </div>
     </div>
 
     <!-- 2f: Assessment -->
     <div class="dimension-card">
-      <div class="dimension-header">
-        <h3>6. Assessment Strategy</h3>
-      </div>
+      <div class="dimension-header"><h3>6. Assessment Strategy</h3></div>
       <div class="dimension-cols">
         <div class="dimension-col elem">
-          <div class="dimension-col-label">&#127891; K&ndash;5 Elementary</div>
+          <div class="dimension-col-label">K&ndash;5 Elementary</div>
           <p><strong>Cue-based observation.</strong> Specific, measurable, form-focused.</p>
           <ul>
             <li>&ldquo;Demonstrate 2 of 4 cues for the underhand serve&rdquo;</li>
@@ -662,18 +745,18 @@ body {
           </ul>
         </div>
         <div class="dimension-col ms">
-          <div class="dimension-col-label">&#9971; MS Grades 6&ndash;8</div>
+          <div class="dimension-col-label">MS Grades 6&ndash;8</div>
           <p><strong>Game performance &amp; tactical application.</strong></p>
           <ul>
-            <li>Can the student apply skills in a live game situation?</li>
+            <li>Can the student apply skills in a live scrimmage or tournament?</li>
             <li>Are they reading the play and choosing the right skill?</li>
             <li>Are they communicating with teammates before the ball arrives?</li>
-            <li>Student officiating serves as embedded rule comprehension assessment</li>
+            <li>Rubric scored primarily on Days 8&ndash;9; self-assessment closes the unit</li>
           </ul>
         </div>
       </div>
       <div class="why-box">
-        <strong>Why it changes:</strong> Elementary assessment targets <em>acquisition</em>&mdash;can they DO it? Middle school assessment targets <em>transfer</em>&mdash;can they USE it when it counts? This mirrors Bloom&rsquo;s Taxonomy: elementary students work at knowledge and application levels, while middle school pushes into analysis (reading the game) and synthesis (making tactical decisions in real time).
+        <strong>Why it changes:</strong> Elementary assessment targets <em>acquisition</em> &mdash; can they DO it? Middle school assessment targets <em>transfer</em> &mdash; can they USE it when it counts? This mirrors Bloom&rsquo;s Taxonomy: elementary students work at knowledge and application levels, while middle school pushes into analysis (reading the game) and synthesis (making tactical decisions in real time).
       </div>
     </div>
 
@@ -683,7 +766,6 @@ body {
   <div class="section">
     <h2>Theoretical Framework</h2>
     <p>Both units draw from established learning theory. The emphasis shifts as the learner develops.</p>
-
     <div class="theory-grid">
       <div class="theory-card">
         <span class="theory-label elem">K&ndash;5 Focus</span>
@@ -693,7 +775,7 @@ body {
       <div class="theory-card">
         <span class="theory-label ms">MS Focus</span>
         <h4>Teaching Games for Understanding (TGfU)</h4>
-        <p>Game play is introduced early so students learn skills in tactical context. Students discover WHY a skill is needed by experiencing the game first. This increases motivation and real-world transfer of skill.</p>
+        <p>Skills are built in deliberate sequence, then applied in a competitive game. The scrimmage and tournament give students tactical context &mdash; they understand <em>why</em> each skill matters when they need it under pressure.</p>
       </div>
       <div class="theory-card">
         <span class="theory-label both">Both Units</span>
@@ -707,13 +789,13 @@ body {
   <div class="section">
     <h2>View the Full Units</h2>
     <div class="cta-grid">
-      <a href="volleyball-unit.html" class="cta-card elem-cta" target="_blank">
+      <a href="volleyball-unit.html" class="cta-card elem-cta" target="_blank" rel="noopener noreferrer">
         <div class="cta-label">Full Curriculum Document</div>
         <h3>K&ndash;5 Volleyball Unit</h3>
         <p>5-week scaffolded progression with detailed lesson plans, differentiation, and cue-based assessment for K&ndash;5 learners.</p>
         <span class="cta-btn">View Unit Plan &rarr;</span>
       </a>
-      <a href="ms-volleyball-unit.html" class="cta-card ms-cta" target="_blank">
+      <a href="ms-volleyball-unit.html" class="cta-card ms-cta" target="_blank" rel="noopener noreferrer">
         <div class="cta-label">Full Curriculum Document</div>
         <h3>Middle School Volleyball Unit</h3>
         <p>9-day progressive unit: 7-day skill build through serve, bump, set, receive, and rotation &mdash; culminating in scrimmage and tournament for grades 6&ndash;8.</p>
@@ -723,12 +805,16 @@ body {
   </div>
 
   <!-- FOOTER -->
-  <div class="unit-footer">
+  <div class="page-footer">
     <p><strong>Designed by Kevin Terranova, M.S.</strong></p>
     <p>Curriculum &amp; Instruction | Sport Psychology | Rockford Public Schools, IL</p>
     <p class="quote">&ldquo;Same sport. Same standards. Different learners. Different design.&rdquo;</p>
   </div>
 
 </div>
+
+<script>
+  lucide.createIcons();
+</script>
 </body>
 </html>
