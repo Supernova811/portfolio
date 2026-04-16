@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Middle School Volleyball Unit | Curriculum Design Artifact | Kevin Terranova</title>
+<style>
+@media print {
+  body { margin: 0; font-size: 10.5pt; }
+  .page { box-shadow: none; padding: 0.4in 0.5in; max-width: 100%; }
+  .no-print { display: none; }
+  .lesson-card { break-inside: avoid; }
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --primary: #1e40af;
+  --primary-light: #3b82f6;
+  --primary-bg: #eff6ff;
+  --accent: #f59e0b;
+  --success: #10b981;
+  --success-bg: #ecfdf5;
+  --text: #1e293b;
+  --text-light: #64748b;
+  --bg: #ffffff;
+  --bg-alt: #f8fafc;
+  --border: #e2e8f0;
+  --shadow: 0 1px 3px rgba(0,0,0,0.1);
+  --radius: 8px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  color: var(--text);
+  background: #f0f0f0;
+  line-height: 1.6;
+  font-size: 15px;
+}
+
+.page {
+  max-width: 900px;
+  margin: 20px auto;
+  background: var(--bg);
+  padding: 48px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+  border-radius: 8px;
+}
+
+/* HEADER */
+.unit-header {
+  text-align: center;
+  padding-bottom: 32px;
+  border-bottom: 3px solid var(--primary);
+  margin-bottom: 32px;
+}
+
+.unit-header .tag {
+  display: inline-block;
+  background: var(--primary);
+  color: #fff;
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 12px;
+}
+
+.unit-header h1 {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--primary);
+  margin-bottom: 6px;
+}
+
+.unit-header .subtitle {
+  font-size: 16px;
+  color: var(--text-light);
+  margin-bottom: 16px;
+}
+
+.unit-header .meta {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  font-size: 13px;
+  color: var(--text-light);
+}
+
+.unit-header .meta strong { color: var(--text); }
+
+/* SECTIONS */
+.section { margin-bottom: 36px; }
+
+.section h2 {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--primary);
+  border-bottom: 2px solid var(--border);
+  padding-bottom: 8px;
+  margin-bottom: 16px;
+}
+
+.section h3 {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 16px 0 8px;
+}
+
+.section p { margin-bottom: 10px; }
+.section ul, .section ol { margin: 8px 0 12px 24px; }
+.section li { margin-bottom: 4px; }
+
+/* CALLOUT */
+.callout {
+  background: var(--primary-bg);
+  border-left: 4px solid var(--primary);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+.callout.design {
+  background: #fffbeb;
+  border-left-color: var(--accent);
+}
+
+.callout h4 { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+
+/* OVERVIEW TABLE */
+.overview-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 24px;
+  font-size: 14px;
+}
+
+.overview-table th {
+  background: var(--primary);
+  color: #fff;
+  padding: 10px 14px;
+  text-align: left;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.overview-table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+
+.overview-table tr:nth-child(even) td { background: var(--bg-alt); }
+
+/* LESSON CARDS */
+.lesson-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 24px;
+  overflow: hidden;
+}
+
+.lesson-card-header {
+  background: var(--primary);
+  color: #fff;
+  padding: 14px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.lesson-card-header h3 { color: #fff; margin: 0; font-size: 16px; }
+.lesson-card-header .week { font-size: 13px; opacity: 0.8; }
+.lesson-card-header .arrow { transition: transform 0.3s; }
+.lesson-card-header.open .arrow { transform: rotate(180deg); }
+
+.lesson-card-body {
+  padding: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, padding 0.3s ease;
+}
+
+.lesson-card-body.open {
+  padding: 20px;
+  max-height: 3000px;
+}
+
+.lesson-detail {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 4px 16px;
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+
+.lesson-detail dt {
+  font-weight: 700;
+  color: var(--primary);
+  font-size: 13px;
+}
+
+.lesson-detail dd { color: var(--text); }
+
+.phase {
+  padding: 12px 16px;
+  background: var(--bg-alt);
+  border-radius: var(--radius);
+  margin-bottom: 12px;
+}
+
+.phase-label {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--primary);
+  margin-bottom: 4px;
+}
+
+.cues {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.cue {
+  background: var(--primary-bg);
+  border: 1px solid #dbeafe;
+  border-radius: 4px;
+  padding: 3px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+/* FOOTER */
+.unit-footer {
+  text-align: center;
+  padding-top: 24px;
+  border-top: 2px solid var(--border);
+  font-size: 13px;
+  color: var(--text-light);
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .page { padding: 24px 16px; margin: 10px; }
+  .unit-header h1 { font-size: 22px; }
+  .lesson-detail { grid-template-columns: 1fr; }
+  .unit-header .meta { flex-direction: column; gap: 6px; }
+}
+</style>
+</head>
+<body>
+
+<div class="page">
+  <!-- HEADER -->
+  <div class="unit-header">
+    <span class="tag">Curriculum Design Artifact</span>
+    <h1>Middle School Volleyball Unit</h1>
+    <div class="subtitle">A Standards-Aligned Skill Progression for Grades 6-8</div>
+    <div class="meta">
+      <span><strong>Designer:</strong> Kevin Terranova, M.S.</span>
+      <span><strong>Grade Band:</strong> 6-8</span>
+      <span><strong>Duration:</strong> 7 Lessons (~3-4 Weeks)</span>
+      <span><strong>School:</strong> Barbour School, Rockford IL</span>
+    </div>
+  </div>
+
+  <!-- DESIGN CONTEXT -->
+  <div class="callout design">
+    <h4>Instructional Design Context</h4>
+    <p>This unit was designed for middle school students (grades 6-8) at Barbour School, a K-8 Two-Way Immersion school. Unlike the K-5 unit where skills are introduced one per week in isolation, the MS unit introduces bump and set together from Day 1, reflecting students' greater motor readiness and cognitive capacity for multi-skill integration. Game play is introduced by Lesson 3 and becomes the primary vehicle for skill application from that point forward.</p>
+  </div>
+
+  <!-- STANDARDS -->
+  <div class="section">
+    <h2>Standards Alignment</h2>
+    <ul>
+      <li><strong>IL 19.A.2a:</strong> Demonstrate control when performing combinations and sequences in locomotor, nonlocomotor, and manipulative motor patterns</li>
+      <li><strong>IL 19.A.4a:</strong> Perform skills efficiently in a variety of leisure activities, sports, creative movement, and work-related activities</li>
+      <li><strong>IL 21.B.2a:</strong> Work cooperatively with a partner or small group to reach a shared goal during physical activity</li>
+      <li><strong>SHAPE America Standard 1:</strong> Demonstrates competency in a variety of motor skills and movement patterns</li>
+      <li><strong>SHAPE America Standard 4:</strong> Exhibits responsible personal and social behavior that respects self and others</li>
+    </ul>
+  </div>
+
+  <!-- UNIT OVERVIEW -->
+  <div class="section">
+    <h2>Unit Overview</h2>
+
+    <div class="callout">
+      <h4>Design Philosophy</h4>
+      <p><em>"Multi-skill integration from Day 1. Game play as the primary teacher by Lesson 3. Students move from learners to leaders by Lesson 7."</em></p>
+    </div>
+
+    <table class="overview-table">
+      <thead>
+        <tr>
+          <th>Lesson</th>
+          <th>Focus</th>
+          <th>Progression</th>
+          <th>Assessment</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>1</strong></td>
+          <td>Bump &amp; Set Introduction</td>
+          <td>Demo &rarr; Partner toss/pass &rarr; Bump Challenge &rarr; Group Keep It Up</td>
+          <td>Teacher cue observation</td>
+        </tr>
+        <tr>
+          <td><strong>2</strong></td>
+          <td>Skill Reinforcement</td>
+          <td>Yoshi Run &rarr; Review cues &rarr; Competitive Bump Challenge &rarr; Group rally</td>
+          <td>Teacher observation + peer counting</td>
+        </tr>
+        <tr>
+          <td><strong>3</strong></td>
+          <td>Fitness Integration &amp; First Game</td>
+          <td>Fitness testing &rarr; Skill review &rarr; Bump Challenge &rarr; Modified game</td>
+          <td>Fitness scores + game observation</td>
+        </tr>
+        <tr>
+          <td><strong>4</strong></td>
+          <td>Tactical Combinations</td>
+          <td>Freeze Tag &rarr; Bump-Set-Spike in groups of 6 &rarr; Full game</td>
+          <td>Tactical sequencing observation</td>
+        </tr>
+        <tr>
+          <td><strong>5</strong></td>
+          <td>Serving &amp; Receiving</td>
+          <td>Knowledge Q&amp;A &rarr; Group practice &rarr; Serve/receive rotations &rarr; Game</td>
+          <td>Serve accuracy + receive quality</td>
+        </tr>
+        <tr>
+          <td><strong>6</strong></td>
+          <td>Game Play Focus</td>
+          <td>Fitness warm-up &rarr; Group rally &rarr; Extended game play</td>
+          <td>Game performance observation</td>
+        </tr>
+        <tr>
+          <td><strong>7</strong></td>
+          <td>Student-Led Game Day</td>
+          <td>Poly Spot Knockout &rarr; Student refs &amp; scorekeepers &rarr; Full game</td>
+          <td>Student officiating + game play</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- LESSON PLANS -->
+  <div class="section">
+    <h2>Lesson Plans</h2>
+
+    <!-- LESSON 1 -->
+    <div class="lesson-card">
+      <div class="lesson-card-header" onclick="toggleLesson(this)">
+        <h3>Lesson 1: Introduction &mdash; Bump &amp; Set Fundamentals</h3>
+        <span><span class="week">Grades 6-8</span> <span class="arrow">&#9660;</span></span>
+      </div>
+      <div class="lesson-card-body">
+        <dl class="lesson-detail">
+          <dt>Affective</dt>
+          <dd>I can demonstrate fair play and positive communication with classmates</dd>
+          <dt>Cognitive</dt>
+          <dd>I can identify the cues for the bump and set in volleyball</dd>
+          <dt>Psychomotor</dt>
+          <dd>I can demonstrate the forearm bump pass using proper form</dd>
+          <dt>Equipment</dt>
+          <dd>Volleyballs (regulation + volley-lite), cones, net</dd>
+        </dl>
+
+        <div class="phase">
+          <div class="phase-label">Warm-Up</div>
+          <p><strong>Sport-Specific Volleyball Conditioning:</strong> High Knees, Butt Kickers, Walking Squats, Quad Stretch, Skip for Height, Skip for Distance, Lunge and Twist, Karaoke, Feinstein, Back Pedal, Jog/Sprint. Each movement mirrors actions that appear in actual volleyball play, building sport-specific fitness vocabulary from the first day.</p>
+        </div>
+
+        <div class="phase">
+          <div class="phase-label">Lesson Focus</div>
+          <p><strong>Intro Discussion:</strong> Has anyone seen a volleyball game? What is the first hit called? What are the different ways to hit a volleyball?</p>
+          <p><strong>Demonstration:</strong> Teacher demonstrates bump and set with explicit cues. Both skills are introduced together so students understand how they connect in gameplay.</p>
+          <p><strong>Bumping Cues:</strong></p>
+          <div class="cues">
+            <span class="cue">Ready position</span>
+            <span class="cue">Straight arms</span>
+            <span class="cue">Body to target</span>
+          </div>
+          <p style="margin-top:12px"><strong>Setting Cues:</strong></p>
+          <div class="cues">
+            <span class="cue">Ready position</span>
+            <span class="cue">Move under ball</span>
+            <span class="cue">Diamond hands + Extend</span>
+          </div>
+          <p style="margin-top:12px"><strong>Partner Practice:</strong> One partner tosses, the other bumps or sets it back. Take turns. Progress to a continuous back-and-forth rally without the toss.</p>
+          <p><strong>Mini-Game — Bump Challenge:</strong> Half students start with a volleyball. Others find a partner with a ball. Each student tosses to self, uses bumping cues, and counts consecutive passes. Partner counts. Switch. Winner keeps ball; other finds a new partner with a ball and challenges again.</p>
+          <p><strong>Mini-Game — Keep It Up:</strong> Groups see how many times they can keep the ball in the air using any legal hit. Focus on communication and positioning.</p>
+        </div>
+
+        <div class="phase">
+          <div class="phase-label">Closure</div>
+          <p>What can you tell me about volleyball? What is the first hit called? What did you excel at today? What was a challenge?</p>
+        </div>
+
+        <div class="callout" style="margin-top:12px">
+          <h4>Differentiation</h4>
+          <p>Volley-lite balls for students needing more reaction time. Tossing instead of self-toss to start for beginners. Partner toss instead of self-toss during Bump Challenge for those still developing the skill.</p>
+        </div>
+
+        <div class="callout" style="background:var(--success-bg);border-left-color:var(--success)">
+          <h4>Assessment</h4>
+          <p>Teacher observation of cue performance during partner practice and Bump Challenge. Visual model of passing form displayed on the wall or whiteboard for student reference throughout the lesson.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- LESSON 2 -->
+    <div class="lesson-card">
+      <div class="lesson-card-header" onclick="toggleLesson(this)">
+        <h3>Lesson 2: Skill Reinforcement &mdash; Competitive Practice</h3>
+        <span><span class="week">Grades 6-8</span> <span class="arrow">&#9660;</span></span>
+      </div>
+      <div class="lesson-card-body">
+        <dl class="lesson-detail">
+          <dt>Affective</dt>
+          <dd>I can demonstrate fair play and positive communication with classmates</dd>
+          <dt>Cognitive</dt>
+          <dd>I can identify the cues for the bump and set in volleyball</dd>
+          <dt>Psychomotor</dt>
+          <dd>I can demonstrate the forearm bump pass using proper form</dd>
+          <dt>Equipment</dt>
+          <dd>Volleyballs (regulation + volley-lite), cones, net</dd>
+        </dl>
+
+        <div class="phase">
+          <div class="phase-label">Warm-Up</div>
+          <p><strong>Yoshi Run:</strong> Fast-paced tag game between two teams. Objective: get your entire team safely across to the opposite sideline without being tagged. Tagged players sit where they were tagged. Teammates rescue them by walking from the sideline — the rescuer must walk the entire way back with the tagged player before either can try again. First team to get all players across wins. Builds agility, teamwork, spatial awareness, and strategy.</p>
+        </div>
+
+        <div class="phase">
+          <div class="phase-label">Lesson Focus</div>
+          <p><strong>Cue Review:</strong> Bellringer questions with the class — What is the first hit in volleyball called? What are the cues for the bump? What are the cues for the set? Students respond aloud; teacher reinforces correct answers.</p>
+          <p><strong>Partner Practice:</strong> Teacher circulates, watches form, and provides individual feedback. Prompt students to call the cue aloud before each hit to reinforce the connection between language and movement.</p>
+          <p><strong>Bump Challenge (Competitive):</strong> Same competitive partner format as Lesson 1. Students find partners, count consecutive bumps, winner keeps the ball and finds a new challenge. Competition increases intensity and keeps engagement high.</p>
+          <p><strong>Group Keep It Up:</strong> Groups compete to achieve the highest number of consecutive hits using any legal volleyball contact. Students track and report their group total.</p>
+        </div>
+
+        <div class="phase">
+          <div class="phase-label">Closure</div>
+          <p>What can you tell me about volleyball? What is the first hit called? What did you excel at today? What was a challenge?</p>
+        </div>
+
+        <div class="callout" style="margin-top:12px">
+          <h4>Differentiation</h4>
+          <p>Volley-lite balls for students needing more reaction time. Tossing to start for beginners before live hitting. Partner toss instead of self-toss during Bump Challenge.</p>
+        </div>
+
+        <div class="callout" style="background:var(--success-bg);border-left-color:var(--success)">
+          <h4>Assessment</h4>
+          <p>Teacher observation of form and cue application during partner practice. Peer counting during Bump Challenge provides built-in accountability — students are responsible for honest counting and positive feedback.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- LESSON 3 -->
+    <div class="lesson-card">
+      <div class="lesson-card-header" onclick="toggleLesson(this)">
+        <h3>Lesson 3: Fitness Integration &amp; First Game</h3>
+        <span><span class="week">Grades 6-8</span> <span class="arrow">&#9660;</span></span>
+      </div>
+      <div class="lesson-card-body">
+        <dl class="lesson-detail">
+          <dt>Affective</dt>
+          <dd>I can demonstrate fair play and positive communication with classmates</dd>
+          <dt>Cognitive</dt>
+          <dd>I can identify the cues for the bump and set in volleyball</dd>
+          <dt>Psychomotor</dt>
+          <dd>I can demonstrate the forearm bump pass using proper form</dd>
+          <dt>Equipment</dt>
+          <dd>Volleyballs (regulation + volley-lite), fitness testing materials (push-up test paper), net</dd>
+        </dl>
+
+        <div class="phase">
+          <div class="phase-label">Warm-Up</div>
+          <p><strong>Short Dynamic Warm-Up:</strong> Jog, sprint, single-leg pogo (10 reps each leg, hop halfway down court, switch legs), double-leg pogo (20 reps, hop to midcourt, then sprint the remainder). Brief and high-energy to prepare for fitness testing.</p>
+        </div>
+
+        <div class="phase">
+          <div class="phase-label">Lesson Focus</div>
+          <p><strong>FitnessGram Testing — Push-Up Test:</strong> FitnessGram video played on YouTube. Students complete as many push-ups as possible in 3 minutes using the FitnessGram cadence. Students call "time" when they stop; teacher records stopping time. Students record their score on a testing sheet.</p>
+          <p><strong>FitnessGram Testing — Sit-and-Reach:</strong> One leg bent, reach forward with both hands, hold, record best score for each leg. Students write scores on the same testing sheet.</p>
+          <p><strong>Volleyball Review:</strong> Bump and set cues review with the class. Partner practice focusing on consistency — count how many consecutive contacts you and your partner can achieve.</p>
+          <p><strong>Bump Challenge:</strong> Same competitive format as Lessons 1 and 2. Brief but high-energy to reconnect with the competitive element before the game.</p>
+          <p><strong>First Modified Game:</strong> Two captains select teams using an alternating pick format. Modified volleyball game using bump and set skills practiced. Teacher monitors from the perimeter and provides feedback on skill application in the game context.</p>
+        </div>
+
+        <div class="phase">
+          <div class="phase-label">Closure</div>
+          <p>What can you tell me about volleyball? What is the first hit called? What did you excel at today? What was a challenge?</p>
+        </div>
+
+        <div class="callout" style="margin-top:12px">
+          <h4>Differentiation</h4>
+          <p>Volley-lite balls available for the game. Fitness testing is self-paced — students complete at their own level. Tossing to start during skill practice for students still building confidence with the ball.</p>
+        </div>
+
+        <div class="callout" style="background:var(--success-bg);border-left-color:var(--success)">
+          <h4>Assessment</h4>
+          <p>Fitness testing scores recorded on paper — students keep their own record. Game observation by teacher: are students applying bump and set cues in the game context? Are they communicating with teammates before contact?</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- LESSON 4 -->
+    <div class="lesson-card">
+      <div class="lesson-card-header" onclick="toggleLesson(this)">
+        <h3>Lesson 4: Tactical Combinations &mdash; Bump-Set-Spike</h3>
+        <span><span class="week">Grades 6-8</span> <span class="arrow">&#9660;</span></span>
+      </div>
+      <div class="lesson-card-body">
+        <dl class="lesson-detail">
+          <dt>Affective</dt>
+          <dd>I can demonstrate fair play and positive communication with teammates</dd>
+          <dt>Cognitive</dt>
+          <dd>I can identify when to use a bump vs. a set in a game situation</dd>
+          <dt>Psychomotor</dt>
+          <dd>I can demonstrate the bump-set-spike sequence in order with my teammates</dd>
+          <dt>Equipment</dt>
+          <dd>Volleyballs, net, pool noodles (Freeze Tag), red balls (Freeze Tag)</dd>
+        </dl>
+
+        <div class="phase">
+          <div class="phase-label">Warm-Up</div>
+          <p><strong>Freeze Tag:</strong> Designated taggers carry pool noodles. Tagged students freeze in place where they were tagged. Students carrying red balls can unfreeze frozen teammates by tagging them. Multiple taggers and multiple rescuers running simultaneously. Builds agility, spatial awareness, and cardiovascular fitness at high intensity.</p>
+        </div>
+
+        <div class="phase">
+          <div class="phase-label">Lesson Focus</div>
+          <p><strong>Groups of 6 (3 per side of net):</strong> Students practice the bump-set-spike sequence. First student bumps, second student sets, third student spikes. Rotate positions after each sequence so every student practices every role.</p>
+          <p><strong>Unstructured Practice Period:</strong> Brief open time for students to warm up their volleys freely before the structured game. Students choose their own drills or continue partner passing from previous lessons.</p>
+          <p><strong>Full Volleyball Game:</strong> Teacher monitors from the perimeter. Provides targeted feedback on tactical decisions: When should you bump vs. set? Are you calling the ball before contact? Are you positioning before the ball arrives? Student teams self-manage with teacher stepping in as needed.</p>
+        </div>
+
+        <div class="phase">
+          <div class="phase-label">Closure</div>
+          <p>What can you tell me about volleyball? What did you notice about working as a team? What was a challenge?</p>
+        </div>
+
+        <div class="callout" style="margin-top:12px">
+          <h4>Differentiation</h4>
+          <p>Volley-lite balls available. Groups of 4 instead of 6 if needed to reduce wait time and increase contacts per student. Allow catch-and-throw between contacts to slow the game for students still building ball control.</p>
+        </div>
+
+        <div class="callout" style="background:var(--success-bg);border-left-color:var(--success)">
+          <h4>Assessment</h4>
+          <p>Teacher observation of tactical sequencing — do students understand when to bump vs. set based on ball height and position? Are they calling for the ball and communicating before contact? Are they rotating positions within the bump-set-spike sequence?</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- LESSON 5 -->
+    <div class="lesson-card">
+      <div class="lesson-card-header" onclick="toggleLesson(this)">
+        <h3>Lesson 5: Serving &amp; Receiving</h3>
+        <span><span class="week">Grades 6-8</span> <span class="arrow">&#9660;</span></span>
+      </div>
+      <div class="lesson-card-body">
+        <dl class="lesson-detail">
+          <dt>Affective</dt>
+          <dd>I can demonstrate fair play and positive verbal and nonverbal communication with teammates</dd>
+          <dt>Cognitive</dt>
+          <dd>I can explain how to work with my team to get the ball over the net using serve and receive</dd>
+          <dt>Psychomotor</dt>
+          <dd>I can demonstrate serving and receiving the ball using proper form</dd>
+          <dt>Equipment</dt>
+          <dd>Volleyballs (regulation + volley-lite), net, dice (4 dice)</dd>
+        </dl>
+
+        <div class="phase">
+          <div class="phase-label">Warm-Up</div>
+          <p><strong>Dice Warm-Up:</strong> 4 students each toss a die. Add up all four numbers. That total equals the number of laps the entire class completes together. Fast, communal, and unpredictable — students never know how far they will run until the dice are rolled.</p>
+        </div>
+
+        <div class="phase">
+          <div class="phase-label">Lesson Focus</div>
+          <p><strong>Knowledge Check:</strong> Class lines up on the volleyball court. Has anyone seen a volleyball game? What is the first hit called? What are the different ways to hit a volleyball? Teacher uses student responses to gauge retention from previous lessons.</p>
+          <p><strong>Group Bump/Set Warm-Up:</strong> 3-4 minutes of free practice — partners or small groups bumping and setting to review skills before adding serving.</p>
+          <p><strong>Serving and Receiving Rotations:</strong> Split class in two groups. Group 1 practices serving over the net. Group 2 practices receiving and returning the ball. Switch after 3-4 minutes. Both groups then switch roles again for one more round, so every student serves and receives multiple times.</p>
+          <p><strong>Cue Review During Transitions:</strong> Teacher reviews bump and set cues verbally while students transition between rotations to reinforce consistent vocabulary.</p>
+          <p><strong>Keep It Up Mini-Game:</strong> Groups compete for the most consecutive hits. This reconnects serving and receiving practice back to the cooperative skill of keeping the ball alive.</p>
+          <p><strong>Game Play:</strong> Modified volleyball with emphasis on serve and receive. Students apply the serving and receiving rotations in the context of an actual game.</p>
+        </div>
+
+        <div class="phase">
+          <div class="phase-label">Closure</div>
+          <p>What can you tell me about volleyball? What is the first hit called? What did you excel at today? What was a challenge?</p>
+        </div>
+
+        <div class="callout" style="margin-top:12px">
+          <h4>Differentiation</h4>
+          <p>Underhand serve for students not yet ready for overhand. Volley-lite balls for students needing more reaction time on the receive. Tossing instead of serving for beginners during serve/receive rotations.</p>
+        </div>
+
+        <div class="callout" style="background:var(--success-bg);border-left-color:var(--success)">
+          <h4>Assessment</h4>
+          <p>Teacher observation of serve form (is the contact point consistent? is the follow-through toward the target?) and receive quality (is the student moving to the ball early? are their arms in the correct platform position before contact?). Are teammates communicating before the ball arrives?</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- LESSON 6 -->
+    <div class="lesson-card">
+      <div class="lesson-card-header" onclick="toggleLesson(this)">
+        <h3>Lesson 6: Game Play Focus</h3>
+        <span><span class="week">Grades 6-8</span> <span class="arrow">&#9660;</span></span>
+      </div>
+      <div class="lesson-card-body">
+        <dl class="lesson-detail">
+          <dt>Affective</dt>
+          <dd>I can demonstrate fair play and positive communication with classmates</dd>
+          <dt>Cognitive</dt>
+          <dd>I can identify the cues for the bump and set in volleyball</dd>
+          <dt>Psychomotor</dt>
+          <dd>I can demonstrate the forearm bump pass using proper form</dd>
+          <dt>Equipment</dt>
+          <dd>Volleyballs (regulation + volley-lite), net</dd>
+        </dl>
+
+        <div class="phase">
+          <div class="phase-label">Warm-Up</div>
+          <p><strong>3-Minute Jog:</strong> Students record their own distance or teacher notes general pace for fitness tracking. Followed by a partner push-up test using the FitnessGram cadence protocol. Partners count each other's reps and provide feedback on form. This embeds fitness assessment into the warm-up rather than treating it as a separate event.</p>
+        </div>
+
+        <div class="phase">
+          <div class="phase-label">Lesson Focus</div>
+          <p><strong>Group Warm-Up:</strong> Bump and set rallies in small groups to review skills before extended game play. Teacher circulates and provides individual cue reminders before the game begins.</p>
+          <p><strong>Keep It Up Mini-Game:</strong> Brief group competition to reconnect with cooperative skill application.</p>
+          <p><strong>Extended Game Play:</strong> Full volleyball games for the majority of class time. Teacher circulates between courts and provides targeted feedback on skill application, communication, and positioning. Student referees keep score. Teacher adjusts team balance as needed to maintain competitive, engaging games.</p>
+        </div>
+
+        <div class="phase">
+          <div class="phase-label">Closure</div>
+          <p>What can you tell me about volleyball? What is the first hit called? What did you excel at today? What was a challenge?</p>
+        </div>
+
+        <div class="callout" style="margin-top:12px">
+          <h4>Differentiation</h4>
+          <p>Volley-lite balls available. Underhand serve option for any student who needs it. Teacher adjusts team balance as needed to keep games competitive and all students engaged.</p>
+        </div>
+
+        <div class="callout" style="background:var(--success-bg);border-left-color:var(--success)">
+          <h4>Assessment</h4>
+          <p>Game performance observation — are students applying bump and set cues in the game? Are they communicating before the ball arrives? Are they making tactical decisions (when to bump vs. set) based on ball height and position? Are they problem-solving together as a team?</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- LESSON 7 -->
+    <div class="lesson-card">
+      <div class="lesson-card-header" onclick="toggleLesson(this)">
+        <h3>Lesson 7: Student-Led Game Day</h3>
+        <span><span class="week">Grades 6-8</span> <span class="arrow">&#9660;</span></span>
+      </div>
+      <div class="lesson-card-body">
+        <dl class="lesson-detail">
+          <dt>Affective</dt>
+          <dd>I can demonstrate fair play, lead by example, and provide positive feedback to peers</dd>
+          <dt>Cognitive</dt>
+          <dd>I can apply volleyball rules and cues to officiate a game</dd>
+          <dt>Psychomotor</dt>
+          <dd>I can perform volleyball skills during game play demonstrating correct cue usage</dd>
+          <dt>Equipment</dt>
+          <dd>Volleyballs (regulation + volley-lite), net, poly spots, pool noodles (Poly Spot Knockout)</dd>
+        </dl>
+
+        <div class="phase">
+          <div class="phase-label">Warm-Up</div>
+          <p><strong>Poly Spot Knockout:</strong> Each student gets a poly spot. Round 1: balance the poly spot on the dominant hand. If it falls, complete 5 jumping jacks and continue. Round 2: non-dominant hand. Round 3: balance the spot on the head (teacher emphasizes care and safety). Pizza Hunters — designated students carrying pool noodles — try to knock spots off hands and heads. Builds balance, coordination, and agility in a playful, high-energy format.</p>
+        </div>
+
+        <div class="phase">
+          <div class="phase-label">Lesson Focus</div>
+          <p><strong>Group Keep It Up Warm-Up:</strong> All students on the court. Groups compete for most consecutive hits to warm up skills before game play begins.</p>
+          <p><strong>Full Game Play:</strong> Students select teams or teacher assigns balanced teams. Multiple games running simultaneously on available court space.</p>
+          <p><strong>Student Referees and Scorekeepers:</strong> Students serve as referees and scorekeepers in rotating roles so multiple students officiate throughout the period. Student referees receive a quick rules review before stepping onto the court. They call faults, track score, and manage serve rotation.</p>
+          <p><strong>Teacher Role Shift:</strong> Teacher moves from director to sideline coach. Observes, gives targeted individual feedback, and lets students self-manage. Students help set up and take down net equipment at the close of the lesson.</p>
+        </div>
+
+        <div class="phase">
+          <div class="phase-label">Closure — Unit Reflection</div>
+          <p>What can you tell me about volleyball? What skill improved the most over the unit? What would you practice more if you had extra time? How did your team communicate differently in Lesson 7 compared to Lesson 1?</p>
+        </div>
+
+        <div class="callout" style="margin-top:12px">
+          <h4>Differentiation</h4>
+          <p>Volley-lite balls available for any students who need them. Student referees receive a brief rules review before officiating to set them up for success. Teacher monitors and supports student referees without undermining their authority on the court.</p>
+        </div>
+
+        <div class="callout" style="background:var(--success-bg);border-left-color:var(--success)">
+          <h4>Assessment</h4>
+          <p>Quality of student officiating — do students know the rules well enough to call them correctly and confidently? Game performance in the final lesson — are all three bump cues and all three set cues being applied in the live game context? This final lesson serves as a holistic performance assessment for the entire unit.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- DESIGN RATIONALE -->
+  <div class="section">
+    <h2>Instructional Design Rationale</h2>
+
+    <h3>Accelerated Skill Integration</h3>
+    <p>Unlike the K-5 unit where skills are introduced one per week in isolation, the MS unit introduces bump and set simultaneously from Day 1. Middle school students have the motor development and cognitive capacity to process multiple related skills at the same time. The faster pace also matches their engagement style — they want to play, not drill in isolation for weeks before touching a game.</p>
+
+    <h3>Sport-Specific Conditioning</h3>
+    <p>Warm-ups shift from general fitness games to volleyball-specific dynamic exercises that mirror actual game movements. High knees, karaoke, back pedal, and jog-sprint transitions all appear in real volleyball play. This builds sport-specific fitness alongside movement vocabulary, connecting conditioning directly to performance on the court.</p>
+
+    <h3>Tactical Games Approach</h3>
+    <p>Game play is introduced by Lesson 3 and dominates the second half of the unit. This reflects a tactical games approach (Teaching Games for Understanding): instead of mastering all skills before playing, students play early and discover what they need to improve. The game provides authentic motivation for skill refinement in a way that isolated drills cannot replicate.</p>
+
+    <h3>Progressive Student Autonomy</h3>
+    <p>Students begin as learners and end as game leaders. By Lesson 7, they referee, scorekeep, select teams, and manage their own game. This builds rule comprehension, leadership, and personal responsibility — outcomes that extend far beyond PE class. The teacher's role intentionally shrinks across the unit as student independence grows.</p>
+
+    <h3>FitnessGram Integration</h3>
+    <p>Rather than teaching fitness testing as a separate unit, FitnessGram protocols are embedded within volleyball lessons. Students see that cardiovascular fitness and muscular endurance are directly connected to sport performance, not isolated PE requirements. Fitness testing becomes a meaningful data point, not a disconnected event.</p>
+
+    <h3>Consistent Cue Language</h3>
+    <p>The same three bump cues (Ready position | Straight arms | Body to target) and three set cues (Ready position | Move under ball | Diamond hands + Extend) repeat every single lesson. By Lesson 7, these cues are automatic vocabulary for students. Consistent language across all 7 lessons eliminates confusion and accelerates skill retention.</p>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="unit-footer">
+    <p><strong>Designed by Kevin Terranova, M.S.</strong></p>
+    <p>Curriculum &amp; Instruction | Sport Psychology | Barbour School, Rockford IL</p>
+    <p style="margin-top:8px">Aligned to Illinois State Goals 19, 21 | SHAPE America Standards 1 &amp; 4</p>
+  </div>
+</div>
+
+<script>
+function toggleLesson(header) {
+  const body = header.nextElementSibling;
+  const isOpen = body.classList.contains('open');
+  header.classList.toggle('open', !isOpen);
+  body.classList.toggle('open', !isOpen);
+}
+</script>
+</body>
+</html>
