@@ -37,14 +37,6 @@
   --shadow: 0 1px 3px rgba(0,0,0,0.1);
   --shadow-lg: 0 10px 25px rgba(0,0,0,0.1);
   --radius: 8px;
-  /* Typography scale */
-  --text-xs: 11px;
-  --text-sm: 13px;
-  --text-base: 14px;
-  --text-md: 17px;
-  --text-lg: 24px;
-  --text-xl: 32px;
-  --text-2xl: 44px;
 }
 
 html { scroll-behavior: smooth; }
@@ -102,7 +94,7 @@ a:hover { text-decoration: underline; }
 .nav-links { display: flex; gap: 28px; list-style: none; }
 
 .nav-links a {
-  font-size: var(--text-base);
+  font-size: 14px;
   font-weight: 600;
   color: var(--text-light);
   transition: color 0.2s;
@@ -150,7 +142,7 @@ a:hover { text-decoration: underline; }
 
 /* Amber brand label above name */
 .hero-brand-label {
-  font-size: var(--text-xs);
+  font-size: 11px;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.18em;
@@ -168,7 +160,7 @@ a:hover { text-decoration: underline; }
   color: #6ee7b7;
   padding: 6px 14px;
   border-radius: 20px;
-  font-size: var(--text-sm);
+  font-size: 13px;
   font-weight: 600;
   margin-bottom: 20px;
 }
@@ -203,7 +195,7 @@ a:hover { text-decoration: underline; }
 .hero-avatar:hover { transform: scale(1.03); }
 
 .hero h1 {
-  font-size: var(--text-2xl);
+  font-size: 44px;
   font-weight: 800;
   line-height: 1.15;
   margin-bottom: 8px;
@@ -230,7 +222,7 @@ a:hover { text-decoration: underline; }
   border: 1px solid rgba(255,255,255,0.25);
   border-radius: 24px;
   padding: 8px 18px;
-  font-size: var(--text-sm);
+  font-size: 13px;
   font-weight: 600;
   color: rgba(255,255,255,0.9);
 }
@@ -248,7 +240,7 @@ a:hover { text-decoration: underline; }
   font-style: italic;
   font-weight: 500;
   color: rgba(255,255,255,0.92);
-  font-size: var(--text-md);
+  font-size: 17px;
   max-width: 600px;
   margin: 0 auto 32px;
   line-height: 1.6;
@@ -291,154 +283,6 @@ a:hover { text-decoration: underline; }
 
 .hero-cta .lucide { width: 16px; height: 16px; stroke-width: 2.5; }
 
-/* ============================================
-   RESEARCH CARDS
-   ============================================ */
-.research-card {
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: var(--shadow);
-}
-
-.research-card-header {
-  padding: 24px 28px;
-  color: var(--bg);
-}
-
-.research-card-header--green { background: linear-gradient(135deg, #065f46, var(--success)); }
-.research-card-header--blue  { background: linear-gradient(135deg, #1e3a5f, var(--primary)); }
-
-.research-card-header-label {
-  font-size: var(--text-xs);
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  opacity: 0.9;
-  margin-bottom: 4px;
-}
-
-.research-card-header h3 {
-  font-size: 19px;
-  font-weight: 800;
-  line-height: 1.3;
-}
-
-.research-card-body { padding: 24px 28px; }
-
-.research-card-stats {
-  display: flex;
-  gap: 16px;
-  margin-bottom: 16px;
-}
-
-.research-card-stat {
-  text-align: center;
-  background: var(--primary-bg);
-  border-radius: var(--radius);
-  padding: 12px 16px;
-  flex: 1;
-}
-
-.research-card-stat-value {
-  font-size: var(--text-lg);
-  font-weight: 800;
-  color: var(--primary);
-}
-
-.research-card-stat-label {
-  font-size: var(--text-xs);
-  color: var(--text-light);
-  font-weight: 600;
-}
-
-.research-card-note {
-  background: #fffbeb;
-  border: 1px solid #fde68a;
-  border-radius: var(--radius);
-  padding: 12px 16px;
-  margin-bottom: 16px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.research-card-note-icon {
-  width: 18px;
-  height: 18px;
-  stroke-width: 2;
-  color: #6b2d0c;
-  flex-shrink: 0;
-}
-
-.research-card-note-text {
-  font-size: var(--text-sm);
-  font-weight: 600;
-  color: #6b2d0c;
-}
-
-.research-card-desc {
-  font-size: var(--text-base);
-  color: var(--text-light);
-  line-height: 1.6;
-  margin-bottom: 12px;
-}
-
-/* ============================================
-   FEATURED BANNER
-   ============================================ */
-.featured-banner {
-  background: linear-gradient(135deg, #1e3a5f, var(--primary));
-  border-radius: 12px;
-  padding: 40px;
-  text-align: center;
-  margin-bottom: 32px;
-  color: var(--bg);
-  box-shadow: var(--shadow-lg);
-}
-
-.featured-banner-label {
-  font-size: var(--text-base);
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  opacity: 0.7;
-  margin-bottom: 8px;
-}
-
-.featured-banner h3 {
-  font-size: var(--text-lg);
-  font-weight: 800;
-  margin-bottom: 12px;
-}
-
-.featured-banner p {
-  opacity: 0.85;
-  max-width: 560px;
-  margin: 0 auto 24px;
-  font-size: 16px;
-}
-
-.featured-banner-ctas {
-  display: flex;
-  gap: 12px;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-/* ============================================
-   CASE STUDY UTILITY CLASSES
-   ============================================ */
-/* Replaces inline margin on <ul> inside case studies */
-.cs-list { margin: 12px 0 12px 24px; }
-
-/* Replaces inline font-size:16px on case study bottom links */
-.cs-link { font-size: 16px; }
-
-/* Credential sub-description — repeated 3x in About */
-.credential-subdesc { font-size: var(--text-sm); color: var(--text-light); margin-top: 2px; }
-
 /* Featured banner CTA classes — cleaner than inline styles */
 .featured-cta {
   display: inline-flex;
@@ -467,8 +311,8 @@ section:nth-child(even) { background: var(--bg-alt); }
 .container { max-width: 1100px; margin: 0 auto; }
 
 .section-header { text-align: center; margin-bottom: 48px; }
-.section-header h2 { font-size: var(--text-xl); font-weight: 800; margin-bottom: 12px; }
-.section-header p { font-size: var(--text-md); color: var(--text-light); max-width: 600px; margin: 0 auto; }
+.section-header h2 { font-size: 32px; font-weight: 800; margin-bottom: 12px; }
+.section-header p { font-size: 17px; color: var(--text-light); max-width: 600px; margin: 0 auto; }
 
 /* ============================================
    ABOUT
@@ -511,7 +355,7 @@ section:nth-child(even) { background: var(--bg-alt); }
 
 .credential-list .icon .lucide { width: 18px; height: 18px; stroke-width: 1.75; }
 .credential-list .degree { font-weight: 700; font-size: 15px; }
-.credential-list .school { font-size: var(--text-sm); color: var(--text-light); }
+.credential-list .school { font-size: 13px; color: var(--text-light); }
 
 /* ============================================
    PORTFOLIO CARDS
@@ -563,7 +407,7 @@ section:nth-child(even) { background: var(--bg-alt); }
 }
 
 .card-body h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
-.card-body p { font-size: var(--text-base); color: var(--text-light); margin-bottom: 16px; line-height: 1.6; }
+.card-body p { font-size: 14px; color: var(--text-light); margin-bottom: 16px; line-height: 1.6; }
 
 .card-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
 
@@ -572,7 +416,7 @@ section:nth-child(even) { background: var(--bg-alt); }
   border: 1px solid #bfdbfe;
   border-radius: 4px;
   padding: 3px 8px;
-  font-size: var(--text-xs);
+  font-size: 11px;
   font-weight: 600;
   color: #1e40af;
 }
@@ -581,7 +425,7 @@ section:nth-child(even) { background: var(--bg-alt); }
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  font-size: var(--text-base);
+  font-size: 14px;
   font-weight: 700;
   color: var(--primary);
 }
@@ -612,8 +456,8 @@ section:nth-child(even) { background: var(--bg-alt); }
   margin-top: 24px;
 }
 
-.case-study h3 { font-size: var(--text-lg); font-weight: 800; margin-bottom: 20px; color: var(--primary); }
-.case-study h4 { font-size: var(--text-md); font-weight: 700; margin: 24px 0 8px; }
+.case-study h3 { font-size: 24px; font-weight: 800; margin-bottom: 20px; color: var(--primary); }
+.case-study h4 { font-size: 17px; font-weight: 700; margin: 24px 0 8px; }
 .case-study p { margin-bottom: 12px; }
 
 .process-steps {
@@ -637,10 +481,10 @@ section:nth-child(even) { background: var(--bg-alt); }
   border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
   margin: 0 auto 8px;
-  font-size: var(--text-sm); font-weight: 700;
+  font-size: 13px; font-weight: 700;
 }
 
-.process-step .step-label { font-size: var(--text-sm); font-weight: 600; }
+.process-step .step-label { font-size: 13px; font-weight: 600; }
 
 .close-case {
   display: inline-flex;
@@ -653,7 +497,7 @@ section:nth-child(even) { background: var(--bg-alt); }
   border-radius: var(--radius);
   font-weight: 600;
   cursor: pointer;
-  font-size: var(--text-base);
+  font-size: 14px;
   transition: background 0.2s;
 }
 .close-case:hover { background: var(--border); }
@@ -699,7 +543,7 @@ section:nth-child(even) { background: var(--bg-alt); }
 .skill-pill {
   padding: 5px 12px;
   border-radius: 20px;
-  font-size: var(--text-sm);
+  font-size: 13px;
   font-weight: 500;
   border: 1px solid;
   cursor: default;
@@ -715,8 +559,8 @@ section:nth-child(even) { background: var(--bg-alt); }
    CONTACT
    ============================================ */
 .contact-header { text-align: center; margin-bottom: 40px; }
-.contact-header h2 { font-size: var(--text-xl); font-weight: 800; margin-bottom: 12px; }
-.contact-header p { font-size: var(--text-md); color: var(--text-light); max-width: 480px; margin: 0 auto; }
+.contact-header h2 { font-size: 32px; font-weight: 800; margin-bottom: 12px; }
+.contact-header p { font-size: 17px; color: var(--text-light); max-width: 480px; margin: 0 auto; }
 
 .contact-cards {
   display: grid;
@@ -758,8 +602,8 @@ section:nth-child(even) { background: var(--bg-alt); }
 .contact-card:hover .contact-card-icon--linkedin { background: #0a66c2; color: #fff; }
 
 .contact-card-info { flex: 1; }
-.contact-card-label { font-size: var(--text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-light); margin-bottom: 2px; }
-.contact-card-value { font-size: var(--text-base); font-weight: 600; color: var(--text); }
+.contact-card-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-light); margin-bottom: 2px; }
+.contact-card-value { font-size: 14px; font-weight: 600; color: var(--text); }
 .contact-card-arrow { width: 16px; height: 16px; color: var(--text-light); flex-shrink: 0; stroke-width: 2; }
 
 /* ============================================
@@ -768,14 +612,14 @@ section:nth-child(even) { background: var(--bg-alt); }
 .footer {
   padding: 48px 24px;
   text-align: center;
-  font-size: var(--text-sm);
+  font-size: 13px;
   color: var(--text-light);
   border-top: 2px solid #bfdbfe;
   background: linear-gradient(180deg, transparent, var(--primary-bg));
 }
 
 .footer-links { margin-top: 8px; display: flex; justify-content: center; gap: 20px; }
-.footer-links a { font-size: var(--text-sm); color: var(--primary); font-weight: 500; }
+.footer-links a { font-size: 13px; color: var(--primary); font-weight: 500; }
 
 /* ============================================
    RESPONSIVE
@@ -841,7 +685,7 @@ section:nth-child(even) { background: var(--bg-alt); }
   <img src="headshot.jpg" alt="Kevin Terranova — Instructional Designer" class="hero-avatar" onerror="this.style.display='none'">
 
   <!-- Brand label — identity at a glance -->
-  <div class="hero-brand-label">Instructional Designer | Curriculum Developer | Performance Designer</div>
+  <div class="hero-brand-label">Instructional Designer &mdash; Builder &mdash; Researcher</div>
 
   <!-- Availability signal -->
   <div class="availability-badge">
@@ -853,18 +697,14 @@ section:nth-child(even) { background: var(--bg-alt); }
   <div class="title">Instructional Designer &nbsp;&amp;&nbsp; Curriculum Developer</div>
 
   <div class="hero-badges">
-    <div style="display:flex;justify-content:center;flex-wrap:wrap;gap:12px;margin-bottom:8px">
-      <span class="badge">M.S. Curriculum &amp; Instruction</span>
-      <span class="badge">M.S. Sport Psychology</span>
-    </div>
-    <div style="display:flex;justify-content:center;flex-wrap:wrap;gap:12px">
-      <span class="badge">Instructional Designer</span>
-      <span class="badge">Curriculum Developer</span>
-      <span class="badge">eLearning Developer</span>
-    </div>
+    <span class="badge">M.S. Curriculum &amp; Instruction</span>
+    <span class="badge">M.S. Sport Psychology</span>
+    <span class="badge">B.S. Kinesiology</span>
+    <span class="badge">Instructional Designer</span>
+    <span class="badge">eLearning Developer</span>
   </div>
 
-  <p class="lead">I know what disengagement looks like. I know what fixes it.</p>
+  <p class="lead">Two master's degrees. Nearly a decade designing learning programs.</p>
 
   <blockquote class="hero-quote">"My focus is helping learners experience small wins early so they build confidence and stay engaged. Start simple. Build success. Increase challenge. That's where retention happens."</blockquote>
 
@@ -872,7 +712,7 @@ section:nth-child(even) { background: var(--bg-alt); }
     <a href="#portfolio" class="hero-cta">
       View My Work <i data-lucide="arrow-down"></i>
     </a>
-    <a href="Kevin_Terranova_Resume.html" class="hero-cta hero-cta--outline" target="_blank" rel="noopener noreferrer">
+    <a href="Kevin_Terranova_Resume.html" class="hero-cta hero-cta--outline" target="_blank">
       View Resume <i data-lucide="file-text"></i>
     </a>
   </div>
@@ -885,9 +725,10 @@ section:nth-child(even) { background: var(--bg-alt); }
     <div class="about-grid">
       <div class="about-text">
         <h2>About Me</h2>
-        <p>I build learning experiences that actually stick.</p>
-        <p>Two master's degrees - Curriculum &amp; Instruction and Sport Psychology - plus nearly a decade working inside K-8 learning environments, first as a Special Education paraprofessional, then as a PE educator. I've designed curriculum, measured outcomes, and iterated based on real data with real students. Not simulations. Not hypotheticals.</p>
-        <p>My background in sport psychology shapes how I think about learning design. Confidence, motivation, and early wins aren't soft skills - they're the difference between a learner who engages and one who disengages. I build that understanding into every design decision I make.</p>
+        <p>I design learning experiences that actually work.</p>
+        <p>With two master's degrees — Curriculum &amp; Instruction (WGU) and Sport Psychology (Capella) — plus nearly a decade of building and refining structured programs in real-world environments, I bring both the theoretical grounding and the practical execution skills to create training and learning content that drives measurable outcomes.</p>
+        <p>I've shipped real products: a FitnessGram assessment system used by educators nationwide, and a sport psychology module grounded in original research on confidence-building for K&ndash;8 learners. I know what works because I've measured it in actual classrooms.</p>
+        <p>I also build digital learning tools — including interactive curriculum modules grounded in sport psychology research — that demonstrate what instructional design looks like when you actually build the thing, not just plan it.</p>
       </div>
       <div>
         <h3 style="font-size:22px;font-weight:700;color:var(--primary);margin-bottom:16px">Education</h3>
@@ -897,7 +738,7 @@ section:nth-child(even) { background: var(--bg-alt); }
             <div>
               <div class="degree">M.S. Sport Psychology</div>
               <div class="school">Capella University | 2025</div>
-              <div class="credential-subdesc">Performance Motivation | Cognitive Psychology | Behavioral Change | SEL</div>
+              <div style="font-size:13px;color:var(--text-light);margin-top:2px">Performance Motivation | Cognitive Psychology | Behavioral Change | SEL</div>
             </div>
           </li>
           <li>
@@ -905,7 +746,7 @@ section:nth-child(even) { background: var(--bg-alt); }
             <div>
               <div class="degree">M.S. Curriculum &amp; Instruction</div>
               <div class="school">Western Governors University | 2024</div>
-              <div class="credential-subdesc">Instructional Design | Curriculum Development | Backward Design | Differentiation</div>
+              <div style="font-size:13px;color:var(--text-light);margin-top:2px">Instructional Design | Curriculum Development | Backward Design | Differentiation</div>
             </div>
           </li>
           <li>
@@ -913,7 +754,7 @@ section:nth-child(even) { background: var(--bg-alt); }
             <div>
               <div class="degree">B.S. Kinesiology, Health &amp; Physical Education</div>
               <div class="school">Rockford University | 2022</div>
-              <div class="credential-subdesc">Exercise Physiology | Functional Movement | Human Anatomy</div>
+              <div style="font-size:13px;color:var(--text-light);margin-top:2px">Exercise Physiology | Functional Movement | Human Anatomy</div>
             </div>
           </li>
         </ul>
@@ -927,29 +768,29 @@ section:nth-child(even) { background: var(--bg-alt); }
   <div class="container">
     <div class="section-header">
       <h2>Research &amp; Scholarship</h2>
-      <p>Original research. Built into real products.</p>
+      <p>Original research connecting learning science to practical instructional outcomes.</p>
     </div>
 
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
 
       <!-- WGU Capstone -->
-      <div class="research-card">
-        <div class="research-card-header research-card-header--green">
-          <div class="research-card-header-label">WGU M.S. Capstone</div>
-          <h3>SEL Integration in Physical Education</h3>
+      <div style="background:var(--bg);border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:var(--shadow)">
+        <div style="background:linear-gradient(135deg,#065f46,#10b981);padding:24px 28px;color:#fff">
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;opacity:0.9;margin-bottom:4px">WGU M.Ed. Capstone</div>
+          <h3 style="font-size:19px;font-weight:800;line-height:1.3">SEL Integration in Physical Education</h3>
         </div>
-        <div class="research-card-body">
-          <div class="research-card-stats">
-            <div class="research-card-stat">
-              <div class="research-card-stat-value">150%</div>
-              <div class="research-card-stat-label">Teamwork Confidence Improvement</div>
+        <div style="padding:24px 28px">
+          <div style="display:flex;gap:16px;margin-bottom:16px">
+            <div style="text-align:center;background:var(--primary-bg);border-radius:8px;padding:12px 16px;flex:1">
+              <div style="font-size:24px;font-weight:800;color:var(--primary)">150%</div>
+              <div style="font-size:11px;color:var(--text-light);font-weight:600">Teamwork Confidence Improvement</div>
             </div>
-            <div class="research-card-stat">
-              <div class="research-card-stat-value">50%&rarr;90%</div>
-              <div class="research-card-stat-label">Effective Communication</div>
+            <div style="text-align:center;background:var(--primary-bg);border-radius:8px;padding:12px 16px;flex:1">
+              <div style="font-size:24px;font-weight:800;color:var(--primary)">50%&rarr;90%</div>
+              <div style="font-size:11px;color:var(--text-light);font-weight:600">Effective Communication</div>
             </div>
           </div>
-          <p class="research-card-desc">Action research study measuring the impact of Social-Emotional Learning strategies on 6th-grade students' collaboration and communication skills in PE. Used mixed-methods design: pre/post surveys, observation checklists, and student journal reflections.</p>
+          <p style="font-size:14px;color:var(--text-light);line-height:1.6;margin-bottom:12px">Action research study measuring the impact of Social-Emotional Learning strategies on 6th-grade students' collaboration and communication skills in PE. Used mixed-methods design: pre/post surveys, observation checklists, and student journal reflections.</p>
           <div style="display:flex;flex-wrap:wrap;gap:6px">
             <span class="tag">Action Research</span>
             <span class="tag">Mixed Methods</span>
@@ -961,17 +802,17 @@ section:nth-child(even) { background: var(--bg-alt); }
       </div>
 
       <!-- Capella Capstone -->
-      <div class="research-card">
-        <div class="research-card-header research-card-header--blue">
-          <div class="research-card-header-label">Capella University M.S. Capstone</div>
-          <h3>Sport Psychology &amp; Confidence-Building in K&ndash;8 PE</h3>
+      <div style="background:var(--bg);border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:var(--shadow)">
+        <div style="background:linear-gradient(135deg,#1e3a5f,#1e40af);padding:24px 28px;color:#fff">
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;opacity:0.9;margin-bottom:4px">Capella University M.S. Capstone</div>
+          <h3 style="font-size:19px;font-weight:800;line-height:1.3">Sport Psychology &amp; Confidence-Building in K&ndash;8 PE</h3>
         </div>
-        <div class="research-card-body">
-          <div class="research-card-note">
-            <i data-lucide="link" class="research-card-note-icon"></i>
-            <span class="research-card-note-text">This research is the academic foundation for the interactive Confidence Module in this portfolio, connecting original scholarship to a shipped instructional tool.</span>
+        <div style="padding:24px 28px">
+          <div style="background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:12px 16px;margin-bottom:16px;display:flex;align-items:center;gap:10px">
+            <i data-lucide="link" style="width:18px;height:18px;stroke-width:2;color:#6b2d0c;flex-shrink:0"></i>
+            <span style="font-size:13px;font-weight:600;color:#6b2d0c">This research is the academic foundation for the interactive Confidence Module in this portfolio, connecting original scholarship to a shipped instructional tool.</span>
           </div>
-          <p class="research-card-desc">Designed a year-long confidence-building framework for K&ndash;8 physical education grounded in Bandura's Self-Efficacy Theory and Locke &amp; Latham's Goal-Setting Theory. Bridges sport psychology research with practical curriculum design for youth learners. Framework later adapted into the interactive Confidence Module available in this portfolio.</p>
+          <p style="font-size:14px;color:var(--text-light);line-height:1.6;margin-bottom:12px">Designed a year-long confidence-building framework for K&ndash;8 physical education grounded in Bandura's Self-Efficacy Theory and Locke &amp; Latham's Goal-Setting Theory. Bridges sport psychology research with practical curriculum design for youth learners.</p>
           <div style="display:flex;flex-wrap:wrap;gap:6px">
             <span class="tag">Bandura Self-Efficacy</span>
             <span class="tag">Locke &amp; Latham</span>
@@ -995,12 +836,12 @@ section:nth-child(even) { background: var(--bg-alt); }
     </div>
 
     <!-- Featured module -->
-    <div class="featured-banner">
-      <div class="featured-banner-label">Featured Project</div>
-      <h3>Confidence Through Structured Goal Setting</h3>
-      <p>A 5-lesson interactive eLearning module grounded in behavioral science and performance psychology. Covers self-efficacy, structured goal setting, scaffolded skill development, and productive self-talk. Built from scratch in HTML/CSS/JS - no Articulate required.</p>
-      <div class="featured-banner-ctas">
-        <a href="confidence-goal-setting-module.html" target="_blank" rel="noopener noreferrer" class="featured-cta featured-cta--primary">
+    <div style="background:linear-gradient(135deg,#1e3a5f,#1e40af);border-radius:12px;padding:40px;text-align:center;margin-bottom:32px;color:#fff;box-shadow:var(--shadow-lg)">
+      <div style="font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;opacity:0.7;margin-bottom:8px">Featured Project</div>
+      <h3 style="font-size:24px;font-weight:800;margin-bottom:12px">Confidence Through Structured Goal Setting</h3>
+      <p style="opacity:0.85;max-width:560px;margin:0 auto 24px;font-size:16px">An interactive 5-lesson sport psychology module for grades 6-8. Built with HTML/CSS/JS, no Articulate subscription required.</p>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+        <a href="confidence-goal-setting-module.html" target="_blank" class="featured-cta featured-cta--primary">
           <i data-lucide="external-link" style="width:16px;height:16px;stroke-width:2.5"></i> Launch Module
         </a>
         <button onclick="openCase('case1')" class="featured-cta featured-cta--secondary">
@@ -1035,7 +876,7 @@ section:nth-child(even) { background: var(--bg-alt); }
         <div class="card-body">
           <div class="card-type">Shipped Digital Product</div>
           <h3>Strike Zone — Bowling Scoring Companion</h3>
-          <p>An interactive bowling scoring web app used in K-8 classrooms. Real 10-frame scoring, three game modes, 17 achievement badges, mascot-based vocabulary instruction, and a hidden teacher dashboard.</p>
+          <p>An interactive bowling scoring web app for K-8 PE classrooms. Real 10-frame scoring, three game modes, 17 achievement badges, mascot-based vocabulary instruction, and a hidden teacher dashboard.</p>
           <div class="card-tags">
             <span class="tag">Product Design</span>
             <span class="tag">K-8</span>
@@ -1071,14 +912,14 @@ section:nth-child(even) { background: var(--bg-alt); }
         <div class="card-banner green"><i data-lucide="users"></i></div>
         <div class="card-body">
           <div class="card-type">Curriculum Design: MS Grades 6&ndash;8</div>
-          <h3>Middle School Volleyball — 9-Day Unit Plan</h3>
-          <p>A complete 9-day volleyball unit for grades 6-8. School color customizer, 45+ skill cues, tactical games approach, and a full tournament finish. Same professional format as the football unit.</p>
+          <h3>Middle School Volleyball Unit</h3>
+          <p>A 7-lesson volleyball unit for grades 6-8 using a tactical games approach — skills integrated early, game play dominant by mid-unit, student leadership by Lesson 7.</p>
           <div class="card-tags">
             <span class="tag">Tactical Games</span>
-            <span class="tag">9-Day Unit</span>
-            <span class="tag">IL + SHAPE Standards</span>
+            <span class="tag">TGfU</span>
             <span class="tag">Differentiation</span>
-            <span class="tag">Print-Ready</span>
+            <span class="tag">IL Standards</span>
+            <span class="tag">Student Leadership</span>
           </div>
           <span class="card-link">View MS Volleyball case study <i data-lucide="chevron-right"></i></span>
         </div>
@@ -1090,7 +931,7 @@ section:nth-child(even) { background: var(--bg-alt); }
         <div class="card-body">
           <div class="card-type">Developmental Progression Analysis</div>
           <h3>Volleyball Across Grade Bands: K&ndash;5 vs. MS</h3>
-          <p>A curriculum analysis demonstrating how the same content requires fundamentally different design decisions across developmental levels. Same standards. Different learners. Different design.</p>
+          <p>A side-by-side analysis of how the same sport requires fundamentally different instructional design across developmental levels. Same standards. Different learners. Different design.</p>
           <div class="card-tags">
             <span class="tag">Curriculum Theory</span>
             <span class="tag">Developmental Design</span>
@@ -1108,7 +949,7 @@ section:nth-child(even) { background: var(--bg-alt); }
         <div class="card-body">
           <div class="card-type">Curriculum Design: MS Grades 6&ndash;8</div>
           <h3>MS Flag Football — 9-Day Unit Plan</h3>
-          <p>A complete 9-day flag football unit for grades 6-8. 45+ explicit skill cues, full tournament structure, and a live school color customizer - teachers select their colors, preview in real time, and print. No design skills required.</p>
+          <p>A complete 9-day flag football unit for grades 6-8. Skill cues on every lesson, full tournament finish, and a built-in school color customizer so every teacher prints it in their own colors.</p>
           <div class="card-tags">
             <span class="tag">Tactical Games</span>
             <span class="tag">9-Day Unit</span>
@@ -1141,7 +982,7 @@ section:nth-child(even) { background: var(--bg-alt); }
         <p><strong>Needs Assessment:</strong> Students lacked a framework for translating effort into progress. Without measurable targets, they couldn't recognize improvement, leading to disengagement.</p>
         <p><strong>Standards Alignment:</strong> SHAPE America Standards 4 &amp; 5, CASEL SEL Competencies (Self-Awareness, Self-Management), Illinois State Goals 19, 20, 21.</p>
         <h4>Design Decisions</h4>
-        <ul class="cs-list">
+        <ul style="margin:12px 0 12px 24px">
           <li><strong>Scaffolded 5-lesson structure:</strong> each lesson builds on the previous, moving from understanding confidence to applying it</li>
           <li><strong>Interactive format:</strong> knowledge checks, reflection prompts, slider activities, scenario-based learning, and a goal-building tool</li>
           <li><strong>Grounded in research:</strong> Bandura's four sources of self-efficacy, Locke &amp; Latham's goal-setting principles</li>
@@ -1152,7 +993,7 @@ section:nth-child(even) { background: var(--bg-alt); }
         <p>Built as a single-file interactive web application using HTML, CSS, and JavaScript. No external dependencies or subscriptions required. Progress tracking via localStorage. Rise-quality interactions without the $1,399/year price tag.</p>
         <h4>Results</h4>
         <p>A fully functional, standards-aligned interactive learning module ready for classroom deployment. Demonstrates proficiency in instructional design, learning science, interactive content development, and accessibility compliance.</p>
-        <p style="margin-top:20px"><a href="confidence-goal-setting-module.html" class="card-link cs-link" target="_blank" rel="noopener noreferrer">Launch the Interactive Module <i data-lucide="external-link"></i></a></p>
+        <p style="margin-top:20px"><a href="confidence-goal-setting-module.html" class="card-link" style="font-size:16px" target="_blank">Launch the Interactive Module <i data-lucide="external-link"></i></a></p>
         <button class="close-case" onclick="closeCase('case1')"><i data-lucide="x"></i> Close Case Study</button>
       </div>
 
@@ -1174,7 +1015,7 @@ section:nth-child(even) { background: var(--bg-alt); }
         <p><strong>Needs Assessment:</strong> Teachers need a tool that works offline, auto-calculates HFZ zones, handles multiple classes, and generates printable reports — all without training or setup.</p>
         <p><strong>Constraints:</strong> Must work on any device, no app install required, zero learning curve.</p>
         <h4>Design Decisions</h4>
-        <ul class="cs-list">
+        <ul style="margin:12px 0 12px 24px">
           <li><strong>Single HTML file:</strong> opens in any browser, works offline, no installation</li>
           <li><strong>Mobile-first interface:</strong> designed for phone/tablet use in a gym</li>
           <li><strong>Auto-scoring engine:</strong> built-in FitnessGram HFZ standards by age and gender</li>
@@ -1208,7 +1049,7 @@ section:nth-child(even) { background: var(--bg-alt); }
         <p><strong>Learner Profile:</strong> K-5 students across multiple schools, ages 5-11, wide range of motor development and prior experience.</p>
         <p><strong>Standards:</strong> IL State Goal 19 (motor skills), Goal 20 (fitness), Goal 21 (teamwork and cooperation).</p>
         <h4>Design: Scaffolded Skill Progression</h4>
-        <ul class="cs-list">
+        <ul style="margin:12px 0 12px 24px">
           <li><strong>Week 1:</strong> Underhand serving, individual wall practice with specific cues (step, hit with heel of hand, follow through)</li>
           <li><strong>Week 2:</strong> Bumping/Forearm pass, individual drills progressing to partner passing with measurable outcomes</li>
           <li><strong>Week 3:</strong> Setting/Overhand pass, technique with hoop targets for accuracy measurement</li>
@@ -1216,7 +1057,7 @@ section:nth-child(even) { background: var(--bg-alt); }
           <li><strong>Week 5:</strong> Modified game play, applying all skills in game situations</li>
         </ul>
         <h4>Key Instructional Strategies</h4>
-        <ul class="cs-list">
+        <ul style="margin:12px 0 12px 24px">
           <li><strong>Explicit cue-based instruction:</strong> every skill broken into 3-5 observable cues</li>
           <li><strong>Scaffolded complexity:</strong> individual practice &rarr; partner drills &rarr; small group &rarr; game</li>
           <li><strong>Differentiation:</strong> beach balls/trainers for developing students, regulation balls for advanced</li>
@@ -1226,7 +1067,7 @@ section:nth-child(even) { background: var(--bg-alt); }
         </ul>
         <h4>Results</h4>
         <p>Delivered across 3 schools, K-5, with documented student progression from individual skill practice to cooperative game play. Unit demonstrates backward design, scaffolded instruction, standards alignment, differentiation, and formative assessment — all core instructional design competencies.</p>
-        <p style="margin-top:20px"><a href="volleyball-unit.html" class="card-link cs-link" target="_blank" rel="noopener noreferrer">View the Full Unit Plan <i data-lucide="external-link"></i></a></p>
+        <p style="margin-top:20px"><a href="volleyball-unit.html" class="card-link" style="font-size:16px" target="_blank">View the Full Unit Plan <i data-lucide="external-link"></i></a></p>
         <button class="close-case" onclick="closeCase('case3')"><i data-lucide="x"></i> Close Case Study</button>
       </div>
 
@@ -1248,7 +1089,7 @@ section:nth-child(even) { background: var(--bg-alt); }
         <p><strong>Needs:</strong> Real bowling scoring (not simplified), grade-appropriate content, engagement features, teacher oversight.</p>
         <p><strong>Constraints:</strong> Must work offline, no accounts, no installation, single HTML file, Chromebook-compatible.</p>
         <h4>Design Decisions</h4>
-        <ul class="cs-list">
+        <ul style="margin:12px 0 12px 24px">
           <li><strong>Real 10-frame scoring:</strong> strikes, spares, and 10th frame bonus rules — not a simplified version</li>
           <li><strong>Three game modes:</strong> Solo, Party (2-6 players pass-and-play), Team (A vs B)</li>
           <li><strong>Mascot teaching system:</strong> Pinky the Pin and Bowlie the Ball deliver grade-filtered vocabulary, etiquette tips, and bowling facts</li>
@@ -1263,15 +1104,15 @@ section:nth-child(even) { background: var(--bg-alt); }
         <p>Single HTML file, vanilla JavaScript, no dependencies. localStorage for persistent data per device. SVG mascot characters with animated reactions. Responsive design optimized for Chromebooks. Deployed to Netlify.</p>
         <h4>Results</h4>
         <p>Live product used in classroom bowling units. Second commercial product on Teachers Pay Teachers. Zero competition in the PE bowling digital tools category on TPT.</p>
-        <p style="margin-top:20px"><a href="https://strikezone-pe.netlify.app" class="card-link cs-link" target="_blank" rel="noopener noreferrer">Launch Strike Zone <i data-lucide="external-link"></i></a></p>
+        <p style="margin-top:20px"><a href="https://strikezone-pe.netlify.app" class="card-link" style="font-size:16px" target="_blank">Launch Strike Zone <i data-lucide="external-link"></i></a></p>
         <button class="close-case" onclick="closeCase('case5')"><i data-lucide="x"></i> Close Case Study</button>
       </div>
 
       <!-- CASE 6: MS Volleyball -->
       <div class="case-study" id="case6" aria-hidden="true">
-        <h3>Case Study: Middle School Volleyball — 9-Day Unit Plan</h3>
+        <h3>Case Study: Middle School Volleyball Unit</h3>
         <h4>The Challenge</h4>
-        <p>Middle school students arrive with varying volleyball experience, a shorter tolerance for isolated drill work, and a strong desire to compete. A K-5 scaffolding approach — one skill per week, game play at the end — doesn't match where they are developmentally. The challenge: design a unit that meets MS students where they are while still building real, transferable skill.</p>
+        <p>Middle school students arrive with varying volleyball experience, shorter tolerance for isolated drill work, and a strong desire to compete and play. A K-5 scaffolding approach — one skill per week, game play reserved for the end — doesn't match where they are developmentally. How do you design a unit that meets MS students where they are while still building real skill?</p>
         <h4>Design Process</h4>
         <div class="process-steps">
           <div class="process-step"><div class="step-num">A</div><div class="step-label">Analyze</div></div>
@@ -1281,23 +1122,21 @@ section:nth-child(even) { background: var(--bg-alt); }
           <div class="process-step"><div class="step-num">E</div><div class="step-label">Evaluate</div></div>
         </div>
         <h4>Analysis</h4>
-        <p><strong>Learner Profile:</strong> Grades 6-8, mixed ability, diverse volleyball backgrounds. Cognitively ready for multi-skill instruction. They want to play — extended drill work loses them fast.</p>
-        <p><strong>Needs Assessment:</strong> Students need bump and set fundamentals, serving, tactical game sense, and opportunities to lead. Middle schoolers respond to responsibility and ownership.</p>
-        <p><strong>Standards:</strong> IL Goals 19.A, 19.B, 21.A — SHAPE America Standards S1, S4, S5.</p>
+        <p><strong>Learner Profile:</strong> Grades 6-8 at Barbour School, mixed ability, diverse volleyball backgrounds. Students are cognitively ready to process multiple skills simultaneously. They want to play — extended drill work loses them fast.</p>
+        <p><strong>Needs Assessment:</strong> Students need bump and set fundamentals, serving and receiving, and tactical game sense. They also need opportunities to lead — middle schoolers respond to responsibility and ownership.</p>
+        <p><strong>Constraints:</strong> 7 lessons (~3-4 weeks), FitnessGram testing integrated, shared gym space. Design must maximize active time.</p>
         <h4>Design Decisions</h4>
-        <ul class="cs-list">
-          <li><strong>Tactical games approach:</strong> game play introduced early — students learn skills in context, not isolation</li>
+        <ul style="margin:12px 0 12px 24px">
+          <li><strong>Tactical games approach:</strong> game play introduced by Lesson 3 — students learn skills in context, not isolation</li>
           <li><strong>Multi-skill from Day 1:</strong> bump and set introduced together, reflecting MS motor readiness</li>
-          <li><strong>Progressive student autonomy:</strong> peer counting early, captains mid-unit, student referees by the final lesson</li>
-          <li><strong>45+ explicit skill cues:</strong> consistent language repeated every lesson until automatic</li>
-          <li><strong>Differentiation on every lesson:</strong> modify-down and modify-up built in, not added after</li>
-          <li><strong>School color customizer:</strong> same live preview and print system as the football unit — every school prints it in their own colors</li>
+          <li><strong>Progressive student autonomy:</strong> peer counting (Lesson 2) &rarr; captains (Lesson 3) &rarr; student referees (Lesson 7)</li>
+          <li><strong>FitnessGram integration:</strong> fitness testing embedded in Lessons 3 and 6 rather than taught as a separate unit</li>
+          <li><strong>Sport-specific warm-ups:</strong> volleyball movement patterns (karaoke, back pedal, jog/sprint) rather than general fitness games</li>
+          <li><strong>Consistent cue language:</strong> same three bump cues and three set cues repeated every lesson until automatic</li>
         </ul>
-        <h4>Development</h4>
-        <p>Built as a single HTML file with a live color picker that updates CSS variables in real time. Print-ready layout — each day fits one 8.5x11 page. Deployed to Teachers Pay Teachers.</p>
         <h4>Results</h4>
-        <p>A complete, print-ready 9-day unit plan. Paired with the K-5 Volleyball Unit and the Progression Analysis, it demonstrates the full range of curriculum design across developmental levels — same sport, fundamentally different instructional decisions.</p>
-        <p style="margin-top:20px"><a href="ms-volleyball-unit.html" class="card-link cs-link" target="_blank" rel="noopener noreferrer">View the Full Unit Plan <i data-lucide="external-link"></i></a></p>
+        <p>Students progressed from individual skill practice to self-managed game play in 7 lessons. By Lesson 7, students were officiating their own games, demonstrating rule comprehension and personal accountability that extended beyond physical skill.</p>
+        <p style="margin-top:20px"><a href="ms-volleyball-unit.html" class="card-link" style="font-size:16px" target="_blank">View the Full MS Unit Plan <i data-lucide="external-link"></i></a></p>
         <button class="close-case" onclick="closeCase('case6')"><i data-lucide="x"></i> Close Case Study</button>
       </div>
 
@@ -1307,17 +1146,17 @@ section:nth-child(even) { background: var(--bg-alt); }
         <h4>The Challenge</h4>
         <p>Any curriculum developer can design a lesson. The real skill is designing across developmental levels — understanding how the same content requires fundamentally different instructional choices depending on who the learner is. This analysis documents how volleyball curriculum changes from K-5 to grades 6-8, and more importantly, why.</p>
         <h4>What This Demonstrates</h4>
-        <ul class="cs-list">
-          <li><strong>Pacing:</strong> One skill per week (K-5) vs. one skill per day, 9-day unit (MS)</li>
+        <ul style="margin:12px 0 12px 24px">
+          <li><strong>Pacing:</strong> One skill per week (K-5) vs. multi-skill from Day 1 (MS)</li>
           <li><strong>Equipment:</strong> Balloon-to-regulation ladder (K-5) vs. regulation as default (MS)</li>
-          <li><strong>Game play timing:</strong> Final 2 weeks (K-5) vs. Day 8 Scrimmage &amp; Day 9 Tournament (MS)</li>
-          <li><strong>Student role:</strong> Learner (K-5) vs. practitioner &rarr; self-officiated competitor (MS)</li>
-          <li><strong>Assessment:</strong> Cue demonstration (K-5) vs. tactical application in live scrimmage &amp; tournament (MS)</li>
+          <li><strong>Game play timing:</strong> Final 2 weeks (K-5) vs. integrated by Lesson 3 (MS)</li>
+          <li><strong>Student role:</strong> Learner (K-5) vs. player &rarr; referee &rarr; game leader (MS)</li>
+          <li><strong>Assessment:</strong> Cue demonstration (K-5) vs. tactical application (MS)</li>
           <li><strong>Theoretical grounding:</strong> Vygotsky ZPD scaffolding (K-5) vs. Teaching Games for Understanding (MS)</li>
         </ul>
         <h4>Why It Matters for Curriculum Design</h4>
         <p>The standards are identical. The sport is identical. The teacher is identical. What changes is the learner — and good curriculum design responds to the learner, not just the content. This analysis documents those decisions explicitly, connecting each design choice to developmental theory and practical classroom reality.</p>
-        <p style="margin-top:20px"><a href="volleyball-progression.html" class="card-link cs-link" target="_blank" rel="noopener noreferrer">View the Full Progression Analysis <i data-lucide="external-link"></i></a></p>
+        <p style="margin-top:20px"><a href="volleyball-progression.html" class="card-link" style="font-size:16px" target="_blank">View the Full Progression Analysis <i data-lucide="external-link"></i></a></p>
         <button class="close-case" onclick="closeCase('case7')"><i data-lucide="x"></i> Close Case Study</button>
       </div>
 
@@ -1337,9 +1176,9 @@ section:nth-child(even) { background: var(--bg-alt); }
         <h4>Analysis</h4>
         <p><strong>Learner Profile:</strong> Grades 6-8, mixed athletic backgrounds, wide range of football experience. Students are cognitively ready for multi-skill instruction but need structured entry points — especially students who've never held a football.</p>
         <p><strong>Needs Assessment:</strong> Students need throwing mechanics, catching technique, route running, defensive positioning, and game rules — built progressively so game play is meaningful, not chaotic, by Day 8.</p>
-        <p><strong>Standards:</strong> IL Goals 19.A, 19.B, 21.A | SHAPE America Standards S1, S4, S5.</p>
+        <p><strong>Standards:</strong> IL Goals 19.A, 19.B, 21.A &mdash; SHAPE America Standards S1, S4, S5.</p>
         <h4>Design Decisions</h4>
-        <ul class="cs-list">
+        <ul style="margin:12px 0 12px 24px">
           <li><strong>Skill-first, game-integrated:</strong> isolated skill work on Day 1, applied in modified games by Day 3, full game by Day 8</li>
           <li><strong>45+ explicit skill cues:</strong> every skill broken into named, memorable cues ("Squish the Bug," "Wipe the Windshield," "REEF" for catching) — repeatable language that transfers from drill to game</li>
           <li><strong>9-day progression:</strong> Throwing &rarr; Catching &rarr; Routes &rarr; QB/WR/DB &rarr; Handoffs &rarr; Punting &rarr; Defense &rarr; Mini Game &rarr; Tournament</li>
@@ -1352,7 +1191,7 @@ section:nth-child(even) { background: var(--bg-alt); }
         <p>Built as a single HTML file with a live color picker UI that updates CSS variables in real time. Teachers select school colors, preview the result, and print — no design skills required. Standards badges include hover tooltips with full standard descriptions. Deployed to Teachers Pay Teachers.</p>
         <h4>Results</h4>
         <p>A complete, print-ready 9-day unit plan deployed as a commercial product on Teachers Pay Teachers. Demonstrates progressive curriculum design, scaffolded skill development, differentiation, standards alignment, and a teacher-facing UX feature (color customizer) that no competing product offers.</p>
-        <p style="margin-top:20px"><a href="ms-football-unit.html" class="card-link cs-link" target="_blank" rel="noopener noreferrer">View the Full Unit Plan <i data-lucide="external-link"></i></a></p>
+        <p style="margin-top:20px"><a href="ms-football-unit.html" class="card-link" style="font-size:16px" target="_blank">View the Full Unit Plan <i data-lucide="external-link"></i></a></p>
         <button class="close-case" onclick="closeCase('case8')"><i data-lucide="x"></i> Close Case Study</button>
       </div>
 
@@ -1421,10 +1260,8 @@ section:nth-child(even) { background: var(--bg-alt); }
           <span class="skill-pill">Schoology</span>
           <span class="skill-pill">Canvas LMS</span>
           <span class="skill-pill">Canva</span>
-          <span class="skill-pill">Kahoot / Quizizz</span>
           <span class="skill-pill">Google Forms</span>
-          <span class="skill-pill">FitnessGram</span>
-          <span class="skill-pill">CapCut</span>
+          <span class="skill-pill">GitHub</span>
           <span class="skill-pill">Panorama Education</span>
         </div>
       </div>
@@ -1470,7 +1307,7 @@ section:nth-child(even) { background: var(--bg-alt); }
         <i data-lucide="arrow-right" class="contact-card-arrow"></i>
       </a>
 
-      <a href="https://linkedin.com/in/kevin-terranova-b40903223" target="_blank" rel="noopener noreferrer" class="contact-card">
+      <a href="https://linkedin.com/in/kevin-terranova-b40903223" target="_blank" class="contact-card">
         <div class="contact-card-icon contact-card-icon--linkedin">
           <i data-lucide="linkedin"></i>
         </div>
@@ -1487,9 +1324,9 @@ section:nth-child(even) { background: var(--bg-alt); }
 
 <!-- ==================== FOOTER ==================== -->
 <footer class="footer">
-  <p>&copy; 2026 Kevin Terranova | Instructional Designer &amp; Curriculum Developer</p>
+  <p>&copy; 2026 Kevin Terranova &mdash; Instructional Designer &amp; Curriculum Developer</p>
   <div class="footer-links">
-    <a href="Kevin_Terranova_Resume.html" target="_blank" rel="noopener noreferrer">View Resume</a>
+    <a href="Kevin_Terranova_Resume.html" target="_blank">View Resume</a>
     <a href="#portfolio">Portfolio</a>
     <a href="mailto:titan811@gmail.com">Contact</a>
   </div>
