@@ -30,7 +30,7 @@
   --accent-hover: #d97706;
   --success: #10b981;
   --text: #1e293b;
-  --text-light: #64748b;
+  --text-light: #4b5563;
   --bg: #ffffff;
   --bg-alt: #f8fafc;
   --border: #e2e8f0;
@@ -39,7 +39,9 @@
   --radius: 8px;
 }
 
-html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
 
 body {
   font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
@@ -89,7 +91,7 @@ a:hover { text-decoration: underline; }
   height: 64px;
 }
 
-.nav-brand { font-weight: 800; font-size: 18px; color: var(--primary); }
+.nav-brand { font-weight: 800; font-size: 18px; color: var(--primary); text-decoration: none; }
 
 .nav-links { display: flex; gap: 28px; list-style: none; }
 
@@ -428,6 +430,11 @@ section:nth-child(even) { background: var(--bg-alt); }
   font-size: 14px;
   font-weight: 700;
   color: var(--primary);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  padding: 0;
 }
 .card-link .lucide { width: 14px; height: 14px; stroke-width: 2.5; }
 .card-link:hover { text-decoration: underline; }
@@ -502,6 +509,25 @@ section:nth-child(even) { background: var(--bg-alt); }
 }
 .close-case:hover { background: var(--border); }
 .close-case .lucide { width: 14px; height: 14px; stroke-width: 2.5; }
+
+/* ============================================
+   FOCUS STYLES — keyboard navigation (WCAG 2.4.7)
+   ============================================ */
+.nav-links a:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+.hero-cta:focus-visible,
+.featured-cta:focus-visible,
+.contact-card:focus-visible,
+.close-case:focus-visible,
+.card-link:focus-visible,
+.footer-links a:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
 
 /* ============================================
    SKILLS — pill/badge card layout
@@ -614,6 +640,7 @@ section:nth-child(even) { background: var(--bg-alt); }
   text-align: center;
   font-size: 13px;
   color: var(--text-light);
+  color: #4b5563;
   border-top: 2px solid #bfdbfe;
   background: linear-gradient(180deg, transparent, var(--primary-bg));
 }
@@ -660,19 +687,19 @@ section:nth-child(even) { background: var(--bg-alt); }
 <body>
 
 <!-- Skip link — keyboard users bypass nav -->
-<a href="#about" class="skip-link">Skip to main content</a>
+<a href="#main-content" class="skip-link">Skip to main content</a>
 
 <!-- ==================== NAV ==================== -->
-<nav class="nav" role="navigation">
+<nav class="nav" aria-label="Main navigation">
   <div class="nav-inner">
-    <div class="nav-brand">Kevin Terranova</div>
+    <a href="#hero" class="nav-brand">Kevin Terranova</a>
     <button class="nav-hamburger" id="hamburgerBtn" aria-label="Toggle navigation" aria-expanded="false">
       <i data-lucide="menu" style="width:24px;height:24px;stroke-width:2"></i>
     </button>
     <ul class="nav-links" id="navLinks">
       <li><a href="#about">About</a></li>
-      <li><a href="#research">Research</a></li>
       <li><a href="#portfolio">Portfolio</a></li>
+      <li><a href="#research">Research</a></li>
       <li><a href="#skills">Skills</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
@@ -689,7 +716,7 @@ section:nth-child(even) { background: var(--bg-alt); }
 
   <!-- Availability signal -->
   <div class="availability-badge">
-    <span class="availability-dot"></span>
+    <span class="availability-dot" aria-hidden="true"></span>
     Actively seeking remote roles
   </div>
 
@@ -700,13 +727,11 @@ section:nth-child(even) { background: var(--bg-alt); }
     <span class="badge">M.S. Curriculum &amp; Instruction</span>
     <span class="badge">M.S. Sport Psychology</span>
     <span class="badge">B.S. Kinesiology</span>
-    <span class="badge">Instructional Designer</span>
-    <span class="badge">eLearning Developer</span>
   </div>
 
   <p class="lead">Two master's degrees. Nearly a decade designing learning programs.</p>
 
-  <blockquote class="hero-quote">"My focus is helping learners experience small wins early so they build confidence and stay engaged. Start simple. Build success. Increase challenge. That's where retention happens."</blockquote>
+  <blockquote class="hero-quote">"Start simple. Build success. Increase challenge. Confidence grows."</blockquote>
 
   <div class="hero-cta-group">
     <a href="#portfolio" class="hero-cta">
@@ -718,6 +743,8 @@ section:nth-child(even) { background: var(--bg-alt); }
   </div>
 
 </header>
+
+<main id="main-content">
 
 <!-- ==================== ABOUT ==================== -->
 <section id="about">
@@ -760,6 +787,378 @@ section:nth-child(even) { background: var(--bg-alt); }
         </ul>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- ==================== PORTFOLIO ==================== -->
+<section id="portfolio">
+  <div class="container">
+    <div class="section-header">
+      <h2>Portfolio</h2>
+      <p>Selected projects demonstrating my instructional design process, from needs analysis to measurable outcomes.</p>
+    </div>
+
+    <!-- Featured module -->
+    <div style="background:linear-gradient(135deg,#1e3a5f,#1e40af);border-radius:12px;padding:40px;text-align:center;margin-bottom:32px;color:#fff;box-shadow:var(--shadow-lg)">
+      <div style="font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;opacity:0.9;margin-bottom:8px">Featured Project</div>
+      <h3 style="font-size:24px;font-weight:800;margin-bottom:12px">Confidence Through Structured Goal Setting</h3>
+      <p style="opacity:0.85;max-width:560px;margin:0 auto 24px;font-size:16px">An interactive 5-lesson sport psychology module for grades 6-8. Built with HTML/CSS/JS, no Articulate subscription required.</p>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+        <a href="confidence-goal-setting-module.html" target="_blank" class="featured-cta featured-cta--primary">
+          <i data-lucide="external-link" style="width:16px;height:16px;stroke-width:2.5"></i> Launch Module
+        </a>
+        <button type="button" onclick="openCase('case1', this)" class="featured-cta featured-cta--secondary">
+          <i data-lucide="file-text" style="width:16px;height:16px;stroke-width:2.5"></i> View Case Study
+        </button>
+      </div>
+    </div>
+
+    <div class="portfolio-grid" id="portfolioGrid">
+
+      <!-- PROJECT: TitanPE -->
+      <div class="project-card">
+        <div class="card-banner green"><i data-lucide="activity"></i></div>
+        <div class="card-body">
+          <div class="card-type">Shipped Digital Product</div>
+          <h3>TitanPE: FitnessGram Assessment Tracker</h3>
+          <p>A web-based fitness assessment tracker for K-8 PE teachers. Designed, built, iterated, and shipped to a marketplace of 50,000+ educators.</p>
+          <div class="card-tags">
+            <span class="tag">Product Design</span>
+            <span class="tag">FitnessGram</span>
+            <span class="tag">K-8</span>
+            <span class="tag">Data Tracking</span>
+            <span class="tag">Iteration</span>
+          </div>
+          <button type="button" class="card-link" aria-label="View TitanPE case study" onclick="openCase('case2', this)">View TitanPE case study <i data-lucide="chevron-right"></i></button>
+        </div>
+      </div>
+
+      <!-- PROJECT: Strike Zone -->
+      <div class="project-card">
+        <div class="card-banner red"><i data-lucide="target"></i></div>
+        <div class="card-body">
+          <div class="card-type">Shipped Digital Product</div>
+          <h3>Strike Zone — Bowling Scoring Companion</h3>
+          <p>An interactive bowling scoring web app for K-8 PE classrooms. Real 10-frame scoring, three game modes, 17 achievement badges, mascot-based vocabulary instruction, and a hidden teacher dashboard.</p>
+          <div class="card-tags">
+            <span class="tag">Product Design</span>
+            <span class="tag">K-8</span>
+            <span class="tag">Gamification</span>
+            <span class="tag">localStorage</span>
+            <span class="tag">Chromebook-Ready</span>
+            <span class="tag">Interactive</span>
+          </div>
+          <button type="button" class="card-link" aria-label="View Strike Zone case study" onclick="openCase('case5', this)">View Strike Zone case study <i data-lucide="chevron-right"></i></button>
+        </div>
+      </div>
+
+      <!-- PROJECT: K-5 Volleyball Unit -->
+      <div class="project-card">
+        <div class="card-banner amber"><i data-lucide="clipboard-list"></i></div>
+        <div class="card-body">
+          <div class="card-type">Curriculum Design: ADDIE Process</div>
+          <h3>K-5 Volleyball Unit</h3>
+          <p>A multi-week volleyball unit for K-5 students demonstrating the full ADDIE instructional design process, from needs analysis through evaluation.</p>
+          <div class="card-tags">
+            <span class="tag">ADDIE</span>
+            <span class="tag">Scaffolding</span>
+            <span class="tag">Differentiation</span>
+            <span class="tag">IL Standards</span>
+            <span class="tag">Assessment</span>
+          </div>
+          <button type="button" class="card-link" aria-label="View K-5 Volleyball case study" onclick="openCase('case3', this)">View K-5 Volleyball case study <i data-lucide="chevron-right"></i></button>
+        </div>
+      </div>
+
+      <!-- PROJECT: MS Volleyball Unit -->
+      <div class="project-card">
+        <div class="card-banner blue"><i data-lucide="users"></i></div>
+        <div class="card-body">
+          <div class="card-type">Curriculum Design: MS Grades 6&ndash;8</div>
+          <h3>Middle School Volleyball Unit</h3>
+          <p>A 7-lesson volleyball unit for grades 6-8 using a tactical games approach — skills integrated early, game play dominant by mid-unit, student leadership by Lesson 7.</p>
+          <div class="card-tags">
+            <span class="tag">Tactical Games</span>
+            <span class="tag">TGfU</span>
+            <span class="tag">Differentiation</span>
+            <span class="tag">IL Standards</span>
+            <span class="tag">Student Leadership</span>
+          </div>
+          <button type="button" class="card-link" aria-label="View MS Volleyball case study" onclick="openCase('case6', this)">View MS Volleyball case study <i data-lucide="chevron-right"></i></button>
+        </div>
+      </div>
+
+      <!-- PROJECT: Volleyball Progression Comparison -->
+      <div class="project-card">
+        <div class="card-banner purple"><i data-lucide="bar-chart-2"></i></div>
+        <div class="card-body">
+          <div class="card-type">Developmental Progression Analysis</div>
+          <h3>Volleyball Across Grade Bands: K&ndash;5 vs. MS</h3>
+          <p>A side-by-side analysis of how the same sport requires fundamentally different instructional design across developmental levels. Same standards. Different learners. Different design.</p>
+          <div class="card-tags">
+            <span class="tag">Curriculum Theory</span>
+            <span class="tag">Developmental Design</span>
+            <span class="tag">Vygotsky</span>
+            <span class="tag">TGfU</span>
+            <span class="tag">Assessment Design</span>
+          </div>
+          <button type="button" class="card-link" aria-label="View Volleyball Progression analysis" onclick="openCase('case7', this)">View Progression analysis <i data-lucide="chevron-right"></i></button>
+        </div>
+      </div>
+
+      <!-- PROJECT: MS Flag Football Unit -->
+      <div class="project-card">
+        <div class="card-banner orange"><i data-lucide="flag"></i></div>
+        <div class="card-body">
+          <div class="card-type">Curriculum Design: MS Grades 6&ndash;8</div>
+          <h3>MS Flag Football — 9-Day Unit Plan</h3>
+          <p>A complete 9-day flag football unit for grades 6-8. Skill cues on every lesson, full tournament finish, and a built-in school color customizer so every teacher prints it in their own colors.</p>
+          <div class="card-tags">
+            <span class="tag">Tactical Games</span>
+            <span class="tag">9-Day Unit</span>
+            <span class="tag">IL + SHAPE Standards</span>
+            <span class="tag">Differentiation</span>
+            <span class="tag">Print-Ready</span>
+            <span class="tag">TPT Product</span>
+          </div>
+          <button type="button" class="card-link" aria-label="View MS Flag Football case study" onclick="openCase('case8', this)">View Flag Football case study <i data-lucide="chevron-right"></i></button>
+        </div>
+      </div>
+
+      <!-- ==================== CASE STUDIES ==================== -->
+
+      <!-- CASE 1: Confidence Module -->
+      <div class="case-study" id="case1" aria-hidden="true">
+        <h3>Case Study: Confidence Through Structured Goal Setting</h3>
+        <h4>The Challenge</h4>
+        <p>Middle school PE students often disengage when they perceive themselves as "not athletic." Research in sport psychology (specifically Bandura's Self-Efficacy Theory and Locke &amp; Latham's Goal-Setting Theory) suggests that confidence is built through structured success experiences, not innate talent. How do you design a learning experience that teaches students to build their own confidence?</p>
+        <h4>Design Process</h4>
+        <div class="process-steps">
+          <div class="process-step"><div class="step-num">A</div><div class="step-label">Analyze</div></div>
+          <div class="process-step"><div class="step-num">D</div><div class="step-label">Design</div></div>
+          <div class="process-step"><div class="step-num">D</div><div class="step-label">Develop</div></div>
+          <div class="process-step"><div class="step-num">I</div><div class="step-label">Implement</div></div>
+          <div class="process-step"><div class="step-num">E</div><div class="step-label">Evaluate</div></div>
+        </div>
+        <h4>Analysis</h4>
+        <p><strong>Learner Profile:</strong> Grades 6-8, mixed ability levels, many with low physical self-concept. Students often set vague goals ("get better") or avoid challenge entirely.</p>
+        <p><strong>Needs Assessment:</strong> Students lacked a framework for translating effort into progress. Without measurable targets, they couldn't recognize improvement, leading to disengagement.</p>
+        <p><strong>Standards Alignment:</strong> SHAPE America Standards 4 &amp; 5, CASEL SEL Competencies (Self-Awareness, Self-Management), Illinois State Goals 19, 20, 21.</p>
+        <h4>Design Decisions</h4>
+        <ul style="margin:12px 0 12px 24px">
+          <li><strong>Scaffolded 5-lesson structure:</strong> each lesson builds on the previous, moving from understanding confidence to applying it</li>
+          <li><strong>Interactive format:</strong> knowledge checks, reflection prompts, slider activities, scenario-based learning, and a goal-building tool</li>
+          <li><strong>Grounded in research:</strong> Bandura's four sources of self-efficacy, Locke &amp; Latham's goal-setting principles</li>
+          <li><strong>Accessible and responsive:</strong> WCAG 2.1 AA compliance, works on any device</li>
+          <li><strong>Certificate of completion</strong> with a personal Confidence Plan students can print and use</li>
+        </ul>
+        <h4>Development</h4>
+        <p>Built as a single-file interactive web application using HTML, CSS, and JavaScript. No external dependencies or subscriptions required. Progress tracking via localStorage. Rise-quality interactions without the $1,399/year price tag.</p>
+        <h4>Results</h4>
+        <p>A fully functional, standards-aligned interactive learning module ready for classroom deployment. Demonstrates proficiency in instructional design, learning science, interactive content development, and accessibility compliance.</p>
+        <p style="margin-top:20px"><a href="confidence-goal-setting-module.html" class="card-link" style="font-size:16px" target="_blank">Launch the Interactive Module <i data-lucide="external-link"></i></a></p>
+        <button type="button" class="close-case" onclick="closeCase('case1')"><i data-lucide="x"></i> Close Case Study</button>
+      </div>
+
+      <!-- CASE 2: TitanPE -->
+      <div class="case-study" id="case2" aria-hidden="true">
+        <h3>Case Study: TitanPE FitnessGram Assessment Tracker</h3>
+        <h4>The Challenge</h4>
+        <p>PE teachers administering FitnessGram fitness tests need to score students against age- and gender-specific Healthy Fitness Zone (HFZ) standards, track results across classes, and generate reports. Existing tools were either expensive, complex, or required internet access in a gym with no reliable WiFi.</p>
+        <h4>Design Process</h4>
+        <div class="process-steps">
+          <div class="process-step"><div class="step-num">A</div><div class="step-label">Analyze</div></div>
+          <div class="process-step"><div class="step-num">D</div><div class="step-label">Design</div></div>
+          <div class="process-step"><div class="step-num">D</div><div class="step-label">Develop</div></div>
+          <div class="process-step"><div class="step-num">I</div><div class="step-label">Implement</div></div>
+          <div class="process-step"><div class="step-num">E</div><div class="step-label">Evaluate</div></div>
+        </div>
+        <h4>Analysis</h4>
+        <p><strong>User Profile:</strong> K-8 PE teachers with limited technology time, often entering scores on a phone or tablet between classes.</p>
+        <p><strong>Needs Assessment:</strong> Teachers need a tool that works offline, auto-calculates HFZ zones, handles multiple classes, and generates printable reports — all without training or setup.</p>
+        <p><strong>Constraints:</strong> Must work on any device, no app install required, zero learning curve.</p>
+        <h4>Design Decisions</h4>
+        <ul style="margin:12px 0 12px 24px">
+          <li><strong>Single HTML file:</strong> opens in any browser, works offline, no installation</li>
+          <li><strong>Mobile-first interface:</strong> designed for phone/tablet use in a gym</li>
+          <li><strong>Auto-scoring engine:</strong> built-in FitnessGram HFZ standards by age and gender</li>
+          <li><strong>Quick Entry mode:</strong> rapid score input for class-sized groups</li>
+          <li><strong>Roster import:</strong> paste from spreadsheet to add students instantly</li>
+          <li><strong>Print-ready reports:</strong> individual student reports and class summaries</li>
+        </ul>
+        <h4>Iteration</h4>
+        <p><strong>v1.0:</strong> Core scoring and class management. Shipped to Teachers Pay Teachers marketplace.</p>
+        <p><strong>v1.1:</strong> Fixed input sizing, improved Sit &amp; Reach L/R handling, added roster import, optimized Quick Entry for no horizontal scrolling.</p>
+        <p><strong>v1.2 — shipped:</strong> Achievement certificates, student flags and notes, enhanced print reports.</p>
+        <h4>Results</h4>
+        <p>A real product used by real teachers, available on TPT, a marketplace serving 50,000+ PE educators. Demonstrates full product lifecycle: problem identification, user research, design, development, deployment, iteration based on feedback.</p>
+        <button type="button" class="close-case" onclick="closeCase('case2')"><i data-lucide="x"></i> Close Case Study</button>
+      </div>
+
+      <!-- CASE 3: K-5 Volleyball -->
+      <div class="case-study" id="case3" aria-hidden="true">
+        <h3>Case Study: K-5 Volleyball Unit</h3>
+        <h4>The Challenge</h4>
+        <p>Design a multi-week volleyball unit for K-5 students that progresses from zero experience to game play, differentiates across wide ability ranges, and aligns to Illinois State Learning Standards.</p>
+        <h4>Design Process</h4>
+        <div class="process-steps">
+          <div class="process-step"><div class="step-num">A</div><div class="step-label">Analyze</div></div>
+          <div class="process-step"><div class="step-num">D</div><div class="step-label">Design</div></div>
+          <div class="process-step"><div class="step-num">D</div><div class="step-label">Develop</div></div>
+          <div class="process-step"><div class="step-num">I</div><div class="step-label">Implement</div></div>
+          <div class="process-step"><div class="step-num">E</div><div class="step-label">Evaluate</div></div>
+        </div>
+        <h4>Analysis</h4>
+        <p><strong>Learner Profile:</strong> K-5 students across multiple schools, ages 5-11, wide range of motor development and prior experience.</p>
+        <p><strong>Standards:</strong> IL State Goal 19 (motor skills), Goal 20 (fitness), Goal 21 (teamwork and cooperation).</p>
+        <h4>Design: Scaffolded Skill Progression</h4>
+        <ul style="margin:12px 0 12px 24px">
+          <li><strong>Week 1:</strong> Underhand serving, individual wall practice with specific cues (step, hit with heel of hand, follow through)</li>
+          <li><strong>Week 2:</strong> Bumping/Forearm pass, individual drills progressing to partner passing with measurable outcomes</li>
+          <li><strong>Week 3:</strong> Setting/Overhand pass, technique with hoop targets for accuracy measurement</li>
+          <li><strong>Week 4:</strong> Overhand serving, advanced skill with biomechanical cues</li>
+          <li><strong>Week 5:</strong> Modified game play, applying all skills in game situations</li>
+        </ul>
+        <h4>Key Instructional Strategies</h4>
+        <ul style="margin:12px 0 12px 24px">
+          <li><strong>Explicit cue-based instruction:</strong> every skill broken into 3-5 observable cues</li>
+          <li><strong>Scaffolded complexity:</strong> individual practice &rarr; partner drills &rarr; small group &rarr; game</li>
+          <li><strong>Differentiation:</strong> beach balls/trainers for developing students, regulation balls for advanced</li>
+          <li><strong>Assessment:</strong> teacher observation against cue performance, student self-assessment, peer feedback</li>
+          <li><strong>SEL integration:</strong> reflection prompts, encouragement protocols, cooperation standards</li>
+          <li><strong>Bellringers:</strong> cognitive warm-ups connecting to lesson content</li>
+        </ul>
+        <h4>Results</h4>
+        <p>Delivered across 3 schools, K-5, with documented student progression from individual skill practice to cooperative game play. Unit demonstrates backward design, scaffolded instruction, standards alignment, differentiation, and formative assessment — all core instructional design competencies.</p>
+        <p style="margin-top:20px"><a href="volleyball-unit.html" class="card-link" style="font-size:16px" target="_blank">View the Full Unit Plan <i data-lucide="external-link"></i></a></p>
+        <button type="button" class="close-case" onclick="closeCase('case3')"><i data-lucide="x"></i> Close Case Study</button>
+      </div>
+
+      <!-- CASE 5: Strike Zone -->
+      <div class="case-study" id="case5" aria-hidden="true">
+        <h3>Case Study: Strike Zone — Bowling Scoring Companion</h3>
+        <h4>The Challenge</h4>
+        <p>K-8 PE bowling units lack a digital scoring tool. Students struggle with manual scoring, and teachers have no way to track progress or celebrate achievements across classes.</p>
+        <h4>Design Process</h4>
+        <div class="process-steps">
+          <div class="process-step"><div class="step-num">A</div><div class="step-label">Analyze</div></div>
+          <div class="process-step"><div class="step-num">D</div><div class="step-label">Design</div></div>
+          <div class="process-step"><div class="step-num">D</div><div class="step-label">Develop</div></div>
+          <div class="process-step"><div class="step-num">I</div><div class="step-label">Implement</div></div>
+          <div class="process-step"><div class="step-num">E</div><div class="step-label">Evaluate</div></div>
+        </div>
+        <h4>Analysis</h4>
+        <p><strong>Learner Profile:</strong> K-8 students on school Chromebooks, wide range of bowling experience.</p>
+        <p><strong>Needs:</strong> Real bowling scoring (not simplified), grade-appropriate content, engagement features, teacher oversight.</p>
+        <p><strong>Constraints:</strong> Must work offline, no accounts, no installation, single HTML file, Chromebook-compatible.</p>
+        <h4>Design Decisions</h4>
+        <ul style="margin:12px 0 12px 24px">
+          <li><strong>Real 10-frame scoring:</strong> strikes, spares, and 10th frame bonus rules — not a simplified version</li>
+          <li><strong>Three game modes:</strong> Solo, Party (2-6 players pass-and-play), Team (A vs B)</li>
+          <li><strong>Mascot teaching system:</strong> Pinky the Pin and Bowlie the Ball deliver grade-filtered vocabulary, etiquette tips, and bowling facts</li>
+          <li><strong>17 achievement badges:</strong> First Strike, Turkey, 200 Club, Perfect Game, and more — designed to drive engagement across all skill levels</li>
+          <li><strong>Leaderboards:</strong> grade-based and school-wide with a Hall of Fame</li>
+          <li><strong>Projectable awards page:</strong> end-of-unit class celebration screen</li>
+          <li><strong>Hidden teacher dashboard:</strong> 5-tap access + PIN for player management and data reset</li>
+          <li><strong>Dark arcade aesthetic:</strong> intentionally designed to appeal to students</li>
+          <li><strong>K-2 printable score sheets:</strong> for younger students not using the app independently</li>
+        </ul>
+        <h4>Development</h4>
+        <p>Single HTML file, vanilla JavaScript, no dependencies. localStorage for persistent data per device. SVG mascot characters with animated reactions. Responsive design optimized for Chromebooks. Deployed to Netlify.</p>
+        <h4>Results</h4>
+        <p>Live product used in classroom bowling units. Second commercial product on Teachers Pay Teachers. Zero competition in the PE bowling digital tools category on TPT.</p>
+        <p style="margin-top:20px"><a href="https://strikezone-pe.netlify.app" class="card-link" style="font-size:16px" target="_blank">Launch Strike Zone <i data-lucide="external-link"></i></a></p>
+        <button type="button" class="close-case" onclick="closeCase('case5')"><i data-lucide="x"></i> Close Case Study</button>
+      </div>
+
+      <!-- CASE 6: MS Volleyball -->
+      <div class="case-study" id="case6" aria-hidden="true">
+        <h3>Case Study: Middle School Volleyball Unit</h3>
+        <h4>The Challenge</h4>
+        <p>Middle school students arrive with varying volleyball experience, shorter tolerance for isolated drill work, and a strong desire to compete and play. A K-5 scaffolding approach — one skill per week, game play reserved for the end — doesn't match where they are developmentally. How do you design a unit that meets MS students where they are while still building real skill?</p>
+        <h4>Design Process</h4>
+        <div class="process-steps">
+          <div class="process-step"><div class="step-num">A</div><div class="step-label">Analyze</div></div>
+          <div class="process-step"><div class="step-num">D</div><div class="step-label">Design</div></div>
+          <div class="process-step"><div class="step-num">D</div><div class="step-label">Develop</div></div>
+          <div class="process-step"><div class="step-num">I</div><div class="step-label">Implement</div></div>
+          <div class="process-step"><div class="step-num">E</div><div class="step-label">Evaluate</div></div>
+        </div>
+        <h4>Analysis</h4>
+        <p><strong>Learner Profile:</strong> Grades 6-8 at Barbour School, mixed ability, diverse volleyball backgrounds. Students are cognitively ready to process multiple skills simultaneously. They want to play — extended drill work loses them fast.</p>
+        <p><strong>Needs Assessment:</strong> Students need bump and set fundamentals, serving and receiving, and tactical game sense. They also need opportunities to lead — middle schoolers respond to responsibility and ownership.</p>
+        <p><strong>Constraints:</strong> 7 lessons (~3-4 weeks), FitnessGram testing integrated, shared gym space. Design must maximize active time.</p>
+        <h4>Design Decisions</h4>
+        <ul style="margin:12px 0 12px 24px">
+          <li><strong>Tactical games approach:</strong> game play introduced by Lesson 3 — students learn skills in context, not isolation</li>
+          <li><strong>Multi-skill from Day 1:</strong> bump and set introduced together, reflecting MS motor readiness</li>
+          <li><strong>Progressive student autonomy:</strong> peer counting (Lesson 2) &rarr; captains (Lesson 3) &rarr; student referees (Lesson 7)</li>
+          <li><strong>FitnessGram integration:</strong> fitness testing embedded in Lessons 3 and 6 rather than taught as a separate unit</li>
+          <li><strong>Sport-specific warm-ups:</strong> volleyball movement patterns (karaoke, back pedal, jog/sprint) rather than general fitness games</li>
+          <li><strong>Consistent cue language:</strong> same three bump cues and three set cues repeated every lesson until automatic</li>
+        </ul>
+        <h4>Results</h4>
+        <p>Students progressed from individual skill practice to self-managed game play in 7 lessons. By Lesson 7, students were officiating their own games, demonstrating rule comprehension and personal accountability that extended beyond physical skill.</p>
+        <p style="margin-top:20px"><a href="ms-volleyball-unit.html" class="card-link" style="font-size:16px" target="_blank">View the Full MS Unit Plan <i data-lucide="external-link"></i></a></p>
+        <button type="button" class="close-case" onclick="closeCase('case6')"><i data-lucide="x"></i> Close Case Study</button>
+      </div>
+
+      <!-- CASE 7: Volleyball Progression Comparison -->
+      <div class="case-study" id="case7" aria-hidden="true">
+        <h3>Case Study: Volleyball Across Grade Bands — Developmental Progression Analysis</h3>
+        <h4>The Challenge</h4>
+        <p>Any curriculum developer can design a lesson. The real skill is designing across developmental levels — understanding how the same content requires fundamentally different instructional choices depending on who the learner is. This analysis documents how volleyball curriculum changes from K-5 to grades 6-8, and more importantly, why.</p>
+        <h4>What This Demonstrates</h4>
+        <ul style="margin:12px 0 12px 24px">
+          <li><strong>Pacing:</strong> One skill per week (K-5) vs. multi-skill from Day 1 (MS)</li>
+          <li><strong>Equipment:</strong> Balloon-to-regulation ladder (K-5) vs. regulation as default (MS)</li>
+          <li><strong>Game play timing:</strong> Final 2 weeks (K-5) vs. integrated by Lesson 3 (MS)</li>
+          <li><strong>Student role:</strong> Learner (K-5) vs. player &rarr; referee &rarr; game leader (MS)</li>
+          <li><strong>Assessment:</strong> Cue demonstration (K-5) vs. tactical application (MS)</li>
+          <li><strong>Theoretical grounding:</strong> Vygotsky ZPD scaffolding (K-5) vs. Teaching Games for Understanding (MS)</li>
+        </ul>
+        <h4>Why It Matters for Curriculum Design</h4>
+        <p>The standards are identical. The sport is identical. The teacher is identical. What changes is the learner — and good curriculum design responds to the learner, not just the content. This analysis documents those decisions explicitly, connecting each design choice to developmental theory and practical classroom reality.</p>
+        <p style="margin-top:20px"><a href="volleyball-progression.html" class="card-link" style="font-size:16px" target="_blank">View the Full Progression Analysis <i data-lucide="external-link"></i></a></p>
+        <button type="button" class="close-case" onclick="closeCase('case7')"><i data-lucide="x"></i> Close Case Study</button>
+      </div>
+
+      <!-- CASE 8: MS Flag Football -->
+      <div class="case-study" id="case8" aria-hidden="true">
+        <h3>Case Study: MS Flag Football — 9-Day Unit Plan</h3>
+        <h4>The Challenge</h4>
+        <p>Middle school students arrive at a flag football unit with wildly different backgrounds — some have played organized football, many haven't touched a ball. A single-track lesson plan fails both groups. The challenge: design a 9-day unit that builds real skill from day one, keeps advanced students challenged, and ends with a competitive tournament every student is prepared to play in.</p>
+        <h4>Design Process</h4>
+        <div class="process-steps">
+          <div class="process-step"><div class="step-num">A</div><div class="step-label">Analyze</div></div>
+          <div class="process-step"><div class="step-num">D</div><div class="step-label">Design</div></div>
+          <div class="process-step"><div class="step-num">D</div><div class="step-label">Develop</div></div>
+          <div class="process-step"><div class="step-num">I</div><div class="step-label">Implement</div></div>
+          <div class="process-step"><div class="step-num">E</div><div class="step-label">Evaluate</div></div>
+        </div>
+        <h4>Analysis</h4>
+        <p><strong>Learner Profile:</strong> Grades 6-8, mixed athletic backgrounds, wide range of football experience. Students are cognitively ready for multi-skill instruction but need structured entry points — especially students who've never held a football.</p>
+        <p><strong>Needs Assessment:</strong> Students need throwing mechanics, catching technique, route running, defensive positioning, and game rules — built progressively so game play is meaningful, not chaotic, by Day 8.</p>
+        <p><strong>Standards:</strong> IL Goals 19.A, 19.B, 21.A &mdash; SHAPE America Standards S1, S4, S5.</p>
+        <h4>Design Decisions</h4>
+        <ul style="margin:12px 0 12px 24px">
+          <li><strong>Skill-first, game-integrated:</strong> isolated skill work on Day 1, applied in modified games by Day 3, full game by Day 8</li>
+          <li><strong>45+ explicit skill cues:</strong> every skill broken into named, memorable cues ("Squish the Bug," "Wipe the Windshield," "REEF" for catching) — repeatable language that transfers from drill to game</li>
+          <li><strong>9-day progression:</strong> Throwing &rarr; Catching &rarr; Routes &rarr; QB/WR/DB &rarr; Handoffs &rarr; Punting &rarr; Defense &rarr; Mini Game &rarr; Tournament</li>
+          <li><strong>Differentiation on every lesson:</strong> modify-down and modify-up options built into each day — not an afterthought</li>
+          <li><strong>SWBAT learning targets + essential questions:</strong> every lesson opens with "I can" statements and a driving question connecting skills to game IQ</li>
+          <li><strong>School color customizer:</strong> teachers pick their own primary and accent colors before printing — every school gets a unit plan that looks like it was built for them</li>
+          <li><strong>Print-ready PDF format:</strong> each day fits one 8.5&times;11 page, designed for binder use in a gym with no screen</li>
+        </ul>
+        <h4>Development</h4>
+        <p>Built as a single HTML file with a live color picker UI that updates CSS variables in real time. Teachers select school colors, preview the result, and print — no design skills required. Standards badges include hover tooltips with full standard descriptions. Deployed to Teachers Pay Teachers.</p>
+        <h4>Results</h4>
+        <p>A complete, print-ready 9-day unit plan deployed as a commercial product on Teachers Pay Teachers. Demonstrates progressive curriculum design, scaffolded skill development, differentiation, standards alignment, and a teacher-facing UX feature (color customizer) that no competing product offers.</p>
+        <p style="margin-top:20px"><a href="ms-football-unit.html" class="card-link" style="font-size:16px" target="_blank">View the Full Unit Plan <i data-lucide="external-link"></i></a></p>
+        <button type="button" class="close-case" onclick="closeCase('case8')"><i data-lucide="x"></i> Close Case Study</button>
+      </div>
+
+    </div><!-- /portfolio-grid -->
   </div>
 </section>
 
@@ -824,378 +1223,6 @@ section:nth-child(even) { background: var(--bg-alt); }
       </div>
 
     </div>
-  </div>
-</section>
-
-<!-- ==================== PORTFOLIO ==================== -->
-<section id="portfolio">
-  <div class="container">
-    <div class="section-header">
-      <h2>Portfolio</h2>
-      <p>Selected projects demonstrating my instructional design process, from needs analysis to measurable outcomes.</p>
-    </div>
-
-    <!-- Featured module -->
-    <div style="background:linear-gradient(135deg,#1e3a5f,#1e40af);border-radius:12px;padding:40px;text-align:center;margin-bottom:32px;color:#fff;box-shadow:var(--shadow-lg)">
-      <div style="font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;opacity:0.7;margin-bottom:8px">Featured Project</div>
-      <h3 style="font-size:24px;font-weight:800;margin-bottom:12px">Confidence Through Structured Goal Setting</h3>
-      <p style="opacity:0.85;max-width:560px;margin:0 auto 24px;font-size:16px">An interactive 5-lesson sport psychology module for grades 6-8. Built with HTML/CSS/JS, no Articulate subscription required.</p>
-      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
-        <a href="confidence-goal-setting-module.html" target="_blank" class="featured-cta featured-cta--primary">
-          <i data-lucide="external-link" style="width:16px;height:16px;stroke-width:2.5"></i> Launch Module
-        </a>
-        <button onclick="openCase('case1')" class="featured-cta featured-cta--secondary">
-          <i data-lucide="file-text" style="width:16px;height:16px;stroke-width:2.5"></i> View Case Study
-        </button>
-      </div>
-    </div>
-
-    <div class="portfolio-grid" id="portfolioGrid">
-
-      <!-- PROJECT: TitanPE -->
-      <div class="project-card" tabindex="0" role="button" aria-label="View TitanPE case study" onclick="openCase('case2')" onkeydown="if(event.key==='Enter'||event.key===' ')openCase('case2')">
-        <div class="card-banner green"><i data-lucide="activity"></i></div>
-        <div class="card-body">
-          <div class="card-type">Shipped Digital Product</div>
-          <h3>TitanPE: FitnessGram Assessment Tracker</h3>
-          <p>A web-based fitness assessment tracker for K-8 PE teachers. Designed, built, iterated, and shipped to a marketplace of 50,000+ educators.</p>
-          <div class="card-tags">
-            <span class="tag">Product Design</span>
-            <span class="tag">FitnessGram</span>
-            <span class="tag">K-8</span>
-            <span class="tag">Data Tracking</span>
-            <span class="tag">Iteration</span>
-          </div>
-          <span class="card-link">View TitanPE case study <i data-lucide="chevron-right"></i></span>
-        </div>
-      </div>
-
-      <!-- PROJECT: Strike Zone -->
-      <div class="project-card" tabindex="0" role="button" aria-label="View Strike Zone case study" onclick="openCase('case5')" onkeydown="if(event.key==='Enter'||event.key===' ')openCase('case5')">
-        <div class="card-banner red"><i data-lucide="target"></i></div>
-        <div class="card-body">
-          <div class="card-type">Shipped Digital Product</div>
-          <h3>Strike Zone — Bowling Scoring Companion</h3>
-          <p>An interactive bowling scoring web app for K-8 PE classrooms. Real 10-frame scoring, three game modes, 17 achievement badges, mascot-based vocabulary instruction, and a hidden teacher dashboard.</p>
-          <div class="card-tags">
-            <span class="tag">Product Design</span>
-            <span class="tag">K-8</span>
-            <span class="tag">Gamification</span>
-            <span class="tag">localStorage</span>
-            <span class="tag">Chromebook-Ready</span>
-            <span class="tag">Interactive</span>
-          </div>
-          <span class="card-link">View Strike Zone case study <i data-lucide="chevron-right"></i></span>
-        </div>
-      </div>
-
-      <!-- PROJECT: K-5 Volleyball Unit -->
-      <div class="project-card" tabindex="0" role="button" aria-label="View K-5 Volleyball case study" onclick="openCase('case3')" onkeydown="if(event.key==='Enter'||event.key===' ')openCase('case3')">
-        <div class="card-banner amber"><i data-lucide="clipboard-list"></i></div>
-        <div class="card-body">
-          <div class="card-type">Curriculum Design: ADDIE Process</div>
-          <h3>K-5 Volleyball Unit</h3>
-          <p>A multi-week volleyball unit for K-5 students demonstrating the full ADDIE instructional design process, from needs analysis through evaluation.</p>
-          <div class="card-tags">
-            <span class="tag">ADDIE</span>
-            <span class="tag">Scaffolding</span>
-            <span class="tag">Differentiation</span>
-            <span class="tag">IL Standards</span>
-            <span class="tag">Assessment</span>
-          </div>
-          <span class="card-link">View K-5 Volleyball case study <i data-lucide="chevron-right"></i></span>
-        </div>
-      </div>
-
-      <!-- PROJECT: MS Volleyball Unit -->
-      <div class="project-card" tabindex="0" role="button" aria-label="View MS Volleyball case study" onclick="openCase('case6')" onkeydown="if(event.key==='Enter'||event.key===' ')openCase('case6')">
-        <div class="card-banner green"><i data-lucide="users"></i></div>
-        <div class="card-body">
-          <div class="card-type">Curriculum Design: MS Grades 6&ndash;8</div>
-          <h3>Middle School Volleyball Unit</h3>
-          <p>A 7-lesson volleyball unit for grades 6-8 using a tactical games approach — skills integrated early, game play dominant by mid-unit, student leadership by Lesson 7.</p>
-          <div class="card-tags">
-            <span class="tag">Tactical Games</span>
-            <span class="tag">TGfU</span>
-            <span class="tag">Differentiation</span>
-            <span class="tag">IL Standards</span>
-            <span class="tag">Student Leadership</span>
-          </div>
-          <span class="card-link">View MS Volleyball case study <i data-lucide="chevron-right"></i></span>
-        </div>
-      </div>
-
-      <!-- PROJECT: Volleyball Progression Comparison -->
-      <div class="project-card" tabindex="0" role="button" aria-label="View Volleyball Progression analysis" onclick="openCase('case7')" onkeydown="if(event.key==='Enter'||event.key===' ')openCase('case7')">
-        <div class="card-banner purple"><i data-lucide="bar-chart-2"></i></div>
-        <div class="card-body">
-          <div class="card-type">Developmental Progression Analysis</div>
-          <h3>Volleyball Across Grade Bands: K&ndash;5 vs. MS</h3>
-          <p>A side-by-side analysis of how the same sport requires fundamentally different instructional design across developmental levels. Same standards. Different learners. Different design.</p>
-          <div class="card-tags">
-            <span class="tag">Curriculum Theory</span>
-            <span class="tag">Developmental Design</span>
-            <span class="tag">Vygotsky</span>
-            <span class="tag">TGfU</span>
-            <span class="tag">Assessment Design</span>
-          </div>
-          <span class="card-link">View Progression analysis <i data-lucide="chevron-right"></i></span>
-        </div>
-      </div>
-
-      <!-- PROJECT: MS Flag Football Unit -->
-      <div class="project-card" tabindex="0" role="button" aria-label="View MS Flag Football case study" onclick="openCase('case8')" onkeydown="if(event.key==='Enter'||event.key===' ')openCase('case8')">
-        <div class="card-banner orange"><i data-lucide="flag"></i></div>
-        <div class="card-body">
-          <div class="card-type">Curriculum Design: MS Grades 6&ndash;8</div>
-          <h3>MS Flag Football — 9-Day Unit Plan</h3>
-          <p>A complete 9-day flag football unit for grades 6-8. Skill cues on every lesson, full tournament finish, and a built-in school color customizer so every teacher prints it in their own colors.</p>
-          <div class="card-tags">
-            <span class="tag">Tactical Games</span>
-            <span class="tag">9-Day Unit</span>
-            <span class="tag">IL + SHAPE Standards</span>
-            <span class="tag">Differentiation</span>
-            <span class="tag">Print-Ready</span>
-            <span class="tag">TPT Product</span>
-          </div>
-          <span class="card-link">View Flag Football case study <i data-lucide="chevron-right"></i></span>
-        </div>
-      </div>
-
-      <!-- ==================== CASE STUDIES ==================== -->
-
-      <!-- CASE 1: Confidence Module -->
-      <div class="case-study" id="case1" aria-hidden="true">
-        <h3>Case Study: Confidence Through Structured Goal Setting</h3>
-        <h4>The Challenge</h4>
-        <p>Middle school PE students often disengage when they perceive themselves as "not athletic." Research in sport psychology (specifically Bandura's Self-Efficacy Theory and Locke &amp; Latham's Goal-Setting Theory) suggests that confidence is built through structured success experiences, not innate talent. How do you design a learning experience that teaches students to build their own confidence?</p>
-        <h4>Design Process</h4>
-        <div class="process-steps">
-          <div class="process-step"><div class="step-num">A</div><div class="step-label">Analyze</div></div>
-          <div class="process-step"><div class="step-num">D</div><div class="step-label">Design</div></div>
-          <div class="process-step"><div class="step-num">D</div><div class="step-label">Develop</div></div>
-          <div class="process-step"><div class="step-num">I</div><div class="step-label">Implement</div></div>
-          <div class="process-step"><div class="step-num">E</div><div class="step-label">Evaluate</div></div>
-        </div>
-        <h4>Analysis</h4>
-        <p><strong>Learner Profile:</strong> Grades 6-8, mixed ability levels, many with low physical self-concept. Students often set vague goals ("get better") or avoid challenge entirely.</p>
-        <p><strong>Needs Assessment:</strong> Students lacked a framework for translating effort into progress. Without measurable targets, they couldn't recognize improvement, leading to disengagement.</p>
-        <p><strong>Standards Alignment:</strong> SHAPE America Standards 4 &amp; 5, CASEL SEL Competencies (Self-Awareness, Self-Management), Illinois State Goals 19, 20, 21.</p>
-        <h4>Design Decisions</h4>
-        <ul style="margin:12px 0 12px 24px">
-          <li><strong>Scaffolded 5-lesson structure:</strong> each lesson builds on the previous, moving from understanding confidence to applying it</li>
-          <li><strong>Interactive format:</strong> knowledge checks, reflection prompts, slider activities, scenario-based learning, and a goal-building tool</li>
-          <li><strong>Grounded in research:</strong> Bandura's four sources of self-efficacy, Locke &amp; Latham's goal-setting principles</li>
-          <li><strong>Accessible and responsive:</strong> WCAG 2.1 AA compliance, works on any device</li>
-          <li><strong>Certificate of completion</strong> with a personal Confidence Plan students can print and use</li>
-        </ul>
-        <h4>Development</h4>
-        <p>Built as a single-file interactive web application using HTML, CSS, and JavaScript. No external dependencies or subscriptions required. Progress tracking via localStorage. Rise-quality interactions without the $1,399/year price tag.</p>
-        <h4>Results</h4>
-        <p>A fully functional, standards-aligned interactive learning module ready for classroom deployment. Demonstrates proficiency in instructional design, learning science, interactive content development, and accessibility compliance.</p>
-        <p style="margin-top:20px"><a href="confidence-goal-setting-module.html" class="card-link" style="font-size:16px" target="_blank">Launch the Interactive Module <i data-lucide="external-link"></i></a></p>
-        <button class="close-case" onclick="closeCase('case1')"><i data-lucide="x"></i> Close Case Study</button>
-      </div>
-
-      <!-- CASE 2: TitanPE -->
-      <div class="case-study" id="case2" aria-hidden="true">
-        <h3>Case Study: TitanPE FitnessGram Assessment Tracker</h3>
-        <h4>The Challenge</h4>
-        <p>PE teachers administering FitnessGram fitness tests need to score students against age- and gender-specific Healthy Fitness Zone (HFZ) standards, track results across classes, and generate reports. Existing tools were either expensive, complex, or required internet access in a gym with no reliable WiFi.</p>
-        <h4>Design Process</h4>
-        <div class="process-steps">
-          <div class="process-step"><div class="step-num">A</div><div class="step-label">Analyze</div></div>
-          <div class="process-step"><div class="step-num">D</div><div class="step-label">Design</div></div>
-          <div class="process-step"><div class="step-num">D</div><div class="step-label">Develop</div></div>
-          <div class="process-step"><div class="step-num">I</div><div class="step-label">Implement</div></div>
-          <div class="process-step"><div class="step-num">E</div><div class="step-label">Evaluate</div></div>
-        </div>
-        <h4>Analysis</h4>
-        <p><strong>User Profile:</strong> K-8 PE teachers with limited technology time, often entering scores on a phone or tablet between classes.</p>
-        <p><strong>Needs Assessment:</strong> Teachers need a tool that works offline, auto-calculates HFZ zones, handles multiple classes, and generates printable reports — all without training or setup.</p>
-        <p><strong>Constraints:</strong> Must work on any device, no app install required, zero learning curve.</p>
-        <h4>Design Decisions</h4>
-        <ul style="margin:12px 0 12px 24px">
-          <li><strong>Single HTML file:</strong> opens in any browser, works offline, no installation</li>
-          <li><strong>Mobile-first interface:</strong> designed for phone/tablet use in a gym</li>
-          <li><strong>Auto-scoring engine:</strong> built-in FitnessGram HFZ standards by age and gender</li>
-          <li><strong>Quick Entry mode:</strong> rapid score input for class-sized groups</li>
-          <li><strong>Roster import:</strong> paste from spreadsheet to add students instantly</li>
-          <li><strong>Print-ready reports:</strong> individual student reports and class summaries</li>
-        </ul>
-        <h4>Iteration</h4>
-        <p><strong>v1.0:</strong> Core scoring and class management. Shipped to Teachers Pay Teachers marketplace.</p>
-        <p><strong>v1.1:</strong> Fixed input sizing, improved Sit &amp; Reach L/R handling, added roster import, optimized Quick Entry for no horizontal scrolling.</p>
-        <p><strong>v1.2 — shipped:</strong> Achievement certificates, student flags and notes, enhanced print reports.</p>
-        <h4>Results</h4>
-        <p>A real product used by real teachers, available on TPT, a marketplace serving 50,000+ PE educators. Demonstrates full product lifecycle: problem identification, user research, design, development, deployment, iteration based on feedback.</p>
-        <button class="close-case" onclick="closeCase('case2')"><i data-lucide="x"></i> Close Case Study</button>
-      </div>
-
-      <!-- CASE 3: K-5 Volleyball -->
-      <div class="case-study" id="case3" aria-hidden="true">
-        <h3>Case Study: K-5 Volleyball Unit</h3>
-        <h4>The Challenge</h4>
-        <p>Design a multi-week volleyball unit for K-5 students that progresses from zero experience to game play, differentiates across wide ability ranges, and aligns to Illinois State Learning Standards.</p>
-        <h4>Design Process</h4>
-        <div class="process-steps">
-          <div class="process-step"><div class="step-num">A</div><div class="step-label">Analyze</div></div>
-          <div class="process-step"><div class="step-num">D</div><div class="step-label">Design</div></div>
-          <div class="process-step"><div class="step-num">D</div><div class="step-label">Develop</div></div>
-          <div class="process-step"><div class="step-num">I</div><div class="step-label">Implement</div></div>
-          <div class="process-step"><div class="step-num">E</div><div class="step-label">Evaluate</div></div>
-        </div>
-        <h4>Analysis</h4>
-        <p><strong>Learner Profile:</strong> K-5 students across multiple schools, ages 5-11, wide range of motor development and prior experience.</p>
-        <p><strong>Standards:</strong> IL State Goal 19 (motor skills), Goal 20 (fitness), Goal 21 (teamwork and cooperation).</p>
-        <h4>Design: Scaffolded Skill Progression</h4>
-        <ul style="margin:12px 0 12px 24px">
-          <li><strong>Week 1:</strong> Underhand serving, individual wall practice with specific cues (step, hit with heel of hand, follow through)</li>
-          <li><strong>Week 2:</strong> Bumping/Forearm pass, individual drills progressing to partner passing with measurable outcomes</li>
-          <li><strong>Week 3:</strong> Setting/Overhand pass, technique with hoop targets for accuracy measurement</li>
-          <li><strong>Week 4:</strong> Overhand serving, advanced skill with biomechanical cues</li>
-          <li><strong>Week 5:</strong> Modified game play, applying all skills in game situations</li>
-        </ul>
-        <h4>Key Instructional Strategies</h4>
-        <ul style="margin:12px 0 12px 24px">
-          <li><strong>Explicit cue-based instruction:</strong> every skill broken into 3-5 observable cues</li>
-          <li><strong>Scaffolded complexity:</strong> individual practice &rarr; partner drills &rarr; small group &rarr; game</li>
-          <li><strong>Differentiation:</strong> beach balls/trainers for developing students, regulation balls for advanced</li>
-          <li><strong>Assessment:</strong> teacher observation against cue performance, student self-assessment, peer feedback</li>
-          <li><strong>SEL integration:</strong> reflection prompts, encouragement protocols, cooperation standards</li>
-          <li><strong>Bellringers:</strong> cognitive warm-ups connecting to lesson content</li>
-        </ul>
-        <h4>Results</h4>
-        <p>Delivered across 3 schools, K-5, with documented student progression from individual skill practice to cooperative game play. Unit demonstrates backward design, scaffolded instruction, standards alignment, differentiation, and formative assessment — all core instructional design competencies.</p>
-        <p style="margin-top:20px"><a href="volleyball-unit.html" class="card-link" style="font-size:16px" target="_blank">View the Full Unit Plan <i data-lucide="external-link"></i></a></p>
-        <button class="close-case" onclick="closeCase('case3')"><i data-lucide="x"></i> Close Case Study</button>
-      </div>
-
-      <!-- CASE 5: Strike Zone -->
-      <div class="case-study" id="case5" aria-hidden="true">
-        <h3>Case Study: Strike Zone — Bowling Scoring Companion</h3>
-        <h4>The Challenge</h4>
-        <p>K-8 PE bowling units lack a digital scoring tool. Students struggle with manual scoring, and teachers have no way to track progress or celebrate achievements across classes.</p>
-        <h4>Design Process</h4>
-        <div class="process-steps">
-          <div class="process-step"><div class="step-num">A</div><div class="step-label">Analyze</div></div>
-          <div class="process-step"><div class="step-num">D</div><div class="step-label">Design</div></div>
-          <div class="process-step"><div class="step-num">D</div><div class="step-label">Develop</div></div>
-          <div class="process-step"><div class="step-num">I</div><div class="step-label">Implement</div></div>
-          <div class="process-step"><div class="step-num">E</div><div class="step-label">Evaluate</div></div>
-        </div>
-        <h4>Analysis</h4>
-        <p><strong>Learner Profile:</strong> K-8 students on school Chromebooks, wide range of bowling experience.</p>
-        <p><strong>Needs:</strong> Real bowling scoring (not simplified), grade-appropriate content, engagement features, teacher oversight.</p>
-        <p><strong>Constraints:</strong> Must work offline, no accounts, no installation, single HTML file, Chromebook-compatible.</p>
-        <h4>Design Decisions</h4>
-        <ul style="margin:12px 0 12px 24px">
-          <li><strong>Real 10-frame scoring:</strong> strikes, spares, and 10th frame bonus rules — not a simplified version</li>
-          <li><strong>Three game modes:</strong> Solo, Party (2-6 players pass-and-play), Team (A vs B)</li>
-          <li><strong>Mascot teaching system:</strong> Pinky the Pin and Bowlie the Ball deliver grade-filtered vocabulary, etiquette tips, and bowling facts</li>
-          <li><strong>17 achievement badges:</strong> First Strike, Turkey, 200 Club, Perfect Game, and more — designed to drive engagement across all skill levels</li>
-          <li><strong>Leaderboards:</strong> grade-based and school-wide with a Hall of Fame</li>
-          <li><strong>Projectable awards page:</strong> end-of-unit class celebration screen</li>
-          <li><strong>Hidden teacher dashboard:</strong> 5-tap access + PIN for player management and data reset</li>
-          <li><strong>Dark arcade aesthetic:</strong> intentionally designed to appeal to students</li>
-          <li><strong>K-2 printable score sheets:</strong> for younger students not using the app independently</li>
-        </ul>
-        <h4>Development</h4>
-        <p>Single HTML file, vanilla JavaScript, no dependencies. localStorage for persistent data per device. SVG mascot characters with animated reactions. Responsive design optimized for Chromebooks. Deployed to Netlify.</p>
-        <h4>Results</h4>
-        <p>Live product used in classroom bowling units. Second commercial product on Teachers Pay Teachers. Zero competition in the PE bowling digital tools category on TPT.</p>
-        <p style="margin-top:20px"><a href="https://strikezone-pe.netlify.app" class="card-link" style="font-size:16px" target="_blank">Launch Strike Zone <i data-lucide="external-link"></i></a></p>
-        <button class="close-case" onclick="closeCase('case5')"><i data-lucide="x"></i> Close Case Study</button>
-      </div>
-
-      <!-- CASE 6: MS Volleyball -->
-      <div class="case-study" id="case6" aria-hidden="true">
-        <h3>Case Study: Middle School Volleyball Unit</h3>
-        <h4>The Challenge</h4>
-        <p>Middle school students arrive with varying volleyball experience, shorter tolerance for isolated drill work, and a strong desire to compete and play. A K-5 scaffolding approach — one skill per week, game play reserved for the end — doesn't match where they are developmentally. How do you design a unit that meets MS students where they are while still building real skill?</p>
-        <h4>Design Process</h4>
-        <div class="process-steps">
-          <div class="process-step"><div class="step-num">A</div><div class="step-label">Analyze</div></div>
-          <div class="process-step"><div class="step-num">D</div><div class="step-label">Design</div></div>
-          <div class="process-step"><div class="step-num">D</div><div class="step-label">Develop</div></div>
-          <div class="process-step"><div class="step-num">I</div><div class="step-label">Implement</div></div>
-          <div class="process-step"><div class="step-num">E</div><div class="step-label">Evaluate</div></div>
-        </div>
-        <h4>Analysis</h4>
-        <p><strong>Learner Profile:</strong> Grades 6-8 at Barbour School, mixed ability, diverse volleyball backgrounds. Students are cognitively ready to process multiple skills simultaneously. They want to play — extended drill work loses them fast.</p>
-        <p><strong>Needs Assessment:</strong> Students need bump and set fundamentals, serving and receiving, and tactical game sense. They also need opportunities to lead — middle schoolers respond to responsibility and ownership.</p>
-        <p><strong>Constraints:</strong> 7 lessons (~3-4 weeks), FitnessGram testing integrated, shared gym space. Design must maximize active time.</p>
-        <h4>Design Decisions</h4>
-        <ul style="margin:12px 0 12px 24px">
-          <li><strong>Tactical games approach:</strong> game play introduced by Lesson 3 — students learn skills in context, not isolation</li>
-          <li><strong>Multi-skill from Day 1:</strong> bump and set introduced together, reflecting MS motor readiness</li>
-          <li><strong>Progressive student autonomy:</strong> peer counting (Lesson 2) &rarr; captains (Lesson 3) &rarr; student referees (Lesson 7)</li>
-          <li><strong>FitnessGram integration:</strong> fitness testing embedded in Lessons 3 and 6 rather than taught as a separate unit</li>
-          <li><strong>Sport-specific warm-ups:</strong> volleyball movement patterns (karaoke, back pedal, jog/sprint) rather than general fitness games</li>
-          <li><strong>Consistent cue language:</strong> same three bump cues and three set cues repeated every lesson until automatic</li>
-        </ul>
-        <h4>Results</h4>
-        <p>Students progressed from individual skill practice to self-managed game play in 7 lessons. By Lesson 7, students were officiating their own games, demonstrating rule comprehension and personal accountability that extended beyond physical skill.</p>
-        <p style="margin-top:20px"><a href="ms-volleyball-unit.html" class="card-link" style="font-size:16px" target="_blank">View the Full MS Unit Plan <i data-lucide="external-link"></i></a></p>
-        <button class="close-case" onclick="closeCase('case6')"><i data-lucide="x"></i> Close Case Study</button>
-      </div>
-
-      <!-- CASE 7: Volleyball Progression Comparison -->
-      <div class="case-study" id="case7" aria-hidden="true">
-        <h3>Case Study: Volleyball Across Grade Bands — Developmental Progression Analysis</h3>
-        <h4>The Challenge</h4>
-        <p>Any curriculum developer can design a lesson. The real skill is designing across developmental levels — understanding how the same content requires fundamentally different instructional choices depending on who the learner is. This analysis documents how volleyball curriculum changes from K-5 to grades 6-8, and more importantly, why.</p>
-        <h4>What This Demonstrates</h4>
-        <ul style="margin:12px 0 12px 24px">
-          <li><strong>Pacing:</strong> One skill per week (K-5) vs. multi-skill from Day 1 (MS)</li>
-          <li><strong>Equipment:</strong> Balloon-to-regulation ladder (K-5) vs. regulation as default (MS)</li>
-          <li><strong>Game play timing:</strong> Final 2 weeks (K-5) vs. integrated by Lesson 3 (MS)</li>
-          <li><strong>Student role:</strong> Learner (K-5) vs. player &rarr; referee &rarr; game leader (MS)</li>
-          <li><strong>Assessment:</strong> Cue demonstration (K-5) vs. tactical application (MS)</li>
-          <li><strong>Theoretical grounding:</strong> Vygotsky ZPD scaffolding (K-5) vs. Teaching Games for Understanding (MS)</li>
-        </ul>
-        <h4>Why It Matters for Curriculum Design</h4>
-        <p>The standards are identical. The sport is identical. The teacher is identical. What changes is the learner — and good curriculum design responds to the learner, not just the content. This analysis documents those decisions explicitly, connecting each design choice to developmental theory and practical classroom reality.</p>
-        <p style="margin-top:20px"><a href="volleyball-progression.html" class="card-link" style="font-size:16px" target="_blank">View the Full Progression Analysis <i data-lucide="external-link"></i></a></p>
-        <button class="close-case" onclick="closeCase('case7')"><i data-lucide="x"></i> Close Case Study</button>
-      </div>
-
-      <!-- CASE 8: MS Flag Football -->
-      <div class="case-study" id="case8" aria-hidden="true">
-        <h3>Case Study: MS Flag Football — 9-Day Unit Plan</h3>
-        <h4>The Challenge</h4>
-        <p>Middle school students arrive at a flag football unit with wildly different backgrounds — some have played organized football, many haven't touched a ball. A single-track lesson plan fails both groups. The challenge: design a 9-day unit that builds real skill from day one, keeps advanced students challenged, and ends with a competitive tournament every student is prepared to play in.</p>
-        <h4>Design Process</h4>
-        <div class="process-steps">
-          <div class="process-step"><div class="step-num">A</div><div class="step-label">Analyze</div></div>
-          <div class="process-step"><div class="step-num">D</div><div class="step-label">Design</div></div>
-          <div class="process-step"><div class="step-num">D</div><div class="step-label">Develop</div></div>
-          <div class="process-step"><div class="step-num">I</div><div class="step-label">Implement</div></div>
-          <div class="process-step"><div class="step-num">E</div><div class="step-label">Evaluate</div></div>
-        </div>
-        <h4>Analysis</h4>
-        <p><strong>Learner Profile:</strong> Grades 6-8, mixed athletic backgrounds, wide range of football experience. Students are cognitively ready for multi-skill instruction but need structured entry points — especially students who've never held a football.</p>
-        <p><strong>Needs Assessment:</strong> Students need throwing mechanics, catching technique, route running, defensive positioning, and game rules — built progressively so game play is meaningful, not chaotic, by Day 8.</p>
-        <p><strong>Standards:</strong> IL Goals 19.A, 19.B, 21.A &mdash; SHAPE America Standards S1, S4, S5.</p>
-        <h4>Design Decisions</h4>
-        <ul style="margin:12px 0 12px 24px">
-          <li><strong>Skill-first, game-integrated:</strong> isolated skill work on Day 1, applied in modified games by Day 3, full game by Day 8</li>
-          <li><strong>45+ explicit skill cues:</strong> every skill broken into named, memorable cues ("Squish the Bug," "Wipe the Windshield," "REEF" for catching) — repeatable language that transfers from drill to game</li>
-          <li><strong>9-day progression:</strong> Throwing &rarr; Catching &rarr; Routes &rarr; QB/WR/DB &rarr; Handoffs &rarr; Punting &rarr; Defense &rarr; Mini Game &rarr; Tournament</li>
-          <li><strong>Differentiation on every lesson:</strong> modify-down and modify-up options built into each day — not an afterthought</li>
-          <li><strong>SWBAT learning targets + essential questions:</strong> every lesson opens with "I can" statements and a driving question connecting skills to game IQ</li>
-          <li><strong>School color customizer:</strong> teachers pick their own primary and accent colors before printing — every school gets a unit plan that looks like it was built for them</li>
-          <li><strong>Print-ready PDF format:</strong> each day fits one 8.5&times;11 page, designed for binder use in a gym with no screen</li>
-        </ul>
-        <h4>Development</h4>
-        <p>Built as a single HTML file with a live color picker UI that updates CSS variables in real time. Teachers select school colors, preview the result, and print — no design skills required. Standards badges include hover tooltips with full standard descriptions. Deployed to Teachers Pay Teachers.</p>
-        <h4>Results</h4>
-        <p>A complete, print-ready 9-day unit plan deployed as a commercial product on Teachers Pay Teachers. Demonstrates progressive curriculum design, scaffolded skill development, differentiation, standards alignment, and a teacher-facing UX feature (color customizer) that no competing product offers.</p>
-        <p style="margin-top:20px"><a href="ms-football-unit.html" class="card-link" style="font-size:16px" target="_blank">View the Full Unit Plan <i data-lucide="external-link"></i></a></p>
-        <button class="close-case" onclick="closeCase('case8')"><i data-lucide="x"></i> Close Case Study</button>
-      </div>
-
-    </div><!-- /portfolio-grid -->
   </div>
 </section>
 
@@ -1294,6 +1321,12 @@ section:nth-child(even) { background: var(--bg-alt); }
       <h2>Let's Work Together</h2>
       <p>Actively seeking remote Instructional Designer and Curriculum Developer roles. I respond within 24 hours.</p>
     </div>
+    <div style="text-align:center; margin-bottom:32px;">
+      <a href="mailto:titan811@gmail.com" class="hero-cta">
+        <i data-lucide="mail"></i> Send Me an Email
+      </a>
+    </div>
+
     <div class="contact-cards">
 
       <a href="mailto:titan811@gmail.com" class="contact-card">
@@ -1321,6 +1354,8 @@ section:nth-child(even) { background: var(--bg-alt); }
     </div>
   </div>
 </section>
+
+</main>
 
 <!-- ==================== FOOTER ==================== -->
 <footer class="footer">
@@ -1369,7 +1404,10 @@ document.querySelectorAll('.nav-links a').forEach(function(link) {
 
 // ---- CASE STUDY EXPAND/COLLAPSE ----
 // Manages aria-hidden + focus for accessibility
-function openCase(id) {
+// _lastOpener stores the button that opened the case study so we can return focus when closing
+var _lastOpener = null;
+
+function openCase(id, opener) {
   document.querySelectorAll('.case-study.open').forEach(function(c) {
     c.classList.remove('open');
     c.setAttribute('aria-hidden', 'true');
@@ -1378,16 +1416,17 @@ function openCase(id) {
   el.classList.add('open');
   el.setAttribute('aria-hidden', 'false');
   el.setAttribute('tabindex', '-1');
+  _lastOpener = opener || null;
   setTimeout(function() {
-    el.focus();
     el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }, 100);
 }
 
 function closeCase(id) {
-  var el = document.getElementById(id);
-  el.classList.remove('open');
-  el.setAttribute('aria-hidden', 'true');
+  document.getElementById(id).classList.remove('open');
+  document.getElementById(id).setAttribute('aria-hidden', 'true');
+  // Return focus to the button that opened this case study
+  if (_lastOpener) { _lastOpener.focus(); _lastOpener = null; }
 }
 </script>
 </body>
